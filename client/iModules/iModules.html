@@ -1,4 +1,15 @@
 <template name="iModules">
   {{> iDashboardPanel}}
-  Modules
+  {{#each modules}}
+    {{> iModuleShow}}
+  {{/each}}
+</template>
+
+
+<template name="iModuleShow">
+  <div>
+    MODULE
+    {{name}}:
+    {{module}}
+  </div>
 </template>
