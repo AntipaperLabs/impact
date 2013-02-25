@@ -23,6 +23,11 @@ Impact.cardInfo = {};
 
 
 Impact.dev = {
+  Modules: {},
+  Widgets: {},
+  Cards: {},
+  Themes: {},
+
   moduleConstructors: {},
   widgetConstructors: {},
   themeConstructors: {},

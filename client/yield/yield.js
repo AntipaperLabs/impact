@@ -38,6 +38,8 @@ Template.yield.rendered = function() {
         fileref.setAttribute('src', '/-/m/' + module + '/main.js');
         document.getElementsByTagName('head')[0].appendChild(fileref);
 
+        if()
+
         setTimeout(function(){
           console.log(module);
           Impact.ModuleTemplates[module].initialize(name);
