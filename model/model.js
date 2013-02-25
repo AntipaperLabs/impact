@@ -60,5 +60,9 @@ var Notes = new Meteor.Collection('notes');
 */
 var Roles = new Meteor.Collection('roles');
 
+/*
+  name:
+  moduleClass:
 
+*/
 var Modules = new Meteor.Collection('modules');
