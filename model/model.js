@@ -1,5 +1,6 @@
 /*
 
+moduleName:
 currentVersionId:
 versions: [{
   id:
