@@ -2,17 +2,23 @@
   "meteor": {
     "git": "https://github.com/meteor/meteor.git",
     "branch": "master",
-    "commit": "405cd9e86c6336bd9aaa7a8f240bb9815dceed2d"
+    "commit": "2d8b41a87cec884489ead138b5dfea31487363f3"
   },
   "dependencies": {
     "basePackages": {
-      "router": {}
+      "router": {},
+      "sugar": {}
     },
     "packages": {
       "router": {
         "git": "https://github.com/tmeasday/meteor-router.git",
         "tag": "v0.3.5",
         "commit": "e8e63db2411204f0a6589b74dd591babbfb2da1a"
+      },
+      "sugar": {
+        "git": "https://github.com/bevanhunt/meteor-sugar.git",
+        "tag": "v0.0.9",
+        "commit": "751a4465e0a7d7e4e800e794ca1e6a449e15e63d"
       },
       "page-js": {
         "git": "https://github.com/tmeasday/meteor-page-js.git",
