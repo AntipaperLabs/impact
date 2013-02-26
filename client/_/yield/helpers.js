@@ -2,15 +2,11 @@
 
   Handlebars.registerHelper('renderModule', function () {
 
-
-    var path      = Impact.Yield.getPath();
-    var params    = Impact.Yield.getParams();
-    var module    = Impact.Yield.getCurrentModule();
-    //var params    = Impact.Yield.getParams();
-    // var queryDict = Impact.Yield.getQueryDict();
-
+    var state  = Impact.Yield;
+    var module = Impact.Yield.getCurrentModule();
+    console.log(module)
     if (module)
-      return new Handlebars.SafeString(module.render(path, params) || '');
+      return new Handlebars.SafeString(module.render(state) || '');
 
     // if renderer is undefined fallback to standard router behavior
     var name = Meteor.Router.page();
