@@ -73,6 +73,8 @@ Impact.Yield.enteredPath = function(fullPath) {
   var name = path[0];
   path.splice(0, 1);
 
+  console.log('name', fullPath)
+
   var params = $.deparam(this.querystring || '');
     
 
@@ -90,17 +92,17 @@ Impact.Yield.enteredPath = function(fullPath) {
       //TODO: use class instead of name
       //TODO: try using dev version if present
       Impact.Modules[name] = new constructor;
-      Meteor.Renderer.set(Impact.Modules[name]);
+      Impact.Yield.setCurrentModuleAndState(Impact.Modules[name], path, params);
     } else {
       //TODO: verify file existence
       console.log('loading module', name);
-      Meteor.Renderer.set(null);
+      Impact.Yield.setCurrentModuleAndState(null);
       require(['/-/m/' + name + '/main.js'], function () {
         console.log('loading done');
         constructor = Impact.moduleConstructors[name];
         if (constructor) {
           Impact.Modules[name] = new constructor;
-          Meteor.Renderer.set(Impact.Modules[name]);
+          Impact.Yield.setCurrentModuleAndState(Impact.Modules[name], path, params);
           console.log(Impact.Modules)
         }
       });

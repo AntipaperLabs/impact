@@ -1,23 +1,15 @@
+require('sugar');
 
-exports.to_json_ast = function (code) {
-  // We need handlebars and underscore, but this is bundle time, so
-  // we load them using 'require'.
-  // If we're in a unit test right now, we're actually in the server
-  // run-time environment; we have '_' but not 'require'.
-  // This is all very hacky.
-  var req = (typeof require === 'undefined' ?
-             __meteor_bootstrap__.require : require);
-  var path = req('path');
+var handlebars = require('handlebars');
 
-  var _ = global._;
-  if (! _)
-    _ = req('underscore'); // XXX super lame
+// this code is from meteor package handlebars, parse.js
+var to_json_ast = function (code) {
 
-  var ast = req("handlebars").parse(code);
+  var ast = handlebars.parse(code);
 
   // Recreate Handlebars.Exception to properly report error messages
   // and stack traces. (https://github.com/wycats/handlebars.js/issues/226)
-  makeHandlebarsExceptionsVisible(req);
+  //makeHandlebarsExceptionsVisible(handlebars);
 
   var identifier = function (node) {
     if (node.type !== "ID")
@@ -61,7 +53,7 @@ exports.to_json_ast = function (code) {
     if (node.type !== "hash")
       throw new Error("got ast node " + node.type + " for hash");
     var ret = {};
-    _.each(node.pairs, function (p) {
+    node.pairs.each(function (p) {
       ret[p[0]] = value(p[1]);
     });
     return ret;
@@ -72,7 +64,7 @@ exports.to_json_ast = function (code) {
       throw new Error("got ast node " + node.type + " for invocation");
     var ret = [node.id];
     ret = ret.concat(node.params);
-    ret = _.map(ret, value);
+    ret = ret.map(value);
     if (node.hash)
       ret.push(hash(node.hash));
     return ret;
@@ -116,7 +108,7 @@ exports.to_json_ast = function (code) {
       comment: function (node) {}
     };
 
-    _.each(nodes, function (node) {
+    nodes.each(function (node) {
       if (!(node.type in choices))
         throw new Error("got ast node " + node.type + " in template");
       choices[node.type](node);
@@ -129,18 +121,18 @@ exports.to_json_ast = function (code) {
     throw new Error("got ast node " + node.type + " at toplevel");
   return template(ast.statements);
 };
-
-var makeHandlebarsExceptionsVisible = function (req) {
-  req("handlebars").Exception = function(message) {
+/*
+var makeHandlebarsExceptionsVisible = function (handlebars) {
+  handlebars.Exception = function(message) {
     this.message = message;
     // In Node, if we don't do this we don't see the message displayed
     // nor the right stack trace.
     Error.captureStackTrace(this, arguments.callee);
   };
-  req("handlebars").Exception.prototype = new Error();
-  req("handlebars").Exception.prototype.name = 'Handlebars.Exception';
+  handlebars.Exception.prototype = new Error();
+  handlebars.Exception.prototype.name = 'Handlebars.Exception';
 };
-
+*/
 
 // this is etirely based on meteor's html_scanner.scan method
 exports.compile = function (contents, source_name, module_name) {
@@ -227,7 +219,7 @@ exports.compile = function (contents, source_name, module_name) {
     name = prefix + name;
 
     var code = 'Handlebars.json_ast_to_func(' +
-      JSON.stringify(exports.to_json_ast(tagContents)) + ')';
+      JSON.stringify(to_json_ast(tagContents)) + ')';
     
     results += "Meteor._def_template(" + JSON.stringify(name) + "," + code + ");\n";
   }
