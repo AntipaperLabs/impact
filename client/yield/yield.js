@@ -7,7 +7,7 @@ Impact.Yield.entered = function(fullPath) {
   var name = path[0];
   path.splice(0, 1);
 
-  var params = (this.querystring) ? $.deparam(this.querystring) : {};
+  var params = $.deparam(this.querystring || '');
     
 
 

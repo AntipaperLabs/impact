@@ -6,6 +6,11 @@
 //     var name = params[0];
 //     params.splice(0, 1);
 //     var queryDict = $.deparam(this.querystring);
+// Meteor.Router.add({
+//   '/:name/*' : function () {
+//     var params = this.params[0].split('/');
+//     var name = this.params.name;
+//     var queryDict = $.deparam(this.querystring);
 
 //     Meteor.Renderer.setParams(params);
 //     Meteor.Renderer.setQueryDict(queryDict);
