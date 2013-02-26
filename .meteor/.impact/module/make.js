@@ -1,26 +1,35 @@
 require('sugar');
 
 var fs = require('fs');
+var fsx = require('../fsx');
 var proc = require('child_process');
 
-// fs.readdirSync('.meteor/impact/modules').forEach(module.make);
 
+var CODE_ROOT = '.meteor/impact/modules/';
+var CODE_ROOT_LENGTH = CODE_ROOT.length;
 
+var DEV_ROOT = 'public/-/m/';
+var URL_ROOT = '/-/m/';
 
-var makeFile = function(path) {
+var makeFile = function(path, list) {
   if(!path.endsWith('.js')) return;
   
-  console.log("FILE: "+path);
+  var filename = path.substring(CODE_ROOT_LENGTH);
+  list.push(URL_ROOT + filename);
+  fsx.copy(path, DEV_ROOT + filename);
 }
 
-var makeDirectory = function(directory) {
-  var array = fs.readdirSync(directory);
-  array.forEach(function(name){
+var makeDirectory = function(directory, list) {
+  var dirName = directory.substring(CODE_ROOT_LENGTH);
+  fs.mkdirSync(DEV_ROOT + dirName);
+
+  
+  fs.readdirSync(directory).forEach(function(name) {
     var filename = directory + '/' + name;
     if(fs.statSync(filename).isDirectory()) {
-      makeDirectory(filename);
+      makeDirectory(filename, list);
     } else {
-      makeFile(filename);
+      makeFile(filename, list);
     }
   });
 }
@@ -28,10 +37,18 @@ var makeDirectory = function(directory) {
 
 
 exports.make = function(name) {
-  // console.log("MAKE: " + name);
-  // console.log(fs.readdirSync('.'));
-  // console.log(fs.readdirSync('.meteor/impact/modules/'+name));
-  makeDirectory('.meteor/impact/modules/'+name);
-  // makeDirectory('./meteor/impact/modules/'+name);
+  var list = [];
+  makeDirectory(CODE_ROOT + name, list);
+  console.log(list);
+
+  var dev = "";
+  list.forEach(function(file){
+    dev += "require(" +
+           "['" + file + "']," +
+           "function(){\n    console.log('loaded -[" + file + "]-');\n}" +
+           ");\n";
+  });
+
+  fs.writeFile(DEV_ROOT + name + "/main.js", dev);
 }
 
