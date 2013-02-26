@@ -1,79 +1,51 @@
-Template.yield.modules = function() {
-  var modules = Modules.find({});
-  modules.forEach(function(module){
-    if(Impact.Modules[module.name]) return;
-    Impact.Modules[module.name] = {
-      name: module.name,
-      module: module.module,
-      loaded: false
-    }
-  });
-  return modules;
-}
+Impact.Yield = {};
 
 
-Template.yield.rendered = function() {
-  // console.log("YIELD RENDER");
-  // console.log(window.location.pathname);
 
-  var tab = (''+window.location.pathname).split('/');
-  var name = tab[1];
-  var params = tab;
-  params.splice(0,2);
+Impact.Yield.entered = function(fullPath) {
+  var path = fullPath.split('/');
+  var name = path[0];
+  path.splice(0, 1);
 
-
-  // Impact.initialized = false;
-  // Impact.initialize();
-  // console.log("IMPACT INITIALIZED");
-  // console.log(Impact.Modules);
-  // console.log(Modules.find({}));
+  var params = (this.querystring) ? $.deparam(this.querystring) : {};
+    
 
 
-  setTimeout(function(){
-    if(Impact.Modules[name]) {
-      if(!Impact.Modules[name].loaded) {
-        var module = Impact.Modules[name].module;
-        var fileref = document.createElement('script')
-        fileref.setAttribute('type','text/javascript')
-        fileref.setAttribute('src', '/-/m/' + module + '/main.js');
-        document.getElementsByTagName('head')[0].appendChild(fileref);
+  Meteor.Renderer.setParams(params);
+    Meteor.Renderer.setQueryDict(queryDict);
 
-        
 
-        setTimeout(function(){
-          console.log(module);
-          Impact.ModuleTemplates[module].initialize(name);
-          setTimeout(function(){
-            templateYieldFill(name, params);
-          }, 1000);
-        }, 1000);
-        
-      } else {
-        templateYieldFill(name, params);
-      }
-      
+    // console.log("ROUTER");
+    // console.log("**tail:");
+    // console.log(tail);
+    // console.log("**name:");
+    // console.log(name);
+    // console.log("**params:");
+    // console.log(params);
+
+    console.log(Impact.Modules);
+    if (Impact.Modules[name]) {
+      Meteor.Renderer.set(Impact.Modules[name]);
     } else {
-      $('.yield').html('UNKNOWN MODULE');
+      var constructor = Impact.moduleConstructors[name];
+      if (constructor) {
+        //TODO: use class instead of name
+        //TODO: try using dev version if present
+        Impact.Modules[name] = new constructor;
+        Meteor.Renderer.set(Impact.Modules[name]);
+      } else {
+        //TODO: verify file existence
+        console.log('loading module', name);
+        Meteor.Renderer.set(null);
+        require(['/-/m/' + name + '/main.js'], function () {
+          console.log('loading done');
+          constructor = Impact.moduleConstructors[name];
+          if (constructor) {
+            Impact.Modules[name] = new constructor;
+            Meteor.Renderer.set(Impact.Modules[name]);
+            console.log(Impact.Modules)
+          }
+        });
+      }
     }
-
-  },1);
 };
-
-
-var templateYieldFill = function(name, params) {
-  $('.yield').html('rendering module ' + name);
-  var m = Impact.Modules[name].it;
-  if(m)
-    console.log(m.render(params));
-  else
-    console.log("NO M");
-};
-
-
-
-
-
-
-
-
-
