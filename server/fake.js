@@ -25,6 +25,7 @@ var fakeDocument = function() {
 
   var doc, v0, v1, v2;
 
+  var t = s(1);
   var s1 = s();
   var s2 = s();
   var s3 = s(6);
@@ -33,9 +34,9 @@ var fakeDocument = function() {
   doc = Documents.insert({
     moduleName: 'news',
 
-    metadata: {},
-    header: {},
-    chunks: [
+    meta: {},
+    head: {title: t},
+    body: [
       {type: 'text', content: s1},
       {type: 'text', content: s2x1},
       {type: 'text', content: s3},
@@ -52,9 +53,9 @@ var fakeDocument = function() {
     createdBy: 0,
     memo: 'Initial version.',
 
-    metadata: {},
-    head: {},
-    chunks: [
+    meta: {},
+    head: {title: t},
+    body: [
       {type: 'text', content: s1},
       {type: 'text', content: s2},
     ],
@@ -66,9 +67,9 @@ var fakeDocument = function() {
     createdBy: 0,
     memo: 'Ending added.',
 
-    metadata: {},
-    head: {},
-    chunks: [
+    meta: {},
+    head: {title: t},
+    body: [
       {type: 'text', content: s1},
       {type: 'text', content: s2},
       {type: 'text', content: s3},
@@ -81,9 +82,9 @@ var fakeDocument = function() {
     createdBy: 0,
     memo: 'Ending added.',
 
-    metadata: {},
+    meta: {},
     head: {},
-    chunks: [
+    body: [
       {type: 'text', content: s1},
       {type: 'text', content: s2x1},
       {type: 'text', content: s3},

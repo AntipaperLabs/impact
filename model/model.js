@@ -3,12 +3,14 @@
 
   moduleName:
 
-  metadata:
-  header:
-  chunks: [{
-    type:
-    content:
-  }]
+  meta:
+  head:
+  body:
+  // recommended body schema:
+  // [{
+  //  type:
+  //  content:
+  // }]
 
   versions: ['id']
 
@@ -23,7 +25,9 @@ var Documents = new Meteor.Collection('documents');
 
 
 /*
+  moduleName:
   documentId:
+
   createdAt:
   createdBy:
   memo:
@@ -35,16 +39,15 @@ var Documents = new Meteor.Collection('documents');
 
 
 
-  metadata:
-  header:
-  chunks: [{
-    type:
-    content:
-  }]
+  meta:
+  head:
+  body:
 */
 var Versions = new Meteor.Collection('versions');
 
 /*
+  moduleName:
+
   createdAt:
   userId:
   name:
