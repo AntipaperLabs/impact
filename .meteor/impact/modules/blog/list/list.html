@@ -1,13 +1,14 @@
-<template name="IM_Blog_list">
+
+<template name="listEntry">
+  <div>
+    document:
+    {{header}}
+  </div>
+</template>
+
+<template name="list">
   {{#each documents}}
-    {{>IM_Blog_listEntry}}
+    {{> listEntry}}
   {{/each}}
 </template>
 
-
-<template name="IM_Blog_listEntry">
-  <div>
-    document:
-    {{header.title}}
-  </div>
-</template>

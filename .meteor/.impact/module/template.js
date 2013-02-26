@@ -135,6 +135,11 @@ var makeHandlebarsExceptionsVisible = function (handlebars) {
 */
 
 // this is etirely based on meteor's html_scanner.scan method
+/*
+  contents      - string with source code
+  source_name   - source code filename
+  module_name   - name for module
+*/
 exports.compile = function (contents, source_name, module_name) {
   var rest = contents;
   var index = 0;
