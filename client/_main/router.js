@@ -1,23 +1,13 @@
 
 
 Meteor.Router.add({
-  '/*' : function (tail) {
-    var params    = tail.split('/');
-    var name = params[0];
-    params.splice(0, 1);
+  '/:name/*' : function () {
+    var params = this.params[0].split('/');
+    var name = this.params.name;
     var queryDict = $.deparam(this.querystring);
 
     Meteor.Renderer.setParams(params);
     Meteor.Renderer.setQueryDict(queryDict);
-
-
-    console.log("ROUTER");
-    console.log("**tail:");
-    console.log(tail);
-    console.log("**name:");
-    console.log(name);
-    console.log("**params:");
-    console.log(params);
 
     console.log(Impact.Modules);
     if (Impact.Modules[name]) {
