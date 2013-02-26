@@ -22,14 +22,8 @@ Impact.widgetInfo = {};
 Impact.cardInfo = {};
 
 
-Impact.dev = {
-  Modules: {},
-  Widgets: {},
-  Cards: {},
-  Themes: {},
-
-  moduleConstructors: {},
-  widgetConstructors: {},
-  themeConstructors: {},
-  cardConstructors: {},
+Impact.has = {
+  module: function(classname, constructor) {
+    Impact.moduleConstructors[classname] = constructor;
+  };
 };
