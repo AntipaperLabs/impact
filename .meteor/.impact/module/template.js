@@ -216,7 +216,7 @@ exports.compile = function (contents, source_name, module_name) {
 
     var prefix = module_name + '-';
     // add prefixes to all partials used in this template
-    tagContents.replace(/^{{>\s?(\w+)}}$/, function (match, partial) {
+    tagContents = tagContents.replace(/{{>\s?(\w+)}}/, function (match, partial) {
       return '{{> ' + prefix + partial + '}}';
     });
 
