@@ -214,7 +214,7 @@ exports.compile = function (contents, source_name, module_name) {
     if (!name)
       throw parseError("Template has no 'name' attribute");
 
-    var prefix = module_name + '-';
+    var prefix = 'im-' + module_name + '-';
     // add prefixes to all partials used in this template
     tagContents = tagContents.replace(/{{>\s?(\w+)}}/, function (match, partial) {
       return '{{> ' + prefix + partial + '}}';

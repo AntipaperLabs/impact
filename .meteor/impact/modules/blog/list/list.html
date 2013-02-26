@@ -1,4 +1,11 @@
 
+<template name="list">
+  {{#each documents}}
+    <div>{{name}}</div>
+  {{/each}}
+</template>
+
+
 <template name="listEntry">
   <div>
     document:
@@ -6,9 +13,4 @@
   </div>
 </template>
 
-<template name="list">
-  {{#each documents}}
-    {{> listEntry}}
-  {{/each}}
-</template>
 
