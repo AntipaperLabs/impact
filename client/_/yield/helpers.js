@@ -2,9 +2,9 @@
 
   Handlebars.registerHelper('renderModule', function () {
 
-    var renderer  = Meteor.Renderer.get();
-    var params    = Meteor.Renderer.getParams();
-    var queryDict = Meteor.Renderer.getQueryDict();
+    var renderer  = Impact.Yield.get();
+    var path      = Impact.Yield.getPath();
+    var params    = Impact.Yield.getParams();
 
     if (renderer)
       return new Handlebars.SafeString(renderer.render(params, queryDict) || '');
