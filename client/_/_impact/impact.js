@@ -5,21 +5,21 @@ var Impact = {};
 
 // Actual instances, created by Impact
 Impact.Modules = {};
-Impact.Cards = {};
-Impact.Widgets = {};
-Impact.Themes = {};
+// Impact.Cards = {};
+// Impact.Widgets = {};
+// Impact.Themes = {};
 
 // Created by add-on developer
 Impact.moduleConstructors = {};
-Impact.widgetConstructors = {};
-Impact.themeConstructors = {};
-Impact.cardConstructors = {};
+// Impact.widgetConstructors = {};
+// Impact.themeConstructors = {};
+// Impact.cardConstructors = {};
 
 // Created by site admin
-Impact.moduleInfo = {};
-Impact.themeInfo = {};
-Impact.widgetInfo = {};
-Impact.cardInfo = {};
+Impact.moduleClasses = {};
+// Impact.themeInfo = {};
+// Impact.widgetInfo = {};
+// Impact.cardInfo = {};
 
 
 Impact.has = {
