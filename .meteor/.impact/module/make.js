@@ -34,3 +34,4 @@ exports.make = function(name) {
   makeDirectory('.meteor/impact/modules/'+name);
   // makeDirectory('./meteor/impact/modules/'+name);
 }
+
