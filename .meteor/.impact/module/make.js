@@ -12,6 +12,12 @@ var DEV_ROOT = 'public/-/m/';
 var URL_ROOT = '/-/m/';
 
 var makeFile = function(path, list) {
+  //XXX: for testing only
+  //if (path.endsWith('.html')) {
+  //  var template = require('./template');
+  //  console.log(template.compile(fs.readFileSync(path, 'utf8')));
+  //}
+
   if(!path.endsWith('.js')) return;
   
   var filename = path.substring(CODE_ROOT_LENGTH);
