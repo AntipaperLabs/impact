@@ -10,3 +10,6 @@ Blog.templates.listItem = function(item) {
 }
 
 
+
+console.log("LOADED BLOG LIST TEMPLATE");
+

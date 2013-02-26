@@ -8,3 +8,4 @@ Blog.templates.list.documents = function(){
 
 
 
+console.log("LOADED BLOG LIST");

@@ -25,5 +25,5 @@ Impact.cardInfo = {};
 Impact.has = {
   module: function(classname, constructor) {
     Impact.moduleConstructors[classname] = constructor;
-  };
+  },
 };
