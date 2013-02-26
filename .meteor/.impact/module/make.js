@@ -51,9 +51,13 @@ exports.make = function(name) {
   list.forEach(function(file){
     dev += "require(" +
            "['" + file + "']," +
-           "function(){\n    console.log('loaded -[" + file + "]-');\n}" +
-           ");\n";
+           "function(){\n";
   });
+  dev += "console.log('MODULE LOADED: ["+name+"]')\n";
+  list.forEach(function(file){
+    dev += "});";
+  });
+  dev += "\n";
 
   fs.writeFile(DEV_ROOT + name + "/main.js", dev);
 }
