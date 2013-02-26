@@ -1,14 +1,25 @@
 
 
 Meteor.Router.add({
-  '/:name/*' : function (tail, name) {
+  '/*' : function (tail) {
     var params    = tail.split('/');
+    var name = params[0];
+    params.splice(0, 1);
     var queryDict = $.deparam(this.querystring);
 
     Meteor.Renderer.setParams(params);
     Meteor.Renderer.setQueryDict(queryDict);
 
-    console.log(Impact.Modules)
+
+    console.log("ROUTER");
+    console.log("**tail:");
+    console.log(tail);
+    console.log("**name:");
+    console.log(name);
+    console.log("**params:");
+    console.log(params);
+
+    console.log(Impact.Modules);
     if (Impact.Modules[name]) {
       Meteor.Rederer.set(Impact.Modules[name]);
     } else {
@@ -19,6 +30,7 @@ Meteor.Router.add({
         Impact.Modules[name] = new constructor;
         Meteor.Renderer.set(Impact.Modules[name]);
       } else {
+        //TODO: verify file existence
         console.log('loading module', name);
         Meteor.Renderer.set(null);
         require(['/-/m/' + name + '/main.js'], function () {
