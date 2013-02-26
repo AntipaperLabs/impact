@@ -1,10 +1,77 @@
 (function () {
 
+  var QueryDict = function () {
+    this._properties = {};
+    this._listeners  = {};
+  };
+
+  $functions(QueryDict, {
+
+    get: function (key) {
+      var context = Meteor.deps.Context.current;
+      if (context) {
+        if (!this._listeners[key])
+          this._listeners[key] = {};
+        var listeners = this._listeners[key];
+        if (!listeners[context.id])
+          listeners[context.id] = context;
+        var self = this;
+        context.onInvalidate(function () {
+          delete listeners[context.id];
+          //TODO: is it necessary???
+          if (Object.isEmpty(listeners))
+            delete self._listeners[key];
+        });
+      }
+      return this._properties[key];
+    },
+
+    set: function (key, value) {
+      if (value === this._properties[key])
+        return;
+      this._properties[key] = value;
+      this._invalidateKey(key);
+    },
+
+    unset: function (key) {
+      if (!Object.has(this._properties, key))
+        return;
+      delete this._properties[key];
+      this._invalidateKey(key);
+    },
+
+    fetch: function (key, value) {
+      var self = this, data = {};
+      Object.each(this._properties, function (key) {
+        data[key] = self.get(key);
+      });
+      return data;
+    },
+
+    copy: function (object) {
+      var self = this;
+      Object.each(object, function (key, value) {
+        self.set(key, value);
+      });
+
+      Object.each(this._properties, function (key) {
+        if (!Object.has(object, key))
+          self.unset(key);
+      });
+    },
+
+    _invalidateKey: function (key) {
+      for (var contextId in this._listeners[key])
+        this._listeners[key][contextId].invalidate();
+    },
+
+  });
+
   var Yield = function () {
     this.listeners = {};
     this.currentModule  = null;
     this.path = [];
-    this.params = {};
+    this.params = new QueryDict();
   };
 
 
@@ -37,7 +104,7 @@
     },
 
     getParams: function () {
-      this._reactive();
+      //this._reactive();
       return this.params;
     },
 
@@ -46,52 +113,47 @@
         // return; // do not invalidate
       this.currentModule = currentModule;
       this.path = path;
-      this.params = params;
+      console.log(params)
+      this.params.copy(params);
       this._invalidate();
     },
 
     setPathAndParams: function (path, params) {
       //TODO: check for changes
       this.path = path;
-      this.params = params;
+      this.params.copy(params);
       this._invalidate();
+    },
+
+    setParam: function (key, value) {
+      this.params.set(key, value);
     },
 
   });
 
   //TODO: also make params and queryDict reactive
 
+  var loadModule = function (name, callback) {
+    require(['/-/m/' + name + '/_.js'], function () {
+      if (callback instanceof Function)
+        callback.call(this);
+    });
+  };
 
   Impact.Yield = new Yield();
 
-})();
+  Impact.Yield.enteredPath = function(fullPath) {
+    var path = fullPath.split('/');
+    var name = path[0];
+    path.splice(0, 1);
 
+    var params = $.deparam(this.querystring || '');
 
+    console.log("IMPACT MODULES:");
+    console.log(Impact.Modules);
 
-Impact.Yield.enteredPath = function(fullPath) {
-  var path = fullPath.split('/');
-  var name = path[0];
-  path.splice(0, 1);
-
-  console.log('name', fullPath)
-
-  var params = $.deparam(this.querystring || '');
-    
-
-  // Impact.Yield.setPathAndParams(path, params);
-
-  console.log("IMPACT MODULES:");
-  console.log(Impact.Modules);
-
-  // Requested module is already cached
-  if (Impact.Modules[name]) {
-    Impact.Yield.setCurrentModuleAndState(Impact.Modules[name], path, params);
-  } else {
-    var constructor = Impact.moduleConstructors[name];
-    if (constructor) {
-      //TODO: use class instead of name
-      //TODO: try using dev version if present
-      Impact.Modules[name] = new constructor;
+    // Requested module is already cached
+    if (Impact.Modules[name]) {
       Impact.Yield.setCurrentModuleAndState(Impact.Modules[name], path, params);
     } else {
       //TODO: verify file existence
@@ -108,14 +170,10 @@ Impact.Yield.enteredPath = function(fullPath) {
         }
 
       });
-
-      // require(['/-/m/' + name + '/main.js'], function () {
-        
-      // });
     }
-  }
-};
+  };
 
+})();
 
 Impact.loadModuleConstructorCallbacks = {};
 
@@ -128,10 +186,4 @@ Impact.loadModuleConstructor = function(className, callback) {
   Impact.loadModuleConstructorCallbacks[className] = callback;
   require(['/-/m/' + className + '/main.js']);
 };
-
-
-
-
-
-
 
