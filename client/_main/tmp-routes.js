@@ -8,6 +8,6 @@ Meteor.Router.add({
   '/-users':        'iUsers',
   '/-':             'iDashboard',
   '/':              'iHome',
-  '*':              'yield'
+  '*':              'yield',
 });
 
