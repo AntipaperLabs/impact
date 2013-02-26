@@ -30,8 +30,14 @@
       if (value === this._properties[key])
         return;
       this._properties[key] = value;
-      for (var contextId in this._listeners[key])
-        this._listeners[key][contextId].invalidate();
+      this._invalidateKey(key);
+    },
+
+    unset: function (key) {
+      if (!Object.has(this._properties, key))
+        return;
+      delete this._properties[key];
+      this._invalidateKey(key);
     },
 
     fetch: function (key, value) {
@@ -47,6 +53,16 @@
       Object.each(object, function (key, value) {
         self.set(key, value);
       });
+
+      Object.each(this._properties, function (key) {
+        if (!Object.has(object, key))
+          self.unset(key);
+      });
+    },
+
+    _invalidateKey: function (key) {
+      for (var contextId in this._listeners[key])
+        this._listeners[key][contextId].invalidate();
     },
 
   });
@@ -88,7 +104,7 @@
     },
 
     getParams: function () {
-      this._reactive();
+      //this._reactive();
       return this.params;
     },
 
@@ -97,6 +113,7 @@
         // return; // do not invalidate
       this.currentModule = currentModule;
       this.path = path;
+      console.log(params)
       this.params.copy(params);
       this._invalidate();
     },
@@ -139,25 +156,34 @@
     if (Impact.Modules[name]) {
       Impact.Yield.setCurrentModuleAndState(Impact.Modules[name], path, params);
     } else {
-      var constructor = Impact.moduleConstructors[name];
-      if (constructor) {
-        //TODO: use class instead of name
-        //TODO: try using dev version if present
-        Impact.Modules[name] = new constructor;
-        Impact.Yield.setCurrentModuleAndState(Impact.Modules[name], path, params);
-      } else {
-        //TODO: verify file existence
-        Impact.Yield.setCurrentModuleAndState(null);
-        loadModule(name, function () {
-          constructor = Impact.moduleConstructors[name];
-          if (constructor) {
-            Impact.Modules[name] = new constructor;
-            Impact.Yield.setCurrentModuleAndState(Impact.Modules[name], path, params);
-            console.log(Impact.Modules)
-          }
-        });
-      }
+      //TODO: verify file existence
+      console.log('loading module', name);
+      Impact.Yield.setCurrentModuleAndState(null);
+
+      Impact.loadModuleConstructor(name, function() {
+        console.log('******* loading done');
+        constructor = Impact.moduleConstructors[name];
+        if (constructor) {
+          Impact.Modules[name] = new constructor;
+          Impact.Yield.setCurrentModuleAndState(Impact.Modules[name], path, params);
+          console.log(Impact.Modules)
+        }
+
+      });
     }
   };
 
 })();
+
+Impact.loadModuleConstructorCallbacks = {};
+
+Impact.loadedModuleConstructor = function(name) {
+  Impact.loadModuleConstructorCallbacks[name]();
+  delete Impact.loadModuleConstructor[name];
+};
+
+Impact.loadModuleConstructor = function(className, callback) {
+  Impact.loadModuleConstructorCallbacks[className] = callback;
+  require(['/-/m/' + className + '/main.js']);
+};
+
