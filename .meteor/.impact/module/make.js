@@ -53,7 +53,8 @@ exports.make = function(name) {
            "['" + file + "']," +
            "function(){\n";
   });
-  dev += "console.log('MODULE LOADED: ["+name+"]')\n";
+  dev += "console.log('MODULE LOADED: ["+name+"]');\n";
+  dev += "Impact.loadedModuleConstructor('"+name+"');\n";
   list.forEach(function(file){
     dev += "});";
   });

@@ -97,17 +97,41 @@ Impact.Yield.enteredPath = function(fullPath) {
       //TODO: verify file existence
       console.log('loading module', name);
       Impact.Yield.setCurrentModuleAndState(null);
-      require(['/-/m/' + name + '/main.js'], function () {
-        console.log('loading done');
+
+      Impact.loadModuleConstructor(name, function() {
+        console.log('******* loading done');
         constructor = Impact.moduleConstructors[name];
         if (constructor) {
           Impact.Modules[name] = new constructor;
           Impact.Yield.setCurrentModuleAndState(Impact.Modules[name], path, params);
           console.log(Impact.Modules)
         }
+
       });
+
+      // require(['/-/m/' + name + '/main.js'], function () {
+        
+      // });
     }
   }
 };
+
+
+Impact.loadModuleConstructorCallbacks = {};
+
+Impact.loadedModuleConstructor = function(name) {
+  Impact.loadModuleConstructorCallbacks[name]();
+  delete Impact.loadModuleConstructor[name];
+};
+
+Impact.loadModuleConstructor = function(className, callback) {
+  Impact.loadModuleConstructorCallbacks[className] = callback;
+  require(['/-/m/' + className + '/main.js']);
+};
+
+
+
+
+
 
 
