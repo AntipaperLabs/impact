@@ -45,7 +45,7 @@ $functions(Source, {
     ret += this.templates;
     ret += "\n},\n\n";
 
-    ret += "loader: function(exports, Name, Templates, Documents, Versions, Comments) {\n\n";
+    ret += "loader: function(exports, Name, S, Templates, Documents, Versions, Comments) {\n\n";
     ret += this.constructor;
     ret += "\n},\n\n";
 
