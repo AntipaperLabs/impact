@@ -114,9 +114,9 @@ Meteor.startup(function(){
   (8).times(fakeDocument);
 
 
-  Modules.insert({name: 'news', module: 'blog'});
-  Modules.insert({name: 'page', module: 'static'});
-  Modules.insert({name: 'fake', module: 'fake'});
+  Modules.insert({name: 'news', moduleClass: 'blog'});
+  Modules.insert({name: 'page', moduleClass: 'static'});
+  Modules.insert({name: 'fake', moduleClass: 'fake'});
 
 });
 
