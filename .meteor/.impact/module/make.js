@@ -1,4 +1,5 @@
 require('sugar');
+require('../lib/oop.js');
 
 var fs = require('fs');
 var fsx = require('../fsx');
@@ -16,6 +17,49 @@ var URL_ROOT = '/-/m/';
 var COMMENT_FILE_BREAK = "\n////////////////////////////////////////\n";
 
 
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+
+var Source = function(name) {
+  this.name = name;
+  this.templates = '';
+  this.constructor = '';
+};
+
+$functions(Source, {
+  addCode: function(text) {
+    this.constructor += text;
+  },
+  addTemplates: function(text) {
+    this.templates += text;
+  },
+  output: function() {
+    var ret = '';
+
+    ret += "(function(){\n\n";                                        // OPEN #1
+    ret += "Impact.loadModuleConstructor('"+this.name+"',{\n";        // OPEN #2
+
+    ret += "templates: {\n\n";
+    ret += this.templates;
+    ret += "\n},\n\n";
+
+    ret += "loader: function(exports, Name, Templates, Documents, Versions, Comments) {\n\n";
+    ret += this.constructor;
+    ret += "\n},\n\n";
+
+
+    ret += "});\n";                                                   // CLOSE #2
+    ret += "\n})();\n";                                               // CLOSE #1
+
+    return ret;
+  },
+});
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 var compileFile = function(path, source) {
   if(!(path.endsWith('.js') || path.endsWith('.html'))) return;
@@ -28,11 +72,11 @@ var compileFile = function(path, source) {
   var tailer = "\n\n\n\n";
 
   if(path.endsWith('.js')) {
-    appendSource(source, header + code + tailer);
+    source.addCode(header + code + tailer);
   } else
   if(path.endsWith('.html')) {
     code = handlebars.compile(code, filename);
-    prependSource(source, code + "\n");
+    source.addTemplates(code + "\n");
   }
 
 }
@@ -51,28 +95,6 @@ var compileDirectory = function(path, source) {//function(moduleName, directory,
   });
 }
 
-var appendSource = function(source, code) {
-  source.text += code;
-};
-
-var prependSource = function(source, code) {
-  source.text = code + source.text;
-};
-
-var createSource = function() {
-  return {text: ''};
-};
-
-var packSource = function(source, name) {
-  prependSource(source, "(function(){\n");
-
-  source.text += "\n\n" + COMMENT_FILE_BREAK;
-  source.text += "Impact.loadedModuleConstructor('"+name+"');";
-  source.text += "\n\n";
-
-  appendSource(source, "\n})();\n");
-};
-
 
 
 
@@ -80,11 +102,9 @@ exports.make = function(name) {
   var list = [];
 
 
-  var source = createSource();
-  // openSource(source, name);
+  var source = new Source(name);
   compileDirectory(CODE_ROOT + name, source);
-  packSource(source, name);
-
+  
   // makeDirectory(name, CODE_ROOT + name, );
 
   // var dev = "";
@@ -100,6 +120,6 @@ exports.make = function(name) {
   // });
   // dev += "\n";
 
-  fs.writeFile(DEV_ROOT + name + ".js", source.text);
+  fs.writeFile(DEV_ROOT + name + ".js", source.output());
 }
 

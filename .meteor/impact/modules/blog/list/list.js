@@ -1,11 +1,6 @@
 
-
-
-// Blog.templates.list.documents = function(){
-//   return Documents.find({}).fetch();
-// };
-
-
-
+Templates.list.documents = function() {
+  return Documents.find({});
+}
 
 console.log("LOADED BLOG LIST");
