@@ -226,10 +226,11 @@ exports.compile = function (contents, source_name) {
     */
 
 
-    var code = 'Handlebars.json_ast_to_func(' +
-      JSON.stringify(to_json_ast(tagContents)) + ')';
+    // var code = 'Handlebars.json_ast_to_func(' +
+      // JSON.stringify(to_json_ast(tagContents)) + ')';
     
-    results += "Impact.defTemplate(" + JSON.stringify(name) + "," + code + ");\n";
+    // results += "Impact.defTemplate(" + JSON.stringify(name) + "," + code + ");\n";
+    results += '' + JSON.stringify(name) + ': ' + JSON.stringify(to_json_ast(tagContents)) + ",\n";
   }
 
   return results;
