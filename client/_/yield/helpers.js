@@ -4,7 +4,7 @@
 
     var state  = Impact.Yield;
     var module = Impact.Yield.getCurrentModule();
-    console.log(module);
+    // console.log(module);
     if (module) {
       return new Handlebars.SafeString(module.render(state) || '');
     }
