@@ -5,11 +5,14 @@ Blog.templates = {};
 
 
 Blog.render = function(state) {
-  state.getParams();
-  return Blog.templates.list();
+  console.log("RENDERING BLOG");
+  // console.log(state);
+  // state.getParams();
+  return "<div>TAK WYGLĄDA BLOG!</div>";
+  // return Blog.templates.list();
 };
 
-Impact.has.module('blog', blog);
+Impact.registerModule('blog', blog);
 
 
 

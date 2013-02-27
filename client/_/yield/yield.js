@@ -113,7 +113,7 @@
         // return; // do not invalidate
       this.currentModule = currentModule;
       this.path = path;
-      console.log(params)
+      // console.log(params)
       this.params.copy(params);
       this._invalidate();
     },
@@ -149,15 +149,16 @@
 
     var params = $.deparam(this.querystring || '');
 
-    console.log("IMPACT MODULES:");
-    console.log(Impact.Modules);
+    // console.log("IMPACT MODULES:");
+    // console.log(Impact.Modules);
 
     // Requested module is already cached
     if (Impact.Modules[name]) {
       Impact.Yield.setCurrentModuleAndState(Impact.Modules[name], path, params);
     } else {
       //TODO: verify file existence
-      console.log('loading module', name);
+      console.log(' ******* ******* ******* ******* ');
+      console.log(' ******* loading module', name);
       Impact.Yield.setCurrentModuleAndState(null);
       Meteor.autorun(function () {
           var info = Modules.findOne({name:name});
@@ -170,7 +171,7 @@
               if (constructor) {
                 Impact.Modules[name] = new constructor;
                 Impact.Yield.setCurrentModuleAndState(Impact.Modules[name], path, params);
-                console.log(Impact.Modules)
+                // console.log(Impact.Modules)
               }
             });
           }
@@ -184,13 +185,34 @@
 
 Impact.loadModuleConstructorCallbacks = {};
 
+
+Impact.makeImportantLogCall = function(asdf) {
+  console.log("[[[[[   -"+asdf+"-  ]]]]]");
+};
+
 Impact.loadedModuleConstructor = function(name) {
   Impact.loadModuleConstructorCallbacks[name]();
   delete Impact.loadModuleConstructor[name];
 };
 
 Impact.loadModuleConstructor = function(className, callback) {
+
   Impact.loadModuleConstructorCallbacks[className] = callback;
-  require(['/-/m/' + className + '/main.js']);
+
+  $.ajax('/-/m/' + className + '.js', {
+    dataType: '',
+    success: function(data) {
+      console.log(" ******* success!");
+      // console.log(data);
+      // console.log(" ******* success!");
+
+      // with(Impact) {eval(data);};
+      // console.log(data.substring(2, data.length-2));
+
+      // eval(data.substring(2, data.length-2));
+    }
+  });
+
+  // require(['/-/m/' + className + '/main.js']);
 };
 

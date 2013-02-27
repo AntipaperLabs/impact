@@ -1,9 +1,9 @@
 
 
 
-Blog.templates.list.documents = function(){
-  return Documents.find({}).fetch();
-};
+// Blog.templates.list.documents = function(){
+//   return Documents.find({}).fetch();
+// };
 
 
 

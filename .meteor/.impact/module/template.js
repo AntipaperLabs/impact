@@ -140,7 +140,7 @@ var makeHandlebarsExceptionsVisible = function (handlebars) {
   source_name   - source code filename
   module_name   - name for module
 */
-exports.compile = function (contents, source_name, module_name) {
+exports.compile = function (contents, source_name) {
   var rest = contents;
   var index = 0;
 
@@ -214,6 +214,7 @@ exports.compile = function (contents, source_name, module_name) {
     if (!name)
       throw parseError("Template has no 'name' attribute");
 
+    /*
     var prefix = 'im-' + module_name + '-';
     // add prefixes to all partials used in this template
     tagContents = tagContents.replace(/{{>\s?(\w+)}}/, function (match, partial) {
@@ -222,11 +223,13 @@ exports.compile = function (contents, source_name, module_name) {
 
     // prefix this template with module_name
     name = prefix + name;
+    */
+
 
     var code = 'Handlebars.json_ast_to_func(' +
       JSON.stringify(to_json_ast(tagContents)) + ')';
     
-    results += "Meteor._def_template(" + JSON.stringify(name) + "," + code + ");\n";
+    results += "Impact.defTemplate(" + JSON.stringify(name) + "," + code + ");\n";
   }
 
   return results;
