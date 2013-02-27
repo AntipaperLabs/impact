@@ -197,19 +197,22 @@ Impact.loadModuleConstructor = function(className, callback) {
 
   Impact.loadModuleConstructorCallbacks[className] = callback;
 
-  $.ajax('/-/m/' + className + '.js', {
-    dataType: '',
-    success: function(data) {
-      console.log(" ******* success!");
-      // console.log(data);
-      // console.log(" ******* success!");
-
-      // with(Impact) {eval(data);};
-      // console.log(data.substring(2, data.length-2));
-
-      // eval(data.substring(2, data.length-2));
-    }
+  require(['/-/m/' + className + '.js'], function(){
+    console.log("******LOADED!");
   });
+  // $.ajax('/-/m/' + className + '.js', {
+  //   dataType: '',
+  //   success: function(data) {
+  //     console.log(" ******* success!");
+  //     // console.log(data);
+  //     // console.log(" ******* success!");
+
+  //     // with(Impact) {eval(data);};
+  //     // console.log(data.substring(2, data.length-2));
+
+  //     // eval(data.substring(2, data.length-2));
+  //   }
+  // });
 
   // require(['/-/m/' + className + '/main.js']);
 };
