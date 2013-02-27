@@ -22,7 +22,8 @@ var COMMENT_FILE_BREAK = "\n////////////////////////////////////////\n";
 ////////////////////////////////////////////////////////////////////////////////
 
 
-var Source = function() {
+var Source = function(name) {
+  this.name = name;
   this.templates = '';
   this.constructor = '';
 };
@@ -37,23 +38,22 @@ $functions(Source, {
   output: function() {
     var ret = '';
 
-    ret += "(function(){\n\n";
-    ret += "var Impact = {};\n\n";
-    
-    ret += "Impact.templateDefinitions = {\n\n";
+    ret += "(function(){\n\n";                                        // OPEN #1
+    ret += "Impact.loadModuleConstructor('"+this.name+"',{\n";        // OPEN #2
+
+    ret += "templates: {\n\n";
     ret += this.templates;
-    ret += "\n};\n\n";
+    ret += "\n},\n\n";
 
-    ret += "Impact.constructor = function(Name, Templates, Documents, Versions, Comments) {\n\n";
+    ret += "loader: function(exports, Name, Templates, Documents, Versions, Comments) {\n\n";
     ret += this.constructor;
-    ret += "\n};\n\n";
+    ret += "\n},\n\n";
 
-    ret += "\n})();\n";
+
+    ret += "});\n";                                                   // CLOSE #2
+    ret += "\n})();\n";                                               // CLOSE #1
 
     return ret;
-    // source.text += "\n\n" + COMMENT_FILE_BREAK;
-    // source.text += "Impact.loadedModuleConstructor('"+name+"');";
-    // source.text += "\n\n";
   },
 });
 
@@ -102,7 +102,7 @@ exports.make = function(name) {
   var list = [];
 
 
-  var source = new Source();
+  var source = new Source(name);
   compileDirectory(CODE_ROOT + name, source);
   
   // makeDirectory(name, CODE_ROOT + name, );

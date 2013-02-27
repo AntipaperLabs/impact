@@ -1,7 +1,6 @@
 
 <template name="list">
   {{#each documents}}
-    <div>{{name}}</div>
     {{> listEntry}}
   {{/each}}
 </template>
@@ -9,8 +8,7 @@
 
 <template name="listEntry">
   <div>
-    document:
-    {{header}}
+    document: <span>{{head}}</span>
   </div>
 </template>
 
