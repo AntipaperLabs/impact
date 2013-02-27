@@ -159,18 +159,25 @@
       //TODO: verify file existence
       console.log('loading module', name);
       Impact.Yield.setCurrentModuleAndState(null);
-
-      Impact.loadModuleConstructor(name, function() {
-        console.log('******* loading done');
-        constructor = Impact.moduleConstructors[name];
-        if (constructor) {
-          Impact.Modules[name] = new constructor;
-          Impact.Yield.setCurrentModuleAndState(Impact.Modules[name], path, params);
-          console.log(Impact.Modules)
-        }
-
+      Meteor.autorun(function () {
+          var info = Modules.findOne({name:name});
+          if (info) {
+            var module_name = info.module;
+            // load module source files
+            Impact.loadModuleConstructor(module_name, function() {
+              console.log('******* loading done');
+              constructor = Impact.moduleConstructors[module_name];
+              if (constructor) {
+                Impact.Modules[name] = new constructor;
+                Impact.Yield.setCurrentModuleAndState(Impact.Modules[name], path, params);
+                console.log(Impact.Modules)
+              }
+            });
+          }
       });
     }
+    
+    return 'loading';
   };
 
 })();
