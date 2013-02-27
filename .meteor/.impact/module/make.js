@@ -52,7 +52,7 @@ $functions(Source, {
 
     ret += "});\n";                                                   // CLOSE #2
     ret += "\n})();\n";                                               // CLOSE #1
-
+    ret += "console.log('END OF FILE REACHED');\n";
     return ret;
   },
 });
