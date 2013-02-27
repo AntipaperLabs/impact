@@ -12,58 +12,94 @@ var CODE_ROOT_LENGTH = CODE_ROOT.length;
 var DEV_ROOT = 'public/-/m/';
 var URL_ROOT = '/-/m/';
 
-var makeFile = function(moduleName, path, list) {
-  
+
+var COMMENT_FILE_BREAK = "\n////////////////////////////////////////\n";
+
+
+
+var compileFile = function(path, source) {
+  if(!(path.endsWith('.js') || path.endsWith('.html'))) return;
+
+  var filename = path.substring(CODE_ROOT_LENGTH);
+  var code = fs.readFileSync(path, 'utf8');
+  var header = "\n" + COMMENT_FILE_BREAK +
+               "// "+ filename +
+               COMMENT_FILE_BREAK + "\n\n\n";
+  var tailer = "\n\n\n\n";
+
   if(path.endsWith('.js')) {
-    var filename = path.substring(CODE_ROOT_LENGTH);
-    list.push(URL_ROOT + filename);
-    fsx.copy(path, DEV_ROOT + filename);
-  } else if(path.endsWith('.html')) {
-    var filename = path.substring(CODE_ROOT_LENGTH);
-    fs.mkdirSync(DEV_ROOT + filename);
-    var htmlCode = fs.readFileSync(path, 'utf8');
-    var jsCode = handlebars.compile(htmlCode, filename, moduleName);
-    fs.writeFile(DEV_ROOT + filename + '/template.js', jsCode);
-    list.push(URL_ROOT + filename + '/template.js');
+    appendSource(source, header + code + tailer);
+  } else
+  if(path.endsWith('.html')) {
+    code = handlebars.compile(code, filename);
+    prependSource(source, code + "\n");
   }
 
-  
 }
 
-var makeDirectory = function(moduleName, directory, list) {
-  var dirName = directory.substring(CODE_ROOT_LENGTH);
-  fs.mkdirSync(DEV_ROOT + dirName);
-
-  
-  fs.readdirSync(directory).forEach(function(name) {
-    var filename = directory + '/' + name;
+var compileDirectory = function(path, source) {//function(moduleName, directory, list) {
+  var dirName = path.substring(CODE_ROOT_LENGTH);
+  fs.readdirSync(path).forEach(function(fileLastName) {
+    var filename = path + '/' + fileLastName;
     if(fs.statSync(filename).isDirectory()) {
-      makeDirectory(moduleName, filename, list);
+      compileDirectory(filename, source);
+      // makeDirectory(moduleName, filename, list);
     } else {
-      makeFile(moduleName, filename, list);
+      compileFile(filename, source);
+      // makeFile(moduleName, filename, list);
     }
   });
 }
+
+var appendSource = function(source, code) {
+  source.text += code;
+};
+
+var prependSource = function(source, code) {
+  source.text = code + source.text;
+};
+
+var createSource = function() {
+  return {text: ''};
+};
+
+var packSource = function(source, name) {
+  prependSource(source, "(function(){\n");
+
+  source.text += "\n\n" + COMMENT_FILE_BREAK;
+  source.text += "Impact.loadedModuleConstructor('"+name+"');";
+  source.text += "\n\n";
+
+  appendSource(source, "\n})();\n");
+};
+
 
 
 
 exports.make = function(name) {
   var list = [];
-  makeDirectory(name, CODE_ROOT + name, list);
 
-  var dev = "";
-  list.forEach(function(file){
-    dev += "require(" +
-           "['" + file + "']," +
-           "function(){\n";
-  });
-  dev += "console.log('MODULE LOADED: ["+name+"]');\n";
-  dev += "Impact.loadedModuleConstructor('"+name+"');\n";
-  list.forEach(function(file){
-    dev += "});";
-  });
-  dev += "\n";
 
-  fs.writeFile(DEV_ROOT + name + "/main.js", dev);
+  var source = createSource();
+  // openSource(source, name);
+  compileDirectory(CODE_ROOT + name, source);
+  packSource(source, name);
+
+  // makeDirectory(name, CODE_ROOT + name, );
+
+  // var dev = "";
+  // list.forEach(function(file){
+  //   dev += "require(" +
+  //          "['" + file + "']," +
+  //          "function(){\n";
+  // });
+  // dev += "console.log('MODULE LOADED: ["+name+"]');\n";
+  // dev += "Impact.loadedModuleConstructor('"+name+"');\n";
+  // list.forEach(function(file){
+  //   dev += "});";
+  // });
+  // dev += "\n";
+
+  fs.writeFile(DEV_ROOT + name + ".js", source.text);
 }
 
