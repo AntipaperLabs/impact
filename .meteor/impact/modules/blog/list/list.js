@@ -1,5 +1,5 @@
 
-Templates.list.documents = function() {
+Template.list.documents = function() {
   return Documents.find({});
 }
 
