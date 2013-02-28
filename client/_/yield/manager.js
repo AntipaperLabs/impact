@@ -184,7 +184,12 @@
   Meteor.startup(function () {
     Impact.ModuleManager._observe();
   });
+<<<<<<< HEAD
 
 })();
 
 
+=======
+ 
+})();
+>>>>>>> master
