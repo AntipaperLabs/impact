@@ -4,12 +4,11 @@
 
     var state  = Impact.Yield;
     var moduleName = Impact.Yield.getCurrentModule();
-    if (moduleName) {
-      var module = Impact.ModuleManager.getInstance(moduleName);
-      // console.log(module);
-      if (module) {
-        return new Handlebars.SafeString(module.render(state) || '');
-      }
+
+    var module = Impact.ModuleManager.getInstance(moduleName);
+    // console.log(module);
+    if (module) {
+      return new Handlebars.SafeString(module.render(state) || '');
     }
 
     // if renderer is undefined fallback to standard router behavior

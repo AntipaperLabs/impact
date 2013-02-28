@@ -142,7 +142,7 @@
           templates: {},
           moduleClass: '#loader',
           loader: function (exports){
-            exports.render=function(){};
+            exports.render=function(){return 'loading...'};
           },
       };
       if (!moduleClass || moduleClass==='#loader') return emptyFactory;
