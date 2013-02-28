@@ -1,0 +1,10 @@
+<template name="show">
+  <div>{{header.title}}</div>
+  <div>{{header.summary}}</div>
+  <div>
+    {{#each body}}
+      {{ShowChunk this}}
+    {{/each}}
+  </div>
+
+</template>
