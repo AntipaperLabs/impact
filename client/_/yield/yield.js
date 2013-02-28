@@ -5,6 +5,8 @@
     this._listeners  = {};
   };
 
+  Impact.QueryDict = QueryDict;
+
   $functions(QueryDict, {
 
     get: function (key) {
@@ -53,7 +55,6 @@
       Object.each(object, function (key, value) {
         self.set(key, value);
       });
-
       Object.each(this._properties, function (key) {
         if (!Object.has(object, key))
           self.unset(key);
@@ -71,10 +72,10 @@
     this.listeners = {};
     this.moduleName  = null;
     this.path = [];
-    this.params = new QueryDict();
+    //XXX: this will be initialized on demand
+    //this.params = new QueryDict();
   };
-
-
+  
   $functions(Yield, {
 
     _reactive: function () {
@@ -104,7 +105,8 @@
     },
 
     getParams: function () {
-      //this._reactive();
+      if (this.params === undefined) // lazy init
+        this.params = new Impact.QueryDict();
       return this.params;
     },
 
@@ -113,42 +115,32 @@
         // return; // do not invalidate
       this.moduleName = moduleName;
       this.path = path;
-      // console.log(params)
-      this.params.copy(params);
+      this.getParams().copy(params);
       this._invalidate();
     },
 
     setPathAndParams: function (path, params) {
       //TODO: check for changes
       this.path = path;
-      this.params.copy(params);
+      this.getParams().copy(params);
       this._invalidate();
     },
 
     setParam: function (key, value) {
-      this.params.set(key, value);
+      this.getParams().set(key, value);
     },
 
-    enteredPath: function(fullPath) {
-      console.log(fullPath)
+    enteredPath: function(context, fullPath) {
       var path = fullPath.split('/');
       var name = path[0];
       path.splice(0, 1);
-      var params = $.deparam(this.querystring || '');
+      var params = $.deparam(context.querystring || '');
       this.setCurrentModuleAndState(name, path, params);
     },
 
   });
 
   //TODO: also make params and queryDict reactive
-
-  var loadModule = function (name, callback) {
-    require(['/-/m/' + name + '/_.js'], function () {
-      if (callback instanceof Function)
-        callback.call(this);
-    });
-  };
-
   Impact.Yield = new Yield();
 
 })();
