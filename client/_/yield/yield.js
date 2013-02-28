@@ -152,4 +152,3 @@
   Impact.Yield = new Yield();
 
 })();
-
