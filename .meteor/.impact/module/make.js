@@ -39,7 +39,7 @@ $functions(Source, {
     var ret = '';
 
     ret += "(function(){\n\n";                                        // OPEN #1
-    ret += "Impact.loadModuleConstructor('"+this.name+"',{\n";        // OPEN #2
+    ret += "Impact.ModuleManager._registerModuleFactory('"+this.name+"',{\n";        // OPEN #2
 
     ret += "templates: {\n\n";
     ret += this.templates;
