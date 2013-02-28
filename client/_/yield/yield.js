@@ -69,7 +69,7 @@
 
   var Yield = function () {
     this.listeners = {};
-    this.currentModule  = null;
+    this.moduleName  = null;
     this.path = [];
     this.params = new QueryDict();
   };
@@ -95,7 +95,7 @@
 
     getCurrentModule: function () {
       this._reactive();
-      return this.currentModule;
+      return this.moduleName;
     },
 
     getPath: function () {
@@ -108,10 +108,10 @@
       return this.params;
     },
 
-    setCurrentModuleAndState: function (currentModule, path, params) {
+    setCurrentModuleAndState: function (moduleName, path, params) {
       // if (this.currentModule === currentModule) {
         // return; // do not invalidate
-      this.currentModule = currentModule;
+      this.moduleName = moduleName;
       this.path = path;
       // console.log(params)
       this.params.copy(params);
@@ -129,6 +129,15 @@
       this.params.set(key, value);
     },
 
+    enteredPath: function(fullPath) {
+      console.log(fullPath)
+      var path = fullPath.split('/');
+      var name = path[0];
+      path.splice(0, 1);
+      var params = $.deparam(this.querystring || '');
+      this.setCurrentModuleAndState(name, path, params);
+    },
+
   });
 
   //TODO: also make params and queryDict reactive
@@ -142,42 +151,44 @@
 
   Impact.Yield = new Yield();
 
-  Impact.Yield.enteredPath = function(fullPath) {
-    var path = fullPath.split('/');
-    var name = path[0];
-    path.splice(0, 1);
+  // Impact.Yield.enteredPath = function(fullPath) {
+  //   var path = fullPath.split('/');
+  //   var name = path[0];
+  //   path.splice(0, 1);
 
-    var params = $.deparam(this.querystring || '');
+  //   var params = $.deparam(this.querystring || '');
 
-    // console.log("IMPACT MODULES:");
-    // console.log(Impact.Modules);
+  //   // console.log("IMPACT MODULES:");
+  //   // console.log(Impact.Modules);
 
-    // Requested module is already cached
-    if (Impact.Modules[name]) {
-      Impact.Yield.setCurrentModuleAndState(Impact.Modules[name], path, params);
-    } else {
-      //TODO: verify file existence
-      console.log(' ******* ******* ******* ******* ');
-      console.log(' ******* loading module', name);
-      Impact.Yield.setCurrentModuleAndState(null);
-      Meteor.autorun(function () {
-          var info = Modules.findOne({name:name});
-          if (info) {
-            var module_name = info.module;
-            // load module source files
-            Impact.loadModuleConstructor(module_name, function() {
-              console.log('******* loading done');
-              constructor = Impact.moduleConstructors[module_name];
-              if (constructor) {
-                Impact.Modules[name] = new constructor;
-                Impact.Yield.setCurrentModuleAndState(Impact.Modules[name], path, params);
-                // console.log(Impact.Modules)
-              }
-            });
-          }
-      });
-    }
-  };
+  //   this.setCurrentModuleAndState(name, path, params);
+
+  //   // Requested module is already cached
+  //   if (Impact.Modules[name]) {
+  //     Impact.Yield.setCurrentModuleAndState(Impact.Modules[name], path, params);
+  //   } else {
+  //     //TODO: verify file existence
+  //     console.log(' ******* ******* ******* ******* ');
+  //     console.log(' ******* loading module', name);
+  //     Impact.Yield.setCurrentModuleAndState(null);
+  //     Meteor.autorun(function () {
+  //         var info = Modules.findOne({name:name});
+  //         if (info) {
+  //           var module_name = info.module;
+  //           // load module source files
+  //           Impact.loadModuleConstructor(module_name, function() {
+  //             console.log('******* loading done');
+  //             constructor = Impact.moduleConstructors[module_name];
+  //             if (constructor) {
+  //               Impact.Modules[name] = new constructor;
+  //               Impact.Yield.setCurrentModuleAndState(Impact.Modules[name], path, params);
+  //               // console.log(Impact.Modules)
+  //             }
+  //           });
+  //         }
+  //     });
+  //   }
+  // };
 
 })();
 

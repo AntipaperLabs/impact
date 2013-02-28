@@ -10,7 +10,7 @@ Meteor.Router.add({
   '/':              'iHome',
   '/*':              function() {
 
-    Impact.Yield.enteredPath.apply(this, arguments);
+    Impact.Yield.enteredPath.apply(Impact.Yield, arguments);
     return 'yield';
   },
 });
