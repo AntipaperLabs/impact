@@ -1,0 +1,1 @@
+Template.show.mname = Name;
