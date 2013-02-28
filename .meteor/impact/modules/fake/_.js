@@ -6,6 +6,16 @@ Template.base.documents = function () {
   return Documents.find({});
 };
 
+Template.item.events({
+  'click': function (event) {
+    var self = this;
+    $(event.target).hide(200, function() {
+      Documents.remove({_id:self._id});
+    });
+    console.log('removing', this.content);
+  },
+});
+
 Template.base.events({
   'click li': function (event) {
     var self = this;
