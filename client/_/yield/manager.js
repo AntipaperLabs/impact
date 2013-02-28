@@ -33,7 +33,7 @@
       if (key) listeners = listeners[key];
       //----------------------------------
       for (var contextId in listeners) {
-        console.log(listeners[contextId])
+        console.log('Listeners ', listeners[contextId])
         listeners[contextId].invalidate();
       }
     },
@@ -76,6 +76,7 @@
     _proxyCollection: function (collection, moduleName) {
       var methods = ['find', 'findOne', 'insert', 'remove', 'update'];
       // --------- helper function --------
+      // TODO:H try to refactor this method up
       var proxyMethod = function (method) {
         return function () {
           var args = arguments;
