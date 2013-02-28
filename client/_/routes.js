@@ -8,8 +8,8 @@ Meteor.Router.add({
   '/-users':        'iUsers',
   '/-':             'iDashboard',
   '/':              'iHome',
-  '/*':             function() {
-                      Impact.Yield.enteredPath.apply(Impact.Yield, arguments);
+  '/*':             function(match) {
+                      Impact.Yield.enteredPath(this, match);
                       return 'yield';
                     },
 });

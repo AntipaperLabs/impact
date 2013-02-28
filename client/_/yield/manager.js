@@ -33,7 +33,7 @@
       if (key) listeners = listeners[key];
       //----------------------------------
       for (var contextId in listeners) {
-        console.log('Listeners ', listeners[contextId])
+        // console.log('Listeners ', listeners[contextId])
         listeners[contextId].invalidate();
       }
     },
@@ -69,7 +69,20 @@
 
     _installTemplate: function (name, template, prefix) {
       prefix = prefix || '';
-      //TODO: prefix all partial calls in this template
+      //-------- recursion ------------
+      var traverse = function (array) {
+        if (array[0] === ">") {
+          array[1] = prefix + array[1];
+        } else {
+          array.each(function (node) {
+            if (node instanceof Array)
+              traverse(node);
+          });
+        }
+      };
+      // add prefix to all partial calls
+      traverse(template);
+      // install this template in Meteor
       Meteor._def_template(prefix + name, Handlebars.json_ast_to_func(template));
     },
 
@@ -153,17 +166,15 @@
     getInstance: function (name) {
       this._catchListener(this._instanceListeners, name);
       var instance = this.instances[name];
-      console.log('getInstance', instance)
       if (!instance || instance.moduleClass === '#loader') {
         var config  = this.getInstanceConfig(name);
-        console.log('config', config)
         var factory = this.getModuleFactory(config.moduleClass);
         if (factory) {
           this.instances[name] = instance = this._createInstance(factory, name);
         }
       }
       //TODO: return instance representing loading screen :)
-      return instance || {name:'#loader', render: function(){}};
+      return instance || {render: function(){}};
     },
 
   });
