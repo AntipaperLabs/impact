@@ -1,3 +1,9 @@
 <template name="base">
 <p>To jest fake'owy szablon</p>
+<input type="button" value="dodaj">
+<ul>
+  {{#each documents}}
+  <li>{{content}}</li>
+  {{/each}}
+</ul>
 </template>
