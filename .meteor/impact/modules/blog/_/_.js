@@ -4,25 +4,25 @@ exports.render = function(state) {
   //#  /articleTitle/id       -> show
   //#  /articleTitle/id/edit  -> edit
 
-  var template = Impact.mrouter(state.getPath(), {
-    '/':                  'list',
-    '/:title/:id':        function(title, id) {
-                            S('articleId', id);
-                            return 'show';
-                          },
-    '/:title/:id/edit':   function(title, id) {
-                            S('articleId', id);
-                            return 'edit';
-                          }
-  });
-  if(!template) return "ERROR";
+  // var template = Impact.mrouter(state.getPath(), {
+  //   '/':                  'list',
+  //   '/:title/:id':        function(title, id) {
+  //                           S('articleId', id);
+  //                           return 'show';
+  //                         },
+  //   '/:title/:id/edit':   function(title, id) {
+  //                           S('articleId', id);
+  //                           return 'edit';
+  //                         }
+  // });
+  // if(!template) return "ERROR";
 
-  return Template[template]();
+  // return Template[template]();
   // if(state.getPath().length == 0) {
 
   // } else if(state.getPath()[0] == )
   // console.log("RENDERING BLOG");
-  // return "<div>TAK WYGLĄDA BLOG!</div>";
+  return "<div>TAK WYGLĄDA BLOG!</div>";
 };
 
 console.log("LOADED BLOG _");
