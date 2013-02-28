@@ -15,6 +15,7 @@ exports.render = function(state) {
                             return 'edit';
                           }
   });
+  if(!template) return "ERROR";
 
   return Template[template]();
   // if(state.getPath().length == 0) {
