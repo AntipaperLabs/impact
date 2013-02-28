@@ -33,7 +33,7 @@
       if (key) listeners = listeners[key];
       //----------------------------------
       for (var contextId in listeners) {
-        console.log(listeners[contextId])
+        //console.log(listeners[contextId])
         listeners[contextId].invalidate();
       }
     },
@@ -152,17 +152,15 @@
     getInstance: function (name) {
       this._catchListener(this._instanceListeners, name);
       var instance = this.instances[name];
-      console.log('getInstance', instance)
       if (!instance || instance.moduleClass === '#loader') {
         var config  = this.getInstanceConfig(name);
-        console.log('config', config)
         var factory = this.getModuleFactory(config.moduleClass);
         if (factory) {
           this.instances[name] = instance = this._createInstance(factory, name);
         }
       }
       //TODO: return instance representing loading screen :)
-      return instance || {name:'#loader', render: function(){}};
+      return instance || {render: function(){}};
     },
 
   });
