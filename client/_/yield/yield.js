@@ -192,39 +192,39 @@
 
 })();
 
-Impact.loadModuleConstructorCallbacks = {};
+// Impact.loadModuleConstructorCallbacks = {};
 
 
-Impact.makeImportantLogCall = function(asdf) {
-  console.log("[[[[[   -"+asdf+"-  ]]]]]");
-};
+// Impact.makeImportantLogCall = function(asdf) {
+//   console.log("[[[[[   -"+asdf+"-  ]]]]]");
+// };
 
-Impact.loadedModuleConstructor = function(name) {
-  Impact.loadModuleConstructorCallbacks[name]();
-  delete Impact.loadModuleConstructor[name];
-};
+// Impact.loadedModuleConstructor = function(name) {
+//   Impact.loadModuleConstructorCallbacks[name]();
+//   delete Impact.loadModuleConstructor[name];
+// };
 
-Impact.loadModuleConstructor = function(className, callback) {
+// Impact.loadModuleConstructor = function(className, callback) {
 
-  Impact.loadModuleConstructorCallbacks[className] = callback;
+//   Impact.loadModuleConstructorCallbacks[className] = callback;
 
-  require(['/-/m/' + className + '.js'], function(){
-    console.log("******LOADED!");
-  });
-  // $.ajax('/-/m/' + className + '.js', {
-  //   dataType: '',
-  //   success: function(data) {
-  //     console.log(" ******* success!");
-  //     // console.log(data);
-  //     // console.log(" ******* success!");
+//   require(['/-/m/' + className + '.js'], function(){
+//     console.log("******LOADED!");
+//   });
+//   // $.ajax('/-/m/' + className + '.js', {
+//   //   dataType: '',
+//   //   success: function(data) {
+//   //     console.log(" ******* success!");
+//   //     // console.log(data);
+//   //     // console.log(" ******* success!");
 
-  //     // with(Impact) {eval(data);};
-  //     // console.log(data.substring(2, data.length-2));
+//   //     // with(Impact) {eval(data);};
+//   //     // console.log(data.substring(2, data.length-2));
 
-  //     // eval(data.substring(2, data.length-2));
-  //   }
-  // });
+//   //     // eval(data.substring(2, data.length-2));
+//   //   }
+//   // });
 
-  // require(['/-/m/' + className + '/main.js']);
-};
+//   // require(['/-/m/' + className + '/main.js']);
+// };
 

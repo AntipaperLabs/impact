@@ -107,10 +107,18 @@
         // proxy the real meteor template
         _Template[templateName] = Template[prefix + templateName];
       });
+
+      var _S = function(key, value) {
+        if(typeof value !== 'undefined') {
+          Session.set(prefix+key, value);
+        }
+        return Session.get(prefix+key);
+      };
+
       var _Comments  = self._proxyCollection({}); //XXX: temporary!!! we do not have Comments collection defined yet
       var _Documents = self._proxyCollection(Documents, name);
       var _Versions  = self._proxyCollection(Versions, name);
-      factory.loader(instance, name, _Template, _Documents, _Versions, _Comments);
+      factory.loader(instance, name, _S, _Template, _Documents, _Versions, _Comments);
       return instance;
     },
 
