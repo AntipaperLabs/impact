@@ -8,6 +8,7 @@ Meteor.Router.add({
   '/-users':        'iUsers',
   '/-':             'iDashboard',
   '/':              'iHome',
+  '/-/*':           function() {console.log("ERROR 404"); return 'error404';},
   '/*':             function(match) {
                       Impact.Yield.enteredPath(this, match);
                       return 'yield';

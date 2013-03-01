@@ -6,8 +6,13 @@
     var moduleName = Impact.Yield.getCurrentModule();
 
     var module = Impact.ModuleManager.getInstance(moduleName);
-    // console.log(module);
-    if (module) {
+
+    // TODO-T
+    // Without moduleName check dashboard will not render.
+    // Still, it seems very fiddly. This function needs to update reactively
+    // in order for paths put earlier in the router to work.
+    // Is there another way?
+    if (moduleName && module) {
       return new Handlebars.SafeString(module.render(state) || '');
     }
 

@@ -11,6 +11,7 @@ var CODE_ROOT = '.meteor/impact/modules/';
 var CODE_ROOT_LENGTH = CODE_ROOT.length;
 
 var DEV_ROOT = 'public/-/m/';
+var SERVER_ROOT = 'plugins/m/';
 var URL_ROOT = '/-/m/';
 
 
@@ -26,6 +27,7 @@ var Source = function(name) {
   this.name = name;
   this.templates = '';
   this.constructor = '';
+  this.dashboard = '';
 };
 
 $functions(Source, {
@@ -38,7 +40,7 @@ $functions(Source, {
   output: function() {
     var ret = '';
 
-    ret += "(function(){\n\n";                                        // OPEN #1
+    ret += "(function(){\n\n";                                                       // OPEN #1
     ret += "Impact.ModuleManager._registerModuleFactory('"+this.name+"',{\n";        // OPEN #2
 
     ret += "templates: {\n\n";
@@ -54,6 +56,14 @@ $functions(Source, {
     ret += "\n})();\n";                                               // CLOSE #1
     ret += "console.log('END OF FILE REACHED');\n";
     return ret;
+  },
+  serverOutput: function() {
+    var ret = '';
+    ret += "(function(){\n\n";                                                       // OPEN #1
+    //ret += "Impact.ModuleManager._registerModuleFactory('"+this.name+"',{\n";        // OPEN #2
+    ret += this.constructor;
+    //ret += "});\n";                                                   // CLOSE #2
+    ret += "\n})();\n";                                               // CLOSE #1
   },
 });
 
@@ -103,8 +113,19 @@ exports.make = function(name) {
 
 
   var source = new Source(name);
-  compileDirectory(CODE_ROOT + name, source);
-  
+  compileDirectory(CODE_ROOT + name + "/shared", source);
+  compileDirectory(CODE_ROOT + name + "/client", source);
+  var dashSource = new Source(name);
+  compileDirectory(CODE_ROOT + name + "/dashboard", dashSource);
+
+  source.templates += dashSource.templates;
+  source.dashboard = dashSource.constructor;
+
+  var serverSource = new Source(name);
+  compileDirectory(CODE_ROOT + name + "/shared", serverSource);
+  compileDirectory(CODE_ROOT + name + "/server", serverSource);
+
+
   // makeDirectory(name, CODE_ROOT + name, );
 
   // var dev = "";
@@ -121,5 +142,6 @@ exports.make = function(name) {
   // dev += "\n";
 
   fs.writeFile(DEV_ROOT + name + ".js", source.output());
+  fs.writeFile(SERVER_ROOT + name + ".js", serverSource.serverOutput());
 }
 
