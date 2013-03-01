@@ -86,26 +86,38 @@
       Meteor._def_template(prefix + name, Handlebars.json_ast_to_func(template));
     },
 
-    _proxyCollection: function (collection, moduleName) {
-      var methods = ['find', 'findOne', 'insert', 'remove', 'update'];
-      // --------- helper function --------
-      // TODO:H try to refactor this method up
-      var proxyMethod = function (method) {
-        return function () {
-          var args = arguments;
-          if(args[0] !== undefined) {
-            args[0].moduleName = moduleName;
-          } else {
-            args[0] = {moduleName: moduleName};
-          };
-          return method.apply(collection, args);
+
+    // --------- helper function --------
+    // Mock database method by add key to filter
+    _proxyMethod: function(collection, method, key, value) {
+      return function() {
+        var args = arguments;
+        if(args[0] !== undefined) {
+          args[0][key] = value;
+        } else {
+          args[0] = {key: value};
         };
-      };
+        return method.apply(collection, args);
+      }
+    },
+
+    _proxyCollection: function (collection, proxyName, reproxy) {
+      var methods = ['find', 'findOne', 'insert', 'remove', 'update'];
+      var self = this;
       // create and return the proxy object
       var proxy = {}, noOp = function(){};
-      methods.each(function (methodName) {
-        proxy[methodName] = proxyMethod(collection[methodName] || noOp);
-      });
+      if(reproxy) {
+        methods.each(function (methodName) {
+          proxy[methodName] = self._proxyMethod(collection, collection[methodName] || noOp, 'collectionName', proxyName);
+        });
+      } else {
+        methods.each(function (methodName) {
+          proxy[methodName] = self._proxyMethod(collection, collection[methodName] || noOp, 'moduleName', proxyName);
+        });
+        proxy.subcollection = function(collectionName) {
+          return self._proxyCollection(this, collectionName, true);
+        };
+      }
       return proxy;
     },
 
@@ -184,12 +196,6 @@
   Meteor.startup(function () {
     Impact.ModuleManager._observe();
   });
-<<<<<<< HEAD
 
 })();
 
-
-=======
- 
-})();
->>>>>>> master

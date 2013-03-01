@@ -1,4 +1,11 @@
 
+var Articles = Documents.subcollection('articles');
+
+if(!Articles.findOne({})) {
+  Articles.insert({head: {title: 'SAMPLE ARTICLE'}});
+}
+
+
 exports.render = function(state) {
   //#  /                      -> list
   //#  /articleTitle/id       -> show
