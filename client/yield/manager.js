@@ -80,6 +80,7 @@
           });
         }
       };
+      // console.log("TEMPLATE PREIX = ", prefix);
       // add prefix to all partial calls
       traverse(template);
       // install this template in Meteor
@@ -141,10 +142,25 @@
         return Session.get(prefix+key);
       };
 
-      var _Comments  = self._proxyCollection({}); //XXX: temporary!!! we do not have Comments collection defined yet
+      var _Notes  = self._proxyCollection(Notes, name); //XXX: temporary!!! we do not have Comments collection defined yet
       var _Documents = self._proxyCollection(Documents, name);
       var _Versions  = self._proxyCollection(Versions, name);
-      factory.loader(instance, name, _S, _Template, _Documents, _Versions, _Comments);
+      // var arg = {
+      //   Name: name,
+      //   S: _S,
+      //   Template: _Template,
+      //   Documents: _Documents,
+      //   Versions: _Versions,
+      //   Comments: _Comments,
+      // };
+      // console.log("FACTORY = ",factory);
+      // console.log("ARG = ", arg);
+      //factory.loader(arg, instance, name);
+      factory.loader(instance, name, _S, _Template, _Documents, _Versions, _Notes);
+      // factory.loader(instance, name);
+      // factory.loader(arg);
+      // console.log("ARG EXPORTS = ", arg.exports);
+      // return arg.exports;
       return instance;
     },
 

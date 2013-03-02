@@ -11,7 +11,7 @@ var CODE_ROOT = '.meteor/impact/modules/';
 var CODE_ROOT_LENGTH = CODE_ROOT.length;
 
 var DEV_ROOT = 'public/-/m/';
-var SERVER_ROOT = 'plugins/m/';
+var SERVER_ROOT = '.plugins/m/';
 var URL_ROOT = '/-/m/';
 
 
@@ -47,8 +47,11 @@ $functions(Source, {
     ret += this.templates;
     ret += "\n},\n\n";
 
-    ret += "loader: function(exports, Name, S, Template, Documents, Versions, Comments) {\n\n";
+    ret += "loader: function(exports, Name, S, Template, Documents, Versions, Notes) {\n\n";
+    // ret += "loader: function(I) {\n\n";
+    // ret += "with(I){\n\n";
     ret += this.constructor;
+    // ret += "\n};\n";
     ret += "\n},\n\n";
 
 
@@ -63,7 +66,8 @@ $functions(Source, {
     //ret += "Impact.ModuleManager._registerModuleFactory('"+this.name+"',{\n";        // OPEN #2
     ret += this.constructor;
     //ret += "});\n";                                                   // CLOSE #2
-    ret += "\n})();\n";                                               // CLOSE #1
+    ret += "\n})();\n";                                                // CLOSE #1
+    return ret;
   },
 });
 
@@ -92,6 +96,7 @@ var compileFile = function(path, source) {
 }
 
 var compileDirectory = function(path, source) {//function(moduleName, directory, list) {
+  if(!fs.existsSync(path)) return;
   var dirName = path.substring(CODE_ROOT_LENGTH);
   fs.readdirSync(path).forEach(function(fileLastName) {
     var filename = path + '/' + fileLastName;

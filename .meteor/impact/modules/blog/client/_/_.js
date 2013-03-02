@@ -5,6 +5,7 @@ if(!Articles.findOne({})) {
   Articles.insert({head: {title: 'SAMPLE ARTICLE'}});
 }
 
+// console.log("IN LOADER: exports then = ", exports);
 
 exports.render = function(state) {
   //#  /                      -> list
@@ -34,3 +35,4 @@ exports.render = function(state) {
   // return "<div>TAK WYGLĄDA BLOG!</div>";
 };
 
+// console.log("IN LOADER: exports now = ", exports);
