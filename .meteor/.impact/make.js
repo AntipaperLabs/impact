@@ -14,7 +14,7 @@ fs.mkdirSync('.plugins/', 0700);
 fs.mkdirSync('.plugins/m/', 0700);
 
 var module = require('./module/make');
-fs.readdirSync('.meteor/impact/modules').forEach(module.make);
+fs.readdirSync('.impact/modules').forEach(module.make);
 
 
 
