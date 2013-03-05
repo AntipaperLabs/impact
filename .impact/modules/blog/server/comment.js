@@ -1,51 +1,3 @@
-(function(){
-
-
-
-////////////////////////////////////////
-// blog/shared/model.js
-////////////////////////////////////////
-
-
-
-// var Articles = Collection('articles');
-// var Comments = Collection('comments');
-
-
-
-
-
-////////////////////////////////////////
-// blog/server/article.js
-////////////////////////////////////////
-
-
-
-Functions({
-
-  'createArticle': function(callback, article) {
-    if(Permissions().deny('createArticle')) {
-      callback('You are not allowed to create articles');
-      return;
-    }
-    callback(false, Articles.insert(article));
-    return;
-  },
-
-});
-
-
-
-
-
-
-
-////////////////////////////////////////
-// blog/server/comment.js
-////////////////////////////////////////
-
-
-
 Functions({
 
 
@@ -87,20 +39,3 @@ Functions({
 
 });
     
-
-
-
-
-
-////////////////////////////////////////
-// blog/server/publish.js
-////////////////////////////////////////
-
-
-
-
-
-
-
-
-})();

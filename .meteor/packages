@@ -6,7 +6,9 @@
 autopublish
 insecure
 preserve-inputs
-bootstrap
 router
 sugar
 jquery
+less
+accounts-base
+accounts-password

@@ -106,8 +106,20 @@ Meteor.startup(function(){
   Versions.remove({});
   Notes.remove({});
 
+  Meteor.users.remove({});
   Modules.remove({});
   Roles.remove({});
+
+
+  Roles.insert({name: 'owner', special: true});
+  Roles.insert({name: 'admin'});
+  Roles.insert({name: 'user', special: true});
+  Roles.insert({name: 'guest', special: true});
+
+  Accounts.createUser({username: 'Owner', password: 'password', role: Roles.findOne({name: 'owner'})._id});
+  Accounts.createUser({username: 'Admin', password: 'password', role: Roles.findOne({name: 'admin'})._id});
+  Accounts.createUser({username: 'User',  password: 'password', role: Roles.findOne({name: 'user'})._id});
+  Accounts.createUser({username: 'Guest', password: 'password', role: Roles.findOne({name: 'guest'})._id});
 
 
 

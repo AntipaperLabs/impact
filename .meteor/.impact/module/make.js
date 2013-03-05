@@ -7,7 +7,7 @@ var proc = require('child_process');
 var handlebars = require('./template.js');
 
 
-var CODE_ROOT = '.meteor/impact/modules/';
+var CODE_ROOT = '.impact/modules/';
 var CODE_ROOT_LENGTH = CODE_ROOT.length;
 
 var DEV_ROOT = 'public/-/m/';
@@ -76,6 +76,7 @@ $functions(Source, {
 ////////////////////////////////////////////////////////////////////////////////
 
 var compileFile = function(path, source) {
+  console.log(path);
   if(!(path.endsWith('.js') || path.endsWith('.html'))) return;
 
   var filename = path.substring(CODE_ROOT_LENGTH);
@@ -114,6 +115,10 @@ var compileDirectory = function(path, source) {//function(moduleName, directory,
 
 
 exports.make = function(name) {
+
+  console.log("==========================");
+  console.log("  MAKE MODULE ["+name+"]");
+  console.log("==========================");
   var list = [];
 
 
