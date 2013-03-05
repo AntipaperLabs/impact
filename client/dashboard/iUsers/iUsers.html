@@ -1,16 +1,11 @@
 <template name="iUsers">
-  <div class="span3">
-    {{> iDashboardPanel}}
-  </div>
-  <div class="span9">
-    <h1>
-      Users
-    </h1><hr/>
-    <div class="row-fluid">
-      {{#each users}}
-        {{> iUsers_user}}
-      {{/each}}
-    </div>
+  <h1>
+    Users
+  </h1><hr/>
+  <div class="row-fluid">
+    {{#each users}}
+      {{> iUsers_user}}
+    {{/each}}
   </div>
 </template>
 

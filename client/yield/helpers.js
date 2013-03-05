@@ -3,9 +3,9 @@
 ////////////////////
 
 
- // Handlebars.registerHelper('renderModule',
- Template.yield.helpers({
-    renderModule: function() {
+// Handlebars.registerHelper('renderModule',
+Template.yield.helpers({
+  renderModule: function() {
 
     var state  = Impact.Yield;
     var moduleName = Impact.Yield.getCurrentModule();
@@ -34,7 +34,7 @@
     // }
 
     return 'ERROR: UNKNOWN MODULE';
-    },
+  },
 });
 
 
