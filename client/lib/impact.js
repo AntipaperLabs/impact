@@ -20,10 +20,3 @@ Impact.moduleClasses = {};
 // Impact.themeInfo = {};
 // Impact.widgetInfo = {};
 // Impact.cardInfo = {};
-
-
-Impact.has = {
-  module: function(classname, constructor) {
-    Impact.moduleConstructors[classname] = constructor;
-  },
-};
