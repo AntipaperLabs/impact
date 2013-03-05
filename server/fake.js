@@ -94,10 +94,17 @@ var fakeDocument = function() {
   Documents.update({_id: doc}, {$set: {versions: [v0, v1, v2]}});
 
 
-}
+};
 
 
-
+var fakeUser = function(name, role) {
+  var email = (name + '@impact.org');
+  uid = Accounts.createUser({username: name, email: email, password: 'password'});
+  Meteor.users.update({_id: uid}, {$set: {
+    role: Roles.findOne({name: role})._id,
+    gravatar: '' + Gravatar.hash(email),
+  }});
+};
 
 Meteor.startup(function(){
   
@@ -116,11 +123,11 @@ Meteor.startup(function(){
   Roles.insert({name: 'user', special: true});
   Roles.insert({name: 'guest', special: true});
 
-  Accounts.createUser({username: 'Owner', password: 'password', role: Roles.findOne({name: 'owner'})._id});
-  Accounts.createUser({username: 'Admin', password: 'password', role: Roles.findOne({name: 'admin'})._id});
-  Accounts.createUser({username: 'User',  password: 'password', role: Roles.findOne({name: 'user'})._id});
-  Accounts.createUser({username: 'Guest', password: 'password', role: Roles.findOne({name: 'guest'})._id});
-
+  fakeUser('Owner', 'owner');
+  fakeUser('Admin', 'admin');
+  fakeUser('User', 'user');
+  fakeUser('Guest', 'guest');
+  
 
 
   (8).times(fakeDocument);

@@ -1,15 +1,25 @@
 <template name="iModules">
-  {{> iDashboardPanel}}
-  {{#each modules}}
-    {{> iModuleShow}}
-  {{/each}}
-</template>
-
-
-<template name="iModuleShow">
-  <div>
-    MODULE
-    {{name}}:
-    {{module}}
+  <div class="span3">
+    {{> iDashboardPanel}}
+  </div>
+  <div class="span9">
+    <h1>
+      Modules
+    </h1><hr/>
+    <div class="row-fluid">
+      {{#each modules}}
+        {{> iModules_module}}
+      {{/each}}
+    </div>
   </div>
 </template>
+
+
+<template name="iModules_module">
+  <div class="span2">
+    <div class="well">
+      {{name}}
+    </div>
+  </div>
+</template>
+
