@@ -1,6 +1,11 @@
-(function () {
+////////////////////
+/**/(function(){/**/
+////////////////////
 
-  Handlebars.registerHelper('renderModule', function () {
+
+ // Handlebars.registerHelper('renderModule',
+ Template.yield.helpers({
+    renderModule: function() {
 
     var state  = Impact.Yield;
     var moduleName = Impact.Yield.getCurrentModule();
@@ -13,8 +18,10 @@
     // in order for paths put earlier in the router to work.
     // Is there another way?
     if (moduleName && module) {
-      return new Handlebars.SafeString(module.render(state) || '');
+        return new Handlebars.SafeString(module.render(state) || '');
     }
+
+    console.log(moduleName);
 
     // EXTRACTED to upper level
     // probably remove
@@ -27,6 +34,10 @@
     // }
 
     return 'ERROR: UNKNOWN MODULE';
-  });
+    },
+});
 
-})();
+
+////////////////////
+/*********/})();/**/
+////////////////////
