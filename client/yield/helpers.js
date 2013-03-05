@@ -16,14 +16,17 @@
       return new Handlebars.SafeString(module.render(state) || '');
     }
 
+    // EXTRACTED to upper level
+    // probably remove
+    //
     // if renderer is undefined fallback to standard router behavior
-    var name = Meteor.Router.page();
-    var template = Template[name];
-    if (template) {
-      return new Handlebars.SafeString(template());
-    }
+    // var name = Meteor.Router.page();
+    // var template = Template[name];
+    // if (template) {
+    //   return new Handlebars.SafeString(template());
+    // }
 
-    return '';
+    return 'ERROR: UNKNOWN MODULE';
   });
 
 })();
