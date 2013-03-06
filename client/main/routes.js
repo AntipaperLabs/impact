@@ -16,10 +16,7 @@ Meteor.Router.add({
                       return 'dashboard';
                     },
   '/*':             function(match) {
-                      Impact.Yield.requestedModuleName = match.split('/')[0];
-                      Impact.Yield.updateState(this, match);
-                      // console.log("REQUESTED MODULE "+Impact.Yield.requestedModuleName);
-                      // Impact.Yield.enteredPath(this, match);
+                      Impact.Yield.enteredPath(this, match);
                       return 'yield';
                     },
 });
