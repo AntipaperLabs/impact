@@ -204,10 +204,10 @@
       try {
         factory.loader(context);
       } catch (err) {
-        context.exports.errors = {
+        context.exports.errors = [{
           message: 'an error occured while executing loader function',
           reason: err.toString(),
-        };
+        }];
       }
 
       //TODO: make it more safe (do not allow overwriting of some fields)
@@ -227,20 +227,22 @@
       if (this.factories[moduleClass] === undefined) {
         var self = this;
         //XXX: note that the URL is hardcoded here
-        $.ajax({
-          url: '/-/m/' + moduleClass + '.js',
-          type: 'GET',
-          dataType: 'script',
-        }).done(function (msg) {
-          self._pokeListeners(self._factoryListeners, moduleClass);
-        }).fail(function (jqXHR, textStatus) {
-          //TODO: provide more information about the error
-          self.factories[moduleClass] = makeLoaderFactory({
-            message : 'an error occured while loading module ' + moduleClass,
-            reason  : textStatus,
+        Meteor.setTimeout(function () {
+          $.ajax({
+            url: '/-/m/' + moduleClass + '.js',
+            type: 'GET',
+            dataType: 'script',
+          }).done(function (msg) {
+            self._pokeListeners(self._factoryListeners, moduleClass);
+          }).fail(function (jqXHR, textStatus) {
+            //TODO: provide more information about the error
+            self.factories[moduleClass] = makeLoaderFactory({
+              message : 'an error occured while loading module ' + moduleClass,
+              reason  : textStatus,
+            });
+            self._pokeListeners(self._factoryListeners, moduleClass);
           });
-          self._pokeListeners(self._factoryListeners, moduleClass);
-        });
+        }, 1000);
       }
       return this.factories[moduleClass] || loaderFactory;
     },

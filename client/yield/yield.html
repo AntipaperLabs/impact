@@ -1,15 +1,20 @@
 <template name="loader">
+<div class='b-loader-messages'>
 {{#if errors}}
     <p>ERROR: loading module failed due to the follwoing reasons:</p>
-    <ul>
+    <ul class='loader-errors'>
     {{#each errors}}
+        <li>
         <p>{{message}}</p>
         <p>{{reason}}</p>
+        </li>
     {{/each}}
     </ul>
 {{else}}
-    <p>Please wait, while loading module `{{moduleClass}}`...</p>
+    <p>Please wait, while loading module <strong>{{moduleClass}}</strong></p>
+    <p><img alt="loading..." src='/-impact/loader.gif'></p>
 {{/if}}
+</div>
 </template>
 
 <template name="yield">
