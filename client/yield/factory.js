@@ -66,14 +66,15 @@
 
     // CREATE MODULE INSTANCE
     create: function (name, options) {
+
       options = options || {};
       //-------------------------------------
       options.moduleClass = this.moduleClass;
-      options.factory     = this.factory;
+      options.factory     = this;
       //------------------------------------------------------
       var instance = new Impact.ModuleInstance(name, options);
       //------------------------------------------------------
-      var prefix = 'im-' + name + '-';
+      var prefix = Impact.ModuleManager.getUniquePrefix(name);
       var _Template = {};
 
       // install templates in global context

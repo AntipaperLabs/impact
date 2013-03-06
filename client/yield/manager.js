@@ -7,6 +7,7 @@
     // describe relation between classes and instances
     this.config = {};
     // for reactivity implemantation
+    this._counters          = {};
     this._configListeners   = {};
     this._factoryListeners  = {};
     this._instanceListeners = {};
@@ -41,7 +42,6 @@
     _catchListener: function (listeners, key) {
       // works both with and without key value
       var context = Meteor.deps.Context.current;
-      console.log(context);
       if (context) {
         var listenersForKey = listeners;
         //------------------------------
@@ -65,6 +65,12 @@
 
     _registerModuleFactory: function (moduleClass, options) {
       (new Impact.ModuleFactory(moduleClass, options));
+    },
+
+    getUniquePrefix: function (name) {
+      var value = (this._counters[name] || 0) + 1;
+      this._counters[name] = value;
+      return 'im-' + name + '-' + value.toString() + '-';
     },
 
     addFactory: function (moduleClass, factory) {
