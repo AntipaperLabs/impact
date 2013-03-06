@@ -12,55 +12,6 @@
     this._instanceListeners = {};
   };
 
-  //xxxxxxxxxxxxxx MODULE INSTANCE xxxxxxxxxxxxxxxxxx
-  var ModuleInstance = function (name, moduleClass) {
-    this.name = name;
-    this.moduleClass = moduleClass;
-  };
-
-  ModuleInstance.prototype.getStatus = function () {
-    if (this.errors)
-      return 'errors';
-    if (this.moduleClass === 'im-loader')
-      return 'loading';
-    return 'ready';
-  };
-
-  ModuleInstance.prototype.render = function () {
-    if (this.moduleClass === 'im-loader' || this.errors) {
-      var template = Template['loader'];
-      var errors   = this.errors;
-      if (errors !== undefined && !(errors instanceof Array))
-        errors = [errors, ];
-      if (!template)
-        return 'CRITICAL ERROR: Template `loader` does not exist!';
-      return template({
-        errors: errors,
-      });
-    }
-    return 'ERROR: the module `' + this.moduleClass + '` has not defined render function';
-  };
-
-  //xxxxxxxxxxxxxxxxxxx LOADER FACTORY xxxxxxxxxxxxxxxxxxx
-  var makeLoaderFactory = function (errors) {
-    // it's ok to pass a single error as an argument
-    if (errors !== undefined && !(errors instanceof Array))
-      errors = [errors, ];
-    // render function
-    var loader = function (context) {
-        context.exports.errors = errors;
-    }
-    // return factory object
-    return {
-      templates   : {},
-      moduleClass : 'im-loader',
-      loader      : loader,
-    };
-  };
-
-  var loaderFactory = makeLoaderFactory();
-  //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
   $functions(ModuleManager, {
 
     _observe: function () {
@@ -90,6 +41,7 @@
     _catchListener: function (listeners, key) {
       // works both with and without key value
       var context = Meteor.deps.Context.current;
+      console.log(context);
       if (context) {
         var listenersForKey = listeners;
         //------------------------------
@@ -111,120 +63,33 @@
       }
     },
 
-    _registerModuleFactory: function (moduleClass, factory) {
-      factory.moduleClass = moduleClass;
+    _registerModuleFactory: function (moduleClass, options) {
+      (new Impact.ModuleFactory(moduleClass, options));
+    },
+
+    addFactory: function (moduleClass, factory) {
+      //TODO: print warnings in case of possible overwriting
+      //TODO: more inteligent comparision
+      if (this.instances[moduleClass] === factory)
+        return; // nothing changed
       this.factories[moduleClass] = factory;
+      this._pokeListeners(this._factoryListeners, moduleClass);
     },
 
-    _installTemplate: function (name, template, prefix) {
-      prefix = prefix || '';
-      //-------- recursion ------------
-      var traverse = function (array) {
-        if (array[0] === ">") {
-          array[1] = prefix + array[1];
-        } else {
-          array.each(function (node) {
-            if (node instanceof Array)
-              traverse(node);
-          });
-        }
-      };
-      // console.log("TEMPLATE PREIX = ", prefix);
-      // add prefix to all partial calls
-      traverse(template);
-      // install this template in Meteor
-      Meteor._def_template(prefix + name, Handlebars.json_ast_to_func(template));
-    },
-
-
-    // --------- helper function --------
-    // Mock database method by add key to filter
-    _proxyMethod: function(collection, method, key, value) {
-      return function() {
-        var args = arguments;
-        if(args[0] !== undefined) {
-          args[0][key] = value;
-        } else {
-          args[0] = {key: value};
-        };
-        return method.apply(collection, args);
-      }
-    },
-
-    _proxyCollection: function (collection, proxyName, reproxy) {
-      var methods = ['find', 'findOne', 'insert', 'remove', 'update'];
-      var self = this;
-      // create and return the proxy object
-      var proxy = {}, noOp = function(){};
-      if(reproxy) {
-        methods.each(function (methodName) {
-          proxy[methodName] = self._proxyMethod(collection, collection[methodName] || noOp, 'collectionName', proxyName);
-        });
-      } else {
-        methods.each(function (methodName) {
-          proxy[methodName] = self._proxyMethod(collection, collection[methodName] || noOp, 'moduleName', proxyName);
-        });
-        proxy.subcollection = function(collectionName) {
-          return self._proxyCollection(this, collectionName, true);
-        };
-      }
-      return proxy;
-    },
-
-    _createInstance: function (factory, name) {
-      var self = this;
-      var instance = new ModuleInstance(name, factory.moduleClass);
-      var prefix = 'im-' + name + '-';
-      var _Template = {};
-      // instal templates first using Meteor routines
-      //TODO: also allow custom templates defininition (without Handlebars)
-      Object.each(factory.templates, function (templateName, templateCode) {
-        self._installTemplate(templateName, templateCode, prefix);
-        // proxy the real meteor template
-        _Template[templateName] = Template[prefix + templateName];
-      });
-
-      var _S = function(key, value) {
-        if(typeof value !== 'undefined') {
-          Session.set(prefix+key, value);
-        }
-        return Session.get(prefix+key);
-      };
-
-      var context = {
-        exports: {},
-        Name: name,
-        S: _S,
-        Template:  _Template,
-        Documents: self._proxyCollection(Documents, name),
-        Versions:  self._proxyCollection(Versions, name),
-        Notes:     self._proxyCollection(Notes, name),
-      };
-
-      try {
-        factory.loader(context);
-      } catch (err) {
-        context.exports.errors = [{
-          message: 'an error occured while executing loader function',
-          reason: err.toString(),
-        }];
-      }
-
-      //TODO: make it more safe (do not allow overwriting of some fields)
-      Object.merge(instance, context.exports);
-
-      //TODO: some more inteligent error testing
-
-      return instance;
+    resetModuleFactory: function (moduleClass) {
+      console.log('reseting module', moduleClass);
+      delete this.factories[moduleClass];
+      this._pokeListeners(this._factoryListeners, moduleClass);
     },
 
     getModuleFactory: function (moduleClass) {
       //TODO: return instance that renders the loading screen
-      if (!moduleClass || moduleClass==='im-loader') return loaderFactory;
-      //------------------------------------------------------------------
+      if (!moduleClass) return;
+      //-------------------------------------------------------
       this._catchListener(this._factoryListeners, moduleClass);
       //TODO: put some locker to prevent multiple ajax calls
       if (this.factories[moduleClass] === undefined) {
+        // load module soruce code
         var self = this;
         //XXX: note that the URL is hardcoded here
         Meteor.setTimeout(function () {
@@ -236,15 +101,18 @@
             self._pokeListeners(self._factoryListeners, moduleClass);
           }).fail(function (jqXHR, textStatus) {
             //TODO: provide more information about the error
-            self.factories[moduleClass] = makeLoaderFactory({
-              message : 'an error occured while loading module ' + moduleClass,
-              reason  : textStatus,
+            //XXX: not that constructor is reactive
+            //     (i.e. it registers the module factory in the manager)
+            self.factories[moduleClass] = new Impact.ModuleFactory (moduleClass, {
+              errors: {
+                message : 'an error occured while loading module ' + moduleClass,
+                reason  : textStatus,
+              }
             });
-            self._pokeListeners(self._factoryListeners, moduleClass);
           });
         }, 1000);
       }
-      return this.factories[moduleClass] || loaderFactory;
+      return this.factories[moduleClass];
     },
 
     getInstanceConfig: function (name) {
@@ -252,21 +120,26 @@
       return this.config[name] || {};
     },
 
+    getLoader: function (name, options) {
+      options = options || {};
+      options.isLoader = true;
+      return new Impact.ModuleInstance(name, options);
+    },
+
     getInstance: function (name) {
       this._catchListener(this._instanceListeners, name);
-      var instance = this.instances[name];
-      //XXX: the second condition is a little unsafe
-      //if (instance)
-      //  console.log('got instance', instance);
-      if (!instance || instance.getStatus() === 'loading') {
-        var config  = this.getInstanceConfig(name);
-        var factory = this.getModuleFactory(config.moduleClass);
-        if (factory) {
-          this.instances[name] = instance = this._createInstance(factory, name);
-        }
+      var config = this.getInstanceConfig(name);
+      var factory = this.getModuleFactory(config.moduleClass);
+      if (factory) {
+        var instance = this.instances[name];
+        if (instance && instance._impact.factory === factory)
+          return instance;
+        //TODO: deffer the instance creation and invalidate listeners
+        // create new instance using the current factory
+        this.instances[name] = instance = factory.create(name);
+        return instance;
       }
-      //TODO: return instance representing loading screen :)
-      return instance || {render: function(){}};
+      return this.getLoader(name);
     },
 
   });

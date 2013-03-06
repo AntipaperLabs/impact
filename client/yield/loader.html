@@ -1,0 +1,19 @@
+<template name="loader">
+<div class='b-loader-messages'>
+{{#if errors}}
+    <p>ERROR: loading module failed due to the follwoing reasons:</p>
+    <ul class='loader-errors'>
+        {{#each errors}}
+        <li>
+        <p>{{message}}</p>
+        <p>{{reason}}</p>
+        </li>
+        {{/each}}
+    </ul>
+    <p><input type="button" value="Retry"></p>
+{{else}}
+    <p>Loading module `{{moduleName}}`. Please wait...</p>
+    <p><img alt="loading..." src='/-impact/loader.gif'></p>
+{{/if}}
+</div>
+</template>
