@@ -151,6 +151,18 @@ Meteor.startup(function(){
   // resetModules();
   // resetDocuments();
 
+
+  if(!ImpactData.findOne({})) {
+    ImpactData.insert({
+      _id: '0',
+      modules: {
+        'news': 'blog',
+        'page': 'static',
+        'fake': 'fake',
+      },
+    });
+  }
+
 });
 
 
