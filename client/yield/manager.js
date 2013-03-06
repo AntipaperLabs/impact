@@ -12,6 +12,55 @@
     this._instanceListeners = {};
   };
 
+  //xxxxxxxxxxxxxx MODULE INSTANCE xxxxxxxxxxxxxxxxxx
+  var ModuleInstance = function (name, moduleClass) {
+    this.name = name;
+    this.moduleClass = moduleClass;
+  };
+
+  ModuleInstance.prototype.getStatus = function () {
+    if (this.errors)
+      return 'errors';
+    if (this.moduleClass === 'im-loader')
+      return 'loading';
+    return 'ready';
+  };
+
+  ModuleInstance.prototype.render = function () {
+    if (this.moduleClass === 'im-loader' || this.errors) {
+      var template = Template['loader'];
+      var errors   = this.errors;
+      if (errors !== undefined && !(errors instanceof Array))
+        errors = [errors, ];
+      if (!template)
+        return 'CRITICAL ERROR: Template `loader` does not exist!';
+      return template({
+        errors: errors,
+      });
+    }
+    return 'ERROR: the module `' + this.moduleClass + '` has not defined render function';
+  };
+
+  //xxxxxxxxxxxxxxxxxxx LOADER FACTORY xxxxxxxxxxxxxxxxxxx
+  var makeLoaderFactory = function (errors) {
+    // it's ok to pass a single error as an argument
+    if (errors !== undefined && !(errors instanceof Array))
+      errors = [errors, ];
+    // render function
+    var loader = function (context) {
+        context.exports.errors = errors;
+    }
+    // return factory object
+    return {
+      templates   : {},
+      moduleClass : 'im-loader',
+      loader      : loader,
+    };
+  };
+
+  var loaderFactory = makeLoaderFactory();
+  //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
   $functions(ModuleManager, {
 
     _observe: function () {
@@ -124,7 +173,7 @@
 
     _createInstance: function (factory, name) {
       var self = this;
-      var instance = {_name: name, moduleClass: factory.moduleClass};
+      var instance = new ModuleInstance(name, factory.moduleClass);
       var prefix = 'im-' + name + '-';
       var _Template = {};
       // instal templates first using Meteor routines
@@ -142,7 +191,7 @@
         return Session.get(prefix+key);
       };
 
-      var args = {
+      var context = {
         exports: {},
         Name: name,
         S: _S,
@@ -152,40 +201,48 @@
         Notes:     self._proxyCollection(Notes, name),
       };
 
-      factory.loader(args);
+      try {
+        factory.loader(context);
+      } catch (err) {
+        context.exports.errors = {
+          message: 'an error occured while executing loader function',
+          reason: err.toString(),
+        };
+      }
 
       //TODO: make it more safe (do not allow overwriting of some fields)
-      Object.merge(instance, args.exports);
+      Object.merge(instance, context.exports);
 
       //TODO: some more inteligent error testing
-      if (!(instance.render instanceof Function)) {
-        instance.render = function () {
-          return 'ERROR: the module does not define render function properly';
-        }
-      }
+
       return instance;
     },
 
     getModuleFactory: function (moduleClass) {
       //TODO: return instance that renders the loading screen
-      var emptyFactory = {
-          templates: {},
-          moduleClass: '#loader',
-          loader: function (args){
-            args.exports.render=function(){return 'loading...'};
-          },
-      };
-      if (!moduleClass || moduleClass==='#loader') return emptyFactory;
-      //---------------------------------------------------------------
+      if (!moduleClass || moduleClass==='im-loader') return loaderFactory;
+      //------------------------------------------------------------------
       this._catchListener(this._factoryListeners, moduleClass);
+      //TODO: put some locker to prevent multiple ajax calls
       if (this.factories[moduleClass] === undefined) {
         var self = this;
         //XXX: note that the URL is hardcoded here
-        require(['/-/m/' + moduleClass + '.js'], function () {
+        $.ajax({
+          url: '/-/m/' + moduleClass + '.js',
+          type: 'GET',
+          dataType: 'script',
+        }).done(function (msg) {
+          self._pokeListeners(self._factoryListeners, moduleClass);
+        }).fail(function (jqXHR, textStatus) {
+          //TODO: provide more information about the error
+          self.factories[moduleClass] = makeLoaderFactory({
+            message : 'an error occured while loading module ' + moduleClass,
+            reason  : textStatus,
+          });
           self._pokeListeners(self._factoryListeners, moduleClass);
         });
       }
-      return this.factories[moduleClass] || emptyFactory;
+      return this.factories[moduleClass] || loaderFactory;
     },
 
     getInstanceConfig: function (name) {
@@ -197,7 +254,9 @@
       this._catchListener(this._instanceListeners, name);
       var instance = this.instances[name];
       //XXX: the second condition is a little unsafe
-      if (!instance || instance.moduleClass === '#loader') {
+      //if (instance)
+      //  console.log('got instance', instance);
+      if (!instance || instance.getStatus() === 'loading') {
         var config  = this.getInstanceConfig(name);
         var factory = this.getModuleFactory(config.moduleClass);
         if (factory) {
