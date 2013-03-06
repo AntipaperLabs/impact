@@ -44,7 +44,6 @@ $functions(Source, {
     //./
     ret += "new Impact.ModuleFactory('"+this.name+"',{\n";        // OPEN #2
 
-
     ret += "templates: {\n\n";
     ret += this.templates;
     ret += "\n},\n\n";
