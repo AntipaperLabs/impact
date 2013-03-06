@@ -1,3 +1,17 @@
+<template name="loader">
+{{#if errors}}
+    <p>ERROR: loading module failed due to the follwoing reasons:</p>
+    <ul>
+    {{#each errors}}
+        <p>{{message}}</p>
+        <p>{{reason}}</p>
+    {{/each}}
+    </ul>
+{{else}}
+    <p>Please wait, while loading module `{{moduleClass}}`...</p>
+{{/if}}
+</template>
+
 <template name="yield">
   {{renderModule}}
 </template>
