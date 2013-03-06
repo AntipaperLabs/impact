@@ -11,6 +11,7 @@ Meteor.Router.add({
   '/':              'home',
   '/-/*':           function() {console.log("ERROR 404"); return 'error404';},
   '/-*':            function(match) {
+                      if(!Meteor.user()) return 'login';
                       Impact.Dashboard.enteredPath(this, match);
                       return 'dashboard';
                     },
