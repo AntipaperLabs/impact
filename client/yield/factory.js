@@ -3,24 +3,24 @@
   Impact.ModuleFactory = function (moduleClass, options) {
     options = options || {};
     //TODO: more error handling
-    var message = 'invalid module factory for module `' + moduleClass + '`';
     this.moduleClass = moduleClass;
     this.exports = new Impact.Exports (options);
     // verify loader function existance
+    var msg = 'invalid module factory for module `' + moduleClass + '`';
     if (options.loader instanceof Function) {
       this.loader = options.loader;
     } else {
-      this.exports.addError(message, 'the module does not define loader function');
+      this.exports.addError(msg, 'the module does not define loader function');
     }
     // verify templates object
     if (options.templates instanceof Object) {
       this.templates = options.templates;
     } else {
-      this.exports.addError(message, 'the module does not define templates object');
+      this.exports.addError(msg, 'the module does not define templates object');
     }
     // register this factory
     if (moduleClass)
-      Impact.ModuleManager.addFactory(moduleClass, this);
+      Impact.ModuleManager.registerFactory(moduleClass, this);
   };
 
   //---------------- helper function --------------
@@ -65,13 +65,14 @@
     loader: function () {},
 
     // CREATE MODULE INSTANCE
-    create: function (name, options) {
-
+    createInstance: function (name, options) {
       options = options || {};
       //-------------------------------------
       options.moduleClass = this.moduleClass;
       options.factory     = this;
       //------------------------------------------------------
+      // a module instance created this way is automatically
+      // registered int the module manager
       var instance = new Impact.ModuleInstance(name, options);
       //------------------------------------------------------
       var prefix = Impact.ModuleManager.getUniquePrefix(name);
@@ -97,6 +98,9 @@
       // feed with factory errors
       exports.copyErrors(this.exports);
 
+      // pretend this is more dificult than it really is
+      //for (var i=0; i<1000000000; i++) {i*i;}
+
       // prepare module context
       var context = {
         exports: exports,
@@ -119,6 +123,7 @@
 
       //TODO: make it more safe (do not allow overwriting of some fields)
       Object.merge(instance, exports);
+
       return instance;
     },
 

@@ -73,13 +73,22 @@
       return 'im-' + name + '-' + value.toString() + '-';
     },
 
-    addFactory: function (moduleClass, factory) {
+    registerFactory: function (moduleClass, factory) {
       //TODO: print warnings in case of possible overwriting
       //TODO: more inteligent comparision
-      if (this.instances[moduleClass] === factory)
+      if (this.factories[moduleClass] === factory)
         return; // nothing changed
       this.factories[moduleClass] = factory;
       this._pokeListeners(this._factoryListeners, moduleClass);
+    },
+
+    registerInstance: function (moduleName, instance) {
+      //TODO: print warnings in case of possible overwriting
+      //TODO: more inteligent comparision
+      if (this.instances[moduleName] === instance)
+        return; // nothing changed
+      this.instances[moduleName] = instance;
+      this._pokeListeners(this._instanceListeners, moduleName);
     },
 
     resetModuleFactory: function (moduleClass) {
@@ -128,8 +137,10 @@
 
     getLoader: function (name, options) {
       options = options || {};
+      options.moduleName = name;
       options.isLoader = true;
-      return new Impact.ModuleInstance(name, options);
+      // we use undefined to prevent module registration
+      return new Impact.ModuleInstance(undefined, options);
     },
 
     getInstance: function (name) {
@@ -140,11 +151,17 @@
         var instance = this.instances[name];
         if (instance && instance._impact.factory === factory)
           return instance;
-        //TODO: deffer the instance creation and invalidate listeners
-        // create new instance using the current factory
-        this.instances[name] = instance = factory.create(name);
-        return instance;
+        // defer the instance creation process
+        var self = this;
+        Meteor.setTimeout(function () {
+          // instance created by a factory will by automatically
+          // registerd in the manager
+          factory.createInstance(name);
+        }); // timeout = 0
       }
+      // we can only use getLoder, because loader module does not
+      // register in module manager; otherwise we would end up
+      // with an infinite loop of context invalidation
       return this.getLoader(name);
     },
 
