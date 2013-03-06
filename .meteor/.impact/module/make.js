@@ -41,7 +41,7 @@ $functions(Source, {
     var ret = '';
 
     ret += "(function(){\n\n";                                                       // OPEN #1
-    ret += "Impact.ModuleManager._registerModuleFactory('"+this.name+"',{\n";        // OPEN #2
+    ret += "new Impact.ModuleFactory('"+this.name+"',{\n";        // OPEN #2
 
     ret += "templates: {\n\n";
     ret += this.templates;

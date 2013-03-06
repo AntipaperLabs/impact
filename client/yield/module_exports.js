@@ -1,6 +1,6 @@
 (function () {
 
-  Impact.Exports = function (options) {
+  Impact.ModuleExports = function (options) {
     options = options || {};
     if (options.errors instanceof Array)
         this.errors = options.errors;
@@ -10,7 +10,7 @@
         this.errors = [];
   };
 
-  $functions(Impact.Exports, {
+  $functions(Impact.ModuleExports, {
     addError : function (message, reason) {
       this.errors.push({message:message, reason:reason});
     },
