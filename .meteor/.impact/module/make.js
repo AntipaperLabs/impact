@@ -47,11 +47,11 @@ $functions(Source, {
     ret += this.templates;
     ret += "\n},\n\n";
 
-    ret += "loader: function(exports, Name, S, Template, Documents, Versions, Notes) {\n\n";
-    // ret += "loader: function(I) {\n\n";
-    // ret += "with(I){\n\n";
+    //ret += "loader: function(exports, Name, S, Template, Documents, Versions, Notes) {\n\n";
+    ret += "loader: function(I) {\n\n";
+    ret += "with(I){\n\n";
     ret += this.constructor;
-    // ret += "\n};\n";
+    ret += "\n};\n";
     ret += "\n},\n\n";
 
 

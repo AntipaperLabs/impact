@@ -124,7 +124,7 @@
 
     _createInstance: function (factory, name) {
       var self = this;
-      var instance = {name: name, moduleClass: factory.moduleClass};
+      var instance = {_name: name, moduleClass: factory.moduleClass};
       var prefix = 'im-' + name + '-';
       var _Template = {};
       // instal templates first using Meteor routines
@@ -142,25 +142,27 @@
         return Session.get(prefix+key);
       };
 
-      var _Notes  = self._proxyCollection(Notes, name); //XXX: temporary!!! we do not have Comments collection defined yet
-      var _Documents = self._proxyCollection(Documents, name);
-      var _Versions  = self._proxyCollection(Versions, name);
-      // var arg = {
-      //   Name: name,
-      //   S: _S,
-      //   Template: _Template,
-      //   Documents: _Documents,
-      //   Versions: _Versions,
-      //   Comments: _Comments,
-      // };
-      // console.log("FACTORY = ",factory);
-      // console.log("ARG = ", arg);
-      //factory.loader(arg, instance, name);
-      factory.loader(instance, name, _S, _Template, _Documents, _Versions, _Notes);
-      // factory.loader(instance, name);
-      // factory.loader(arg);
-      // console.log("ARG EXPORTS = ", arg.exports);
-      // return arg.exports;
+      var args = {
+        exports: {},
+        Name: name,
+        S: _S,
+        Template:  _Template,
+        Documents: self._proxyCollection(Documents, name),
+        Versions:  self._proxyCollection(Versions, name),
+        Notes:     self._proxyCollection(Notes, name),
+      };
+
+      factory.loader(args);
+
+      //TODO: make it more safe (do not allow overwriting of some fields)
+      Object.merge(instance, args.exports);
+
+      //TODO: some more inteligent error testing
+      if (!(instance.render instanceof Function)) {
+        instance.render = function () {
+          return 'ERROR: the module does not define render function properly';
+        }
+      }
       return instance;
     },
 
@@ -169,8 +171,8 @@
       var emptyFactory = {
           templates: {},
           moduleClass: '#loader',
-          loader: function (exports){
-            exports.render=function(){return 'loading...'};
+          loader: function (args){
+            args.exports.render=function(){return 'loading...'};
           },
       };
       if (!moduleClass || moduleClass==='#loader') return emptyFactory;
@@ -194,6 +196,7 @@
     getInstance: function (name) {
       this._catchListener(this._instanceListeners, name);
       var instance = this.instances[name];
+      //XXX: the second condition is a little unsafe
       if (!instance || instance.moduleClass === '#loader') {
         var config  = this.getInstanceConfig(name);
         var factory = this.getModuleFactory(config.moduleClass);
