@@ -20,3 +20,18 @@ Meteor.Router.add({
                     },
 });
 
+// catch all local links
+
+Meteor.startup(function () {
+  $(document).on('click', 'a[href]', function (event) {
+    var href = this.href;
+    var baseURL = window.location.protocol + '//' + window.location.host;
+    var match = href.match(baseURL + '(.*)');
+    if (match && match[1] !== undefined) {
+      Meteor.Router.to(match[1]);
+      if (event.preventDefault)
+        event.preventDefault();
+    }
+  });
+});
+

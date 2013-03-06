@@ -143,18 +143,6 @@
   //TODO: also make params and queryDict reactive
   Impact.Yield = new Yield();
 
-  Template.yield.events({
-    'click a[href]': function (event) {
-      var href = event.target.href;
-      var baseURL = window.location.protocol + '//' + window.location.host;
-      var match = href.match(baseURL + '(.*)');
-      if (match && match[1] !== undefined) {
-        Meteor.Router.to(match[1]);
-        event.preventDefault();
-      }
-    }
-  });
-
 })();
 
 
