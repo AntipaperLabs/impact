@@ -1,3 +1,7 @@
+////////////////////
+/**/(function(){/**/
+////////////////////
+
 var fakeDocument = function() {
   var sentences = [
     'Siabada mydełko fa. ',
@@ -98,7 +102,7 @@ var fakeDocument = function() {
 
 
 var fakeUser = function(name, role) {
-  var email = (name + '@impact.org');
+  var email = (name.toLowerCase() + '@impact.org');
   uid = Accounts.createUser({username: name, email: email, password: 'password'});
   Meteor.users.update({_id: uid}, {$set: {
     role: Roles.findOne({name: role})._id,
@@ -106,15 +110,10 @@ var fakeUser = function(name, role) {
   }});
 };
 
-Meteor.startup(function(){
-  
-  
-  Documents.remove({});
-  Versions.remove({});
-  Notes.remove({});
 
+var resetUsers = function() {
   Meteor.users.remove({});
-  Modules.remove({});
+  
   Roles.remove({});
 
 
@@ -127,21 +126,39 @@ Meteor.startup(function(){
   fakeUser('Admin', 'admin');
   fakeUser('User', 'user');
   fakeUser('Guest', 'guest');
-  
+};
 
-
-  (8).times(fakeDocument);
-
+var resetModules = function() {
+  Modules.remove({});
 
   Modules.insert({name: 'news', moduleClass: 'blog'});
   Modules.insert({name: 'page', moduleClass: 'static'});
   Modules.insert({name: 'fake', moduleClass: 'fake'});
+};
+
+var resetDocuments = function() {
+  Documents.remove({});
+  Versions.remove({});
+  Notes.remove({});
+
+  (8).times(fakeDocument);
+};
+
+
+Meteor.startup(function(){
+  
+  // resetUsers();
+  // resetModules();
+  // resetDocuments();
 
 });
 
 
 
 
+////////////////////
+/*********/})();/**/
+////////////////////
 
 
 

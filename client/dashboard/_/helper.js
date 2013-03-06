@@ -6,6 +6,7 @@
 Template.dashboard.helpers({
   renderDashboard: function() {
 
+
     var state = Impact.Dashboard.path;
 
     var places = ['users', 'roles', 'modules', 'themes'];
