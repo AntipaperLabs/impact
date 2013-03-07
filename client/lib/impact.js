@@ -4,7 +4,7 @@ var Impact = {};
 // Most of these won't be used!
 
 // Actual instances, created by Impact
-// Impact.Modules = {};
+Impact.Modules = {};
 // Impact.Cards = {};
 // Impact.Widgets = {};
 // Impact.Themes = {};
