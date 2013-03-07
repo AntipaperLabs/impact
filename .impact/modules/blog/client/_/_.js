@@ -1,9 +1,9 @@
 
-var Articles = Documents.subcollection('articles');
+// var Articles = Documents.subcollection('articles');
 
-if(!Articles.findOne({})) {
-  Articles.insert({head: {title: 'SAMPLE ARTICLE'}});
-}
+// if(!Articles.findOne({})) {
+//   Articles.insert({head: {title: 'SAMPLE ARTICLE'}});
+// }
 
 // console.log("IN LOADER: exports then = ", exports);
 
