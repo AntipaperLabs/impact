@@ -90,7 +90,6 @@
     },
 
     _invalidate: function () {
-      console.log("YIELD INVALIDATE ", this.listeners);
       for (var contextId in this.listeners) {
         this.listeners[contextId].invalidate();
       }
