@@ -19,22 +19,31 @@
       //TODO: also observe other things
       //      like changes / deletion etc.
       var self = this;
-      ImpactSettings.find({}).observe({
-        added: function (settings) {
-          Object.merge(self.config, settings.modules);
-          console.log(self.config);
-          Object.keys(settings.modules).each(function(name){
-            console.log("POKE IN ", name);
-            self._pokeListeners(self._configListeners[name]);
-          });
-          // settings.modules.each(function(info){});
-          // self.config[info.name] = {
-          //   moduleClass : info.moduleClass,
-          // };
-          // //----------------------------------------------------
-          // self._pokeListeners(self._configListeners[info.name]);
+      Modules.find({}).observe({
+        add: function(info) {
+          self.config[info.name] = {
+            moduleClass : info.moduleClass,
+          };
+          //----------------------------------------------------
+          self._pokeListeners(self._configListeners[info.name]);
         },
       });
+      // ImpactSettings.find({}).observe({
+      //   added: function (settings) {
+      //     Object.merge(self.config, settings.modules);
+      //     console.log(self.config);
+      //     Object.keys(settings.modules).each(function(name){
+      //       console.log("POKE IN ", name);
+      //       self._pokeListeners(self._configListeners[name]);
+      //     });
+      //     // settings.modules.each(function(info){});
+      //     // self.config[info.name] = {
+      //     //   moduleClass : info.moduleClass,
+      //     // };
+      //     // //----------------------------------------------------
+      //     // self._pokeListeners(self._configListeners[info.name]);
+      //   },
+      // });
     },
 
     _pokeListeners: function (listeners, key) {
