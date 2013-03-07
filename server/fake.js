@@ -128,13 +128,13 @@ var resetUsers = function() {
   fakeUser('Guest', 'guest');
 };
 
-var resetModules = function() {
-  Modules.remove({});
+// var resetModules = function() {
+//   Modules.remove({});
 
-  Modules.insert({name: 'news', moduleClass: 'blog'});
-  Modules.insert({name: 'page', moduleClass: 'static'});
-  Modules.insert({name: 'fake', moduleClass: 'fake'});
-};
+//   Modules.insert({name: 'news', moduleClass: 'blog'});
+//   Modules.insert({name: 'page', moduleClass: 'static'});
+//   Modules.insert({name: 'fake', moduleClass: 'fake'});
+// };
 
 var resetDocuments = function() {
   Documents.remove({});
@@ -152,8 +152,8 @@ Meteor.startup(function(){
   // resetDocuments();
 
 
-  if(!ImpactData.findOne({})) {
-    ImpactData.insert({
+  if(!ImpactSettings.findOne({})) {
+    ImpactSettings.insert({
       _id: '0',
       modules: {
         'news': 'blog',

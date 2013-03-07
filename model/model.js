@@ -68,9 +68,9 @@ var Roles = new Meteor.Collection('roles');
   moduleClass:
 
 */
-var Modules = new Meteor.Collection('modules');
+// var Modules = new Meteor.Collection('modules');
 
 
 
-var ImpactData = new Meteor.Collection('impactData');
+var ImpactSettings = new Meteor.Collection('impactData');
 
