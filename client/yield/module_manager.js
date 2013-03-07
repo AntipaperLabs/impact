@@ -19,13 +19,18 @@
       //TODO: also observe other things
       //      like changes / deletion etc.
       var self = this;
-      Modules.find({}).observe({
-        added: function (info) {
-          self.config[info.name] = {
-            moduleClass : info.moduleClass,
-          };
-          //----------------------------------------------------
-          self._pokeListeners(self._configListeners[info.name]);
+      ImpactSettings.find({}).observe({
+        added: function (settings) {
+          Object.merge(self.config, settings.modules);
+          Object.keys(settings.modules).each(function(name){
+            self._pokeListeners(self._configListeners[name]);
+          });
+          // settings.modules.each(function(info){});
+          // self.config[info.name] = {
+          //   moduleClass : info.moduleClass,
+          // };
+          // //----------------------------------------------------
+          // self._pokeListeners(self._configListeners[info.name]);
         },
       });
     },

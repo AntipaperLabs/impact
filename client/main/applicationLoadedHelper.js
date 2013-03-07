@@ -1,4 +1,7 @@
 Handlebars.registerHelper('applicationLoaded', function(options){
-  if(Impact.settings || ImpactData.findOne({})) return options.fn(this);
-  return options.inverse(this);
+  return options.fn(this);
+  // if(ImpactData.findOne({})) return options.fn(this);
+  // if(Impact.settings) return options.fn(this);
+
+  // return options.inverse(this);
 });
