@@ -90,8 +90,10 @@
     },
 
     _invalidate: function () {
-      for (var contextId in this.listeners)
+      console.log("YIELD INVALIDATE ", this.listeners);
+      for (var contextId in this.listeners) {
         this.listeners[contextId].invalidate();
+      }
     },
 
     getCurrentModule: function () {
