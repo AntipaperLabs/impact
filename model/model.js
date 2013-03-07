@@ -1,5 +1,15 @@
 
 /*
+  impact {
+    createdAt:
+    updatedAt:
+    createdBy:
+
+  }
+
+*/
+
+/*
 
   moduleName:
 

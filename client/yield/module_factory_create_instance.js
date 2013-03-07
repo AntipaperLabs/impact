@@ -30,6 +30,12 @@
         return Session.get(prefix+key);
       };
 
+      var _CreateCollection = function(name) {
+        return new Meteor.Collection(prefix + name);
+      };
+
+
+
       // prepare exports object
       var exports = new Impact.ModuleExports ();
       // feed with factory errors
