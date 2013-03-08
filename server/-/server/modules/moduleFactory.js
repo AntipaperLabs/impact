@@ -11,8 +11,6 @@ Impact.ModuleFactory = function(moduleClass, options){
   this.moduleClass = moduleClass;
   this.loader = options.loader;
 
-  this.prefix = 'im1-' + moduleClass + '-';
-
   Impact.ModuleFactories[moduleClass] = this;
 };
 
@@ -22,9 +20,11 @@ $functions(Impact.ModuleFactory, {
   loadModule: function(moduleName) {
     var self = this;
     console.log("LOAD...");
+    var prefix = 'im1-' + moduleName + '-';
 
     var _Collection = function(name) {
-      return new Meteor.Collection(self.prefix + name);
+      console.log("CREATE COLLECTION: "+name);
+      return new Meteor.Collection(prefix + name);
     };
 
     this.loader({

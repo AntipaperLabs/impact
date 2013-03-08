@@ -2,6 +2,7 @@
 /**/(function(){/**/
 ////////////////////
 
+  Impact.collections = {};
 
   $functions(Impact.ModuleFactory, {
 
@@ -34,7 +35,9 @@
       };
 
       var _CreateCollection = function(name) {
-        return new Meteor.Collection(prefix + name);
+        var c = new Meteor.Collection(prefix + name);
+        Impact.collections[prefix + name] = c;
+        return c;
       };
 
 
