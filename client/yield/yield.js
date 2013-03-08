@@ -146,14 +146,14 @@
 
     matchRoute: function(map) {
       var self = this;
-      console.log("MATCHING ROUTE ["+this.fullPath+"]");
-      console.log("OR BETTER: ", this.path);
+      // console.log("MATCHING ROUTE ["+this.fullPath+"]");
+      // console.log("OR BETTER: ", this.path);
 
       for(var key in map) {
         if(!this._routeMatches(this.path, key)) continue;
 
         var value = map[key];
-        console.log("MROUTER match found!", value);
+        // console.log("MROUTER match found!", value);
 
         if(typeof value == "string") return value;
         if(typeof value == "function") return value.apply(this, this.path);

@@ -1,12 +1,10 @@
 <template name="show">
-  <div><a href="/{{M}}" class="someHome">HOME</a></div>
-  I WILL SHOW AN ARTICLE HERE.
-  <!-- <div>{{header.title}}</div>
-  <div>{{header.summary}}</div>
-  <div>
-    {{#each body}}
-      {{ShowChunk this}}
-    {{/each}}
-  </div>
- -->
+  {{#with article}}
+    <div><a href="/{{M}}" class="someHome">HOME</a></div>
+    <div class="well span6">
+      <h1>{{title}}</h1>
+      <p>{{body}}</p>
+    </div>
+  {{/with}}
+
 </template>
