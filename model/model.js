@@ -31,7 +31,7 @@
 
 */
 
-var Documents = new Meteor.Collection('documents');
+// var Documents = new Meteor.Collection('documents');
 
 
 /*
@@ -53,7 +53,7 @@ var Documents = new Meteor.Collection('documents');
   head:
   body:
 */
-var Versions = new Meteor.Collection('versions');
+// var Versions = new Meteor.Collection('versions');
 
 /*
   moduleName:

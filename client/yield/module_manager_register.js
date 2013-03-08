@@ -6,9 +6,18 @@
     //TODO: more inteligent comparision
 
     getInstancePrefix: function (name) {
+      // It starts with 1 now! Dislike.
       var value = (this._counters[name] || 0) + 1;
       this._counters[name] = value;
-      return 'im-' + name + '-' + value.toString() + '-';
+
+      // Changed format due to following scenario:
+      // Module: news-0, collection: 0-data
+      // Module: news, collection: 0-0-data
+      // ...wait, it still does not work!
+      // Think of something better.
+      return (value)
+              ? 'im' + value.toString() + '-' + name + '-'
+              : 'im-' + name + '-';
     },
 
     registerFactory: function (moduleClass, factory) {
