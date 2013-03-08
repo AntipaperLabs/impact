@@ -24,6 +24,7 @@
       Object.each(this.templates, function (templateName, templateCode) {
         Impact._def_template(templateName, templateCode, prefix);
         _Template[templateName] = Template[prefix + templateName];
+        _Template[templateName].helpers({"M": name});
       });
 
       // proxy Meteor session
