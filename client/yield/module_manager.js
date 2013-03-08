@@ -1,4 +1,7 @@
-(function () {
+////////////////////
+/**/(function(){/**/
+////////////////////
+
 
   Impact._ModuleManagerConstructor = function () {
     // manager cache

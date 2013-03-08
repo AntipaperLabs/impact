@@ -9,9 +9,9 @@ fsx.remove('public/-/');
 fs.mkdirSync('public/-/',0700);
 fs.mkdirSync('public/-/m/',0700);
 
-fsx.remove('server/-plugins/');
-fs.mkdirSync('server/-plugins/', 0700);
-fs.mkdirSync('server/-plugins/m/', 0700);
+fsx.remove('server/ZZZ-plugins/');
+fs.mkdirSync('server/ZZZ-plugins/', 0700);
+fs.mkdirSync('server/ZZZ-plugins/m/', 0700);
 
 var module = require('./module/make');
 fs.readdirSync('.impact/modules').forEach(module.make);

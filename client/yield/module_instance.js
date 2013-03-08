@@ -1,4 +1,7 @@
-(function () {
+////////////////////
+/**/(function(){/**/
+////////////////////
+
 
   Impact.ModuleInstance = function (moduleName, options) {
     options = options || {};
@@ -26,5 +29,8 @@
 
   });
 
-})();
 
+
+////////////////////
+/*********/})();/**/
+////////////////////

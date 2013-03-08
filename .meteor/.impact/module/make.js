@@ -11,7 +11,7 @@ var CODE_ROOT = '.impact/modules/';
 var CODE_ROOT_LENGTH = CODE_ROOT.length;
 
 var DEV_ROOT = 'public/-/m/';
-var SERVER_ROOT = 'server/-plugins/m/';
+var SERVER_ROOT = 'server/ZZZ-plugins/m/';
 var URL_ROOT = '/-/m/';
 
 
@@ -121,6 +121,8 @@ var compileDirectory = function(path, source) {//function(moduleName, directory,
 
 
 exports.make = function(name) {
+
+  if(name.startsWith('.')) return;
 
   console.log("==========================");
   console.log("  MAKE MODULE ["+name+"]");

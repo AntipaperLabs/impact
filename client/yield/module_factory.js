@@ -1,4 +1,7 @@
-(function () {
+////////////////////
+/**/(function(){/**/
+////////////////////
+
 
   Impact.ModuleFactory = function (moduleClass, options) {
     
@@ -27,4 +30,7 @@
       Impact.ModuleManager.registerFactory(moduleClass, this);
   };
 
-})();
+
+////////////////////
+/*********/})();/**/
+////////////////////

@@ -1,4 +1,7 @@
-(function () {
+////////////////////
+/**/(function(){/**/
+////////////////////
+
 
   var QueryDict = function () {
     this._properties = {};
@@ -144,7 +147,9 @@
   //TODO: also make params and queryDict reactive
   Impact.Yield = new Yield();
 
-})();
 
 
+////////////////////
+/*********/})();/**/
+////////////////////
 
