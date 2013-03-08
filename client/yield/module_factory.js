@@ -24,7 +24,7 @@ Impact.ModuleFactory = function (moduleClass, options) {
   } else {
     this.exports.addError(msg, 'the module does not define templates object');
   }
-
+    
   // register this factory
   if (moduleClass)
     Impact.ModuleManager.registerFactory(moduleClass, this);

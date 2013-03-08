@@ -18,10 +18,15 @@ Template.yield.helpers({
     // in order for paths put earlier in the router to work.
     // Is there another way?
     if (moduleName && module) {
+        // console.log(module);
+        if(module.routes) {
+          var template = module.routes(state);
+          return Template['im-'+moduleName+'-'+template];
+        }
         return new Handlebars.SafeString(module.render(state) || '');
-    }
+      }
 
-    console.log(moduleName);
+      console.log(moduleName);
 
     // EXTRACTED to upper level
     // probably remove
