@@ -111,46 +111,20 @@ var fakeUser = function(name, role) {
 };
 
 
-var resetUsers = function() {
-  Meteor.users.remove({});
-  
-  Roles.remove({});
-
-
-  Roles.insert({name: 'owner', special: true});
-  Roles.insert({name: 'admin'});
-  Roles.insert({name: 'user', special: true});
-  Roles.insert({name: 'guest', special: true});
-
-  fakeUser('Owner', 'owner');
-  fakeUser('Admin', 'admin');
-  fakeUser('User', 'user');
-  fakeUser('Guest', 'guest');
-};
-
-var resetModules = function() {
-  Modules.remove({});
-
-  Modules.insert({name: 'news', moduleClass: 'blog'});
-  Modules.insert({name: 'page', moduleClass: 'static'});
-  Modules.insert({name: 'fake', moduleClass: 'fake'});
-};
-
-var resetDocuments = function() {
-  Documents.remove({});
-  Versions.remove({});
-  Notes.remove({});
-
-  (8).times(fakeDocument);
-};
-
 
 Meteor.startup(function(){
   
-  // resetUsers();
-  resetModules();
-  // resetDocuments();
+  if(!Meteor.users.findOne({})) {
+    Roles.insert({name: 'owner', special: true});
+    Roles.insert({name: 'admin'});
+    Roles.insert({name: 'user', special: true});
+    Roles.insert({name: 'guest', special: true});
 
+    fakeUser('Owner', 'owner');
+    fakeUser('Admin', 'admin');
+    fakeUser('User', 'user');
+    fakeUser('Guest', 'guest');
+  }
 
   if(!ImpactSettings.findOne({})) {
     ImpactSettings.insert({

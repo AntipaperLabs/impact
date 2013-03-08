@@ -1,4 +1,10 @@
-(function () {
+
+////////////////////
+/**/(function(){/**/
+////////////////////
+
+  Impact.collections = {};
+
 
   $functions(Impact.ModuleFactory, {
 
@@ -20,6 +26,7 @@
       Object.each(this.templates, function (templateName, templateCode) {
         Impact._def_template(templateName, templateCode, prefix);
         _Template[templateName] = Template[prefix + templateName];
+        _Template[templateName].helpers({"M": name});
       });
 
       // proxy Meteor session
@@ -28,6 +35,12 @@
           Session.set(prefix+key, value);
         }
         return Session.get(prefix+key);
+      };
+
+      var _CreateCollection = function(name) {
+        var c = new Meteor.Collection(prefix + name);
+        Impact.collections[prefix + name] = c;
+        return c;
       };
 
       // prepare exports object
@@ -41,12 +54,15 @@
         Name: name,
         S: _S,
         Template: _Template,
-        Documents: _proxyCollection(Documents, name),
-        Versions: _proxyCollection(Versions, name),
-        Notes: _proxyCollection(Notes, name),
+        Collection: _CreateCollection,
+        // Documents: _proxyCollection(Documents, name),
+        // Versions: _proxyCollection(Versions, name),
+        // Notes: _proxyCollection(Notes, name),
+
         // add even more objects for safety
         Meteor: {},
         Session: {},
+        Impact: {},
         //...
       };
 
@@ -75,38 +91,11 @@
 
   });
 
-  //---------------- helper function --------------
-  // Mock database method by adding key to selector
-  var _proxyMethod = function(collection, method, key, value) {
-    return function() {
-      var args = arguments;
-      if(args[0] !== undefined) {
-        args[0][key] = value;
-      } else {
-        args[0] = {key: value};
-      };
-      return method.apply(collection, args);
-    }
-  };
 
-  var _proxyCollection = function (collection, proxyName, reproxy) {
-    var methods = ['find', 'findOne', 'insert', 'remove', 'update'];
-    var self = this;
-    // create and return the proxy object
-    var proxy = {}, noOp = function(){};
-    if (reproxy) {
-      methods.each(function (methodName) {
-        proxy[methodName] = _proxyMethod(collection, collection[methodName] || noOp, 'collectionName', proxyName);
-      });
-    } else {
-      methods.each(function (methodName) {
-        proxy[methodName] = _proxyMethod(collection, collection[methodName] || noOp, 'moduleName', proxyName);
-      });
-      proxy.subcollection = function(collectionName) {
-        return _proxyCollection(this, collectionName, true);
-      };
-    }
-    return proxy;
-  };
 
-})();
+
+
+
+////////////////////
+/*********/})();/**/
+////////////////////

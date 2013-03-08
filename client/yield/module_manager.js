@@ -1,4 +1,7 @@
-(function () {
+////////////////////
+/**/(function(){/**/
+////////////////////
+
 
   Impact._ModuleManagerConstructor = function () {
     // manager cache
@@ -19,15 +22,20 @@
       //TODO: also observe other things
       //      like changes / deletion etc.
       var self = this;
-      Modules.find({}).observe({
-        added: function (info) {
-          self.config[info.name] = {
-            moduleClass : info.moduleClass,
-          };
-          //----------------------------------------------------
-          self._pokeListeners(self._configListeners[info.name]);
+
+      ImpactSettings.find({}).observe({
+        added: function(settings) {
+          // Object.merge(self.config, settings.modules);
+          // console.log(self.config);
+          Object.keys(settings.modules).each(function(name){
+            self.config[name] = {
+              moduleClass: settings.modules[name],
+            };
+            self._pokeListeners(self._configListeners[name]);
+          });
         },
-      });
+      })
+
     },
 
     _pokeListeners: function (listeners, key) {

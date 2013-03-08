@@ -27,4 +27,8 @@
     Meteor._def_template(prefix + name, Handlebars.json_ast_to_func(template));
   }
 
-})();
+
+
+////////////////////
+/*********/})();/**/
+////////////////////

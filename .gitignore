@@ -1,8 +1,7 @@
 .DS_Store
 client/.DS_Store
-.plugins/*
-.plugins/m/*
 public/-/*
 public/-/m/blog/_/_.js
+server/-plugins/*
 
 public/-/m/blog/list/list._template.js

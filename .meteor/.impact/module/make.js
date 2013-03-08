@@ -11,7 +11,7 @@ var CODE_ROOT = '.impact/modules/';
 var CODE_ROOT_LENGTH = CODE_ROOT.length;
 
 var DEV_ROOT = 'public/-/m/';
-var SERVER_ROOT = '.plugins/m/';
+var SERVER_ROOT = 'server/-plugins/m/';
 var URL_ROOT = '/-/m/';
 
 
@@ -41,7 +41,6 @@ $functions(Source, {
     var ret = '';
 
     ret += "(function(){\n\n";                                                       // OPEN #1
-    //./
     ret += "new Impact.ModuleFactory('"+this.name+"',{\n";        // OPEN #2
 
     ret += "templates: {\n\n";
@@ -58,16 +57,22 @@ $functions(Source, {
 
     ret += "});\n";                                                   // CLOSE #2
     ret += "\n})();\n";                                               // CLOSE #1
-    ret += "console.log('END OF FILE REACHED');\n";
+    // ret += "console.log('END OF FILE REACHED');\n";
     return ret;
   },
   serverOutput: function() {
     var ret = '';
-    ret += "(function(){\n\n";                                                       // OPEN #1
-    //ret += "Impact.ModuleManager._registerModuleFactory('"+this.name+"',{\n";        // OPEN #2
+    ret += "(function(){";                                                       // OPEN #1
+    ret += "new Impact.ModuleFactory('"+this.name+"',{\n";        // OPEN #2
+    
+    ret += "loader:function(I){";
+    ret += "with(I){\n\n";
     ret += this.constructor;
-    //ret += "});\n";                                                   // CLOSE #2
-    ret += "\n})();\n";                                                // CLOSE #1
+    ret += "\n};";
+    ret += "},\n";
+
+    ret += "});";                                                   // CLOSE #2
+    ret += "})();\n";                                                // CLOSE #1
     return ret;
   },
 });
@@ -116,6 +121,8 @@ var compileDirectory = function(path, source) {//function(moduleName, directory,
 
 
 exports.make = function(name) {
+
+  if(name.startsWith('.')) return;
 
   console.log("==========================");
   console.log("  MAKE MODULE ["+name+"]");

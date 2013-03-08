@@ -1,7 +1,7 @@
 
 <template name="list">
   ARTICLE LIST WILL BE HERE
-  {{#each documents}}
+  {{#each articles}}
     {{> listEntry}}
   {{/each}}
 </template>
@@ -9,7 +9,7 @@
 
 <template name="listEntry">
   <div>
-    <a href="javascript: Meteor.Router.to('/{{mname}}/asdf/{{_id}}');">document: <span>{{head}}</span></a>
+    <a href="/{{M}}/{{hyphenize title}}/{{_id}}">document: <span>{{title}}</span></a>
   </div>
 </template>
 

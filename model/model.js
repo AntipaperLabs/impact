@@ -1,5 +1,15 @@
 
 /*
+  impact {
+    createdAt:
+    updatedAt:
+    createdBy:
+
+  }
+
+*/
+
+/*
 
   moduleName:
 
@@ -21,7 +31,7 @@
 
 */
 
-var Documents = new Meteor.Collection('documents');
+// var Documents = new Meteor.Collection('documents');
 
 
 /*
@@ -43,7 +53,7 @@ var Documents = new Meteor.Collection('documents');
   head:
   body:
 */
-var Versions = new Meteor.Collection('versions');
+// var Versions = new Meteor.Collection('versions');
 
 /*
   moduleName:
@@ -53,7 +63,7 @@ var Versions = new Meteor.Collection('versions');
   name:
   content:
 */
-var Notes = new Meteor.Collection('notes');
+// var Notes = new Meteor.Collection('notes');
 
 
 
@@ -62,14 +72,6 @@ var Notes = new Meteor.Collection('notes');
 
 */
 var Roles = new Meteor.Collection('roles');
-
-/*
-  name:
-  moduleClass:
-
-*/
-var Modules = new Meteor.Collection('modules');
-
 
 
 var ImpactSettings = new Meteor.Collection('impactData');

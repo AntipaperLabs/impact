@@ -25,13 +25,17 @@ Meteor.Router.add({
 
 Meteor.startup(function () {
   $(document).on('click', 'a[href]', function (event) {
-    var href = this.href;
-    var baseURL = window.location.protocol + '//' + window.location.host;
-    var match = href.match(baseURL + '(.*)');
-    if (match && match[1] !== undefined) {
-      Meteor.Router.to(match[1]);
-      if (event.preventDefault)
-        event.preventDefault();
+    console.log("EVENT FOUND", event.which);
+    if(event.which == 2) return false;
+    var href = this.getAttribute('href');
+    // console.log("h1", href);
+    // console.log("h2", $(this).attr('href'));
+    // console.log("h3", this.getAttribute('href'));
+    // var baseURL = window.location.protocol + '//' + window.location.host;
+    // var match = href.match(baseURL + '(.*)');
+    if(href.startsWith('/')) {
+      Meteor.Router.to(href);
+      if(event.preventDefault) event.preventDefault();
     }
   });
 });

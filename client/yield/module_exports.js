@@ -1,4 +1,6 @@
-(function () {
+////////////////////
+/**/(function(){/**/
+////////////////////
 
   Impact.ModuleExports = function (options) {
     options = options || {};
