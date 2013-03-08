@@ -142,6 +142,25 @@
       this.setCurrentModuleAndState(name, path, params);
     },
 
+
+    matchRoute: function(map) {
+      var self = this;
+
+
+      for(var key in map) {
+        // console.log("MROUTER test key:", key);
+        // if(!Impact.mrouter.match(array, key)) continue;
+        var value = map[key];
+        // console.log("MROUTER match found!", value);
+        if(typeof value == "string") return value;
+        // if(typeof value == "function") return value.apply(this, array);
+        continue;
+      }
+
+      return undefined;
+    },
+
+    
   });
 
   //TODO: also make params and queryDict reactive

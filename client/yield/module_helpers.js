@@ -18,10 +18,15 @@ Template.yield.helpers({
     // in order for paths put earlier in the router to work.
     // Is there another way?
     if (moduleName && module) {
-        // console.log(module);
+        // console.log("HLP: MODULE EXISTS. ", module);
+        // console.log("HLP: CURRENT STATE: ", state);
         if(module.routes) {
           var template = module.routes(state);
-          return Template['im-'+moduleName+'-'+template];
+          console.log("ROUTED TO IN-MODULE TEMPLATE ["+template+"]");
+          if(template)
+            return new Handlebars.SafeString(Template['im1-'+moduleName+'-'+template]());
+          else
+            return "WRONG TEMPLATE FOUND";
         }
         return new Handlebars.SafeString(module.render(state) || '');
       }

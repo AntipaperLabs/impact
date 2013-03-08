@@ -11,7 +11,7 @@ Impact.ModuleFactory = function(moduleClass, options){
   this.moduleClass = moduleClass;
   this.loader = options.loader;
 
-  this.prefix = 'im-' + moduleClass + '-';
+  this.prefix = 'im1-' + moduleClass + '-';
 
   Impact.ModuleFactories[moduleClass] = this;
 };
