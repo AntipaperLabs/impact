@@ -11,7 +11,7 @@ var CODE_ROOT = '.impact/modules/';
 var CODE_ROOT_LENGTH = CODE_ROOT.length;
 
 var DEV_ROOT = 'public/-/m/';
-var SERVER_ROOT = 'server/plugins/m/';
+var SERVER_ROOT = 'server/-plugins/m/';
 var URL_ROOT = '/-/m/';
 
 
@@ -62,11 +62,17 @@ $functions(Source, {
   },
   serverOutput: function() {
     var ret = '';
-    ret += "(function(){\n\n";                                                       // OPEN #1
-    //ret += "Impact.ModuleManager._registerModuleFactory('"+this.name+"',{\n";        // OPEN #2
+    ret += "(function(){";                                                       // OPEN #1
+    ret += "new Impact.ModuleFactory('"+this.name+"',{\n";        // OPEN #2
+    
+    ret += "loader:function(I){";
+    ret += "with(I){\n\n";
     ret += this.constructor;
-    //ret += "});\n";                                                   // CLOSE #2
-    ret += "\n})();\n";                                                // CLOSE #1
+    ret += "\n};";
+    ret += "},\n";
+
+    ret += "});";                                                   // CLOSE #2
+    ret += "})();\n";                                                // CLOSE #1
     return ret;
   },
 });

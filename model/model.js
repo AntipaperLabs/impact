@@ -63,7 +63,7 @@
   name:
   content:
 */
-var Notes = new Meteor.Collection('notes');
+// var Notes = new Meteor.Collection('notes');
 
 
 
@@ -78,7 +78,7 @@ var Roles = new Meteor.Collection('roles');
   moduleClass:
 
 */
-var Modules = new Meteor.Collection('modules');
+// var Modules = new Meteor.Collection('modules');
 
 
 
