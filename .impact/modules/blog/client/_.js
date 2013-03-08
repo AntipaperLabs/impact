@@ -18,26 +18,3 @@ exports.routes = function(state) {
                           }
   });
 }
-
-// exports.render = function(state) {
-
-//   //#  /                      -> list
-//   //#  /articleTitle/id       -> show
-//   //#  /articleTitle/id/edit  -> edit
-
-//   var template = state.matchRoute({
-//     '/':                  'list',
-//     '/:title/:id':        function(title, id) {
-//                             S('articleId', id);
-//                             return 'show';
-//                           },
-//     '/:title/:id/edit':   function(title, id) {
-//                             S('articleId', id);
-//                             return 'edit';
-//                           }
-//   });
-  
-//   if(!template) return "ERROR";
-//   return Template[template]();
-// };
-

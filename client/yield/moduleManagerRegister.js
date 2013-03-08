@@ -1,11 +1,7 @@
-<<<<<<< HEAD
-(function () {
-=======
 ////////////////////
 /**/(function(){/**/
 ////////////////////
 
->>>>>>> H-Root
 
   $functions(Impact._ModuleManagerConstructor, {
 
@@ -13,11 +9,6 @@
     //TODO: more inteligent comparision
 
     getInstancePrefix: function (name) {
-<<<<<<< HEAD
-      var value = (this._counters[name] || 0) + 1;
-      this._counters[name] = value;
-      return 'im-' + name + '-' + value.toString() + '-';
-=======
       // It starts with 1 now! Dislike.
       var value = (this._counters[name] || 0) + 1;
       this._counters[name] = value;
@@ -27,10 +18,12 @@
       // Module: news, collection: 0-0-data
       // ...wait, it still does not work!
       // Think of something better.
+
+      // ...but this does not make sense since value starts from 1...
+      // Oh well, we need to find another solution anyway.
       return (value)
               ? 'im' + value.toString() + '-' + name + '-'
               : 'im-' + name + '-';
->>>>>>> H-Root
     },
 
     registerFactory: function (moduleClass, factory) {
@@ -57,13 +50,6 @@
 
   });
 
-<<<<<<< HEAD
-})();
-=======
-
-
 ////////////////////
 /*********/})();/**/
 ////////////////////
->>>>>>> H-Root
-
