@@ -11,7 +11,7 @@ var CODE_ROOT = '.impact/modules/';
 var CODE_ROOT_LENGTH = CODE_ROOT.length;
 
 var DEV_ROOT = 'public/-/m/';
-var SERVER_ROOT = 'server/ZZZ-plugins/m/';
+var SERVER_ROOT = 'server/-plugins/m/';
 var URL_ROOT = '/-/m/';
 
 
