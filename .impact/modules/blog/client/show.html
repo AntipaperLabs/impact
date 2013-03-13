@@ -7,12 +7,16 @@
       {{#unless editing}}
         <h1>{{title}}</h1>
         {{#each chunks}}
-          {{ShowChunk}}
+          <div class="chunk" data-type="{{type}}">
+            {{ShowChunk}}
+          </div>
         {{/each}}
       {{else}}
         <h1>{{title}}</h1>
         {{#each chunks}}
-          {{EditChunk}}
+          <div class="chunk" data-type="{{type}}">
+            {{EditChunk}}
+          </div>
         {{/each}}
       {{/unless}}
     </div>

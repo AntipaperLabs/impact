@@ -14,8 +14,16 @@ Template.show.events({
   'click input[value=edit]': function () {
     S('editing', true);
   },
-  'click input[value=save]': function () {
-    console.log(this);
+  'click input[value=save]': function (event, template) {
     S('editing', false);
+    var body = [];
+    template.findAll('.chunk').forEach(function (node) {
+      var type = node.getAttribute('data-type');
+      body.push({
+        type    : type,
+        content : Module.getChunkContent(node, type),
+      });
+    });
+    Articles.update({_id:this._id},{$set:{body:body}});
   },
 });
