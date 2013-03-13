@@ -20,4 +20,20 @@
     return new Handlebars.SafeString(renderTemplate(this, 'chunk-' + this.type + '-edit'));
   });
 
+  //XXX: using this method to define chunk indices is clearly not good enough
+  Handlebars.registerHelper('chunks', function () {
+    if (Array.isArray(this.body)) {
+      return this.body.map(function (chunk, index) {
+        chunk.index = index;
+        return chunk;
+      });
+    } else if (Object.isString(this.body)) {
+      return [{
+        type: 'text',
+        content: this.body,
+      }];
+    }
+    return [];
+  });
+
 })();

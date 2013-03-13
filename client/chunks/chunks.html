@@ -1,22 +1,35 @@
 <template name="chunk-text-show">
-<p>{{pagedown content}}</p>
+  <div class="chunk" data-index="{{index}}">
+    <p>{{pagedown content}}</p>
+  </div>
 </template>
 
 <template name="chunk-text-edit">
-<textarea>{{content}}</textarea>
+  <div class="chunk" data-index="{{index}}">
+    <textarea>{{content}}</textarea>
+  </div>
 </template>
 
 <template name="chunk-photo-show">
+  <div class="chunk" data-index="{{index}}">
+  </div>
 </template>
 
 <template name="chunk-photo-edit">
+  <div class="chunk" data-index="{{index}}">
+  </div>
 </template>
 
 <template name="chunk-math-show">
-{{content}}
+  <div class="chunk" data-index="{{index}}">
+    {{pagedown content}}
+  </div>
 </template>
 
 <template name="chunk-math-edit">
+  <div class="chunk" data-index="{{index}}">
+    <textarea>{{content}}</textarea>
+  </div>
 </template>
 
 <!--

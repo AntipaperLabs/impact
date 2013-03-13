@@ -2,11 +2,19 @@
   {{#with article}}
     <div><a href="/{{M}}" class="someHome">HOME</a></div>
     <div class="well span6">
-      <h1>{{title}}</h1>
-      {{#each body}}
-        {{ShowChunk}}
-      {{/each}}
+      <input type="button" value="edit">
+      <input type="button" value="save">
+      {{#unless editing}}
+        <h1>{{title}}</h1>
+        {{#each chunks}}
+          {{ShowChunk}}
+        {{/each}}
+      {{else}}
+        <h1>{{title}}</h1>
+        {{#each chunks}}
+          {{EditChunk}}
+        {{/each}}
+      {{/unless}}
     </div>
   {{/with}}
-
 </template>
