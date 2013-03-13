@@ -39,8 +39,15 @@
   Template['chunk-math-show'].rendered = function () {
     var self = this;
     requireMathJax(function (MathJax) {
+      var nodes = [];
+      try {
+        nodes = self.findAll();
+      } catch (err) { // node not in DOM? ignore
+        return err;
+      }
+      // go on ...
       MathJax.Hub.Queue(
-        ["Typeset", MathJax.Hub, self.findAll()]
+        ["Typeset", MathJax.Hub, nodes]
       );
     });
   };
