@@ -1,5 +1,4 @@
 
-
 Template.base.items = ['a','b','c','d'];
 
 Template.base.documents = function () {
