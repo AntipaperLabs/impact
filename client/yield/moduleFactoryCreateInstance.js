@@ -63,6 +63,7 @@
         Meteor: {},
         Session: {},
         Impact: {},
+        Module: Impact.createHelpersFor(instance),
         //...
       };
 
