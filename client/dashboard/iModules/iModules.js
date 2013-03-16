@@ -1,4 +1,4 @@
 Template.iModules.modules = function() {
-  return Modules.find({});
+  return ImpactSettings.findOne({}).modules;
 };
 
