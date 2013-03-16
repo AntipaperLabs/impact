@@ -1,5 +1,7 @@
 Methods({
-  'createArticle': function(callback, article) {
+  'createArticle': function(article) {
+    console.log("INSIDE OF METHOD CREATE ARTICLE");
+    console.log("ARTICLE:",article);
     if(Permissions().deny('createArticle')) {
       throw 'You are not allowed to create articles';
     }

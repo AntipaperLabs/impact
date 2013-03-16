@@ -31,7 +31,7 @@ $functions(Impact.ModuleFactory, {
       for(var functionName in dict) {
         var ob = {};
         ob[prefix + functionName] = dict[functionName];
-        console.log("CREATE FUNCTION: "+functionName);
+        console.log("CREATE FUNCTION: "+prefix+functionName);
         Meteor.methods(ob);
       }
     };
