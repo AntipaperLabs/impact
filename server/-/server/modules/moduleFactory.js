@@ -27,8 +27,25 @@ $functions(Impact.ModuleFactory, {
       return new Meteor.Collection(prefix + name);
     };
 
+    var _Methods = function(dict) {
+      for(var functionName in dict) {
+        var ob = {};
+        ob[prefix + functionName] = dict[functionName];
+        console.log("CREATE FUNCTION: "+functionName);
+        Meteor.methods(ob);
+      }
+    };
+
+    var _Permissions = function() {
+      this.allow = function() {console.log("["+prefix+"]: ALLOW?");}
+      this.deny = function() {console.log("["+prefix+ "]: DENY?");}
+    };
+
     this.loader({
+      Name: moduleName,
       Collection: _Collection,
+      Methods: _Methods,
+      Permissions: _Permissions,
     });
   },
 });

@@ -1,9 +1,11 @@
 
 <template name="list">
-  ARTICLE LIST WILL BE HERE
-  {{#each articles}}
-    {{> listEntry}}
-  {{/each}}
+  <div class="well">
+    <a href="/{{M}}/new" class="button">NEW ARTICLE</a>
+    {{#each articles}}
+      {{> listEntry}}
+    {{/each}}
+  </div>
 </template>
 
 

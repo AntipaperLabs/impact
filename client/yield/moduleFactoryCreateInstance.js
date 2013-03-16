@@ -43,6 +43,29 @@
         return c;
       };
 
+      var _Method = function() {
+        
+        var name = prefix + arguments[0];
+        console.log("CALLING METHOD",name);
+        console.log(arguments[0]);
+        var args = Array.prototype.splice.call(arguments, 0);
+        args.splice(0, 1);
+        var last = args[args.length - 1];
+        var callback = undefined;
+        if(typeof last === 'function') {
+          callback = last;
+          args.splice(args.length - 1, 1);
+        }
+        // console.log(typeof last);
+        console.log("WITH ARGUMENTS", args);
+        console.log("AND CALLBACK", callback);
+        Meteor.apply(name, args, callback);
+        // Meteor.apply(arguments[0], arguments)
+        // arguments[0] = prefix + arguments[0];
+        // console.log(arguments[0]);
+        // Meteor.call.call(arguments);
+      };
+
       // prepare exports object
       var exports = new Impact.ModuleExports ();
       // feed with factory errors
@@ -55,6 +78,7 @@
         S: _S,
         Template: _Template,
         Collection: _CreateCollection,
+        Method: _Method,
         // Documents: _proxyCollection(Documents, name),
         // Versions: _proxyCollection(Versions, name),
         // Notes: _proxyCollection(Notes, name),
