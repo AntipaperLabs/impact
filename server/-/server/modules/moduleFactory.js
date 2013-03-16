@@ -39,6 +39,7 @@ $functions(Impact.ModuleFactory, {
     var _Permissions = function() {
       this.allow = function() {console.log("["+prefix+"]: ALLOW?");}
       this.deny = function() {console.log("["+prefix+ "]: DENY?");}
+      return this;
     };
 
     this.loader({
