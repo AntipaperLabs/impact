@@ -25,12 +25,10 @@
 
       ImpactSettings.find({}).observe({
         added: function(settings) {
-          // Object.merge(self.config, settings.modules);
+          Object.merge(self.config, settings.modules);
           // console.log(self.config);
           Object.keys(settings.modules).each(function(name){
-            self.config[name] = {
-              moduleClass: settings.modules[name],
-            };
+            // self.config[name] = settings.modules[name];
             self._pokeListeners(self._configListeners[name]);
           });
         },

@@ -130,9 +130,18 @@ Meteor.startup(function(){
     ImpactSettings.insert({
       _id: '0',
       modules: {
-        'news': 'blog',
-        'page': 'static',
-        'fake': 'fake',
+        'news': {
+          name: 'news',
+          moduleClass: 'blog',
+        },
+        'page': {
+          name: 'page',
+          moduleClass: 'static',
+        },
+        'fake': {
+          name: 'fake',
+          moduleClass: 'fake'
+        },
       },
     });
   }
