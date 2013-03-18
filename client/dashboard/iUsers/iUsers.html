@@ -2,6 +2,13 @@
   <h1>
     Users
   </h1><hr/>
+  {{#each roles}}
+    {{> iUsers_role}}
+  {{/each}}
+</template>
+
+
+<template name="iUsers_old">
   <div class="row-fluid">
     {{#each users}}
       {{> iUsers_user}}
@@ -10,8 +17,25 @@
 </template>
 
 
+<template name="iUsers_role">
+  <div class="row-fluid">
+    <div class="span1">
+      <div class="well">
+        {{name}}
+      </div>
+    </div>
+    <div class="span11">
+      <div class="well">
+        {{#each users}}
+          {{> iUsers_user}}
+        {{/each}}
+      </div>
+    </div>
+  </div>
+</template>
+
 <template name="iUsers_user">
-  <div class="span2">
+  <div class="span3">
     <div class="well">
       <img src="http://www.gravatar.com/avatar/{{gravatar}}?s=60&d=identicon"/>
       {{username}}

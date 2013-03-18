@@ -115,10 +115,53 @@ var fakeUser = function(name, role) {
 Meteor.startup(function(){
   
   if(!Meteor.users.findOne({})) {
-    Roles.insert({name: 'owner', special: true});
-    Roles.insert({name: 'admin'});
-    Roles.insert({name: 'user', special: true});
-    Roles.insert({name: 'guest', special: true});
+    
+    Roles.insert({
+      name: 'owner',
+      special: true,
+      globalPermissions: {
+        viewHome:       true,
+        viewDashboard:  true,
+        editUserRoles:  true,
+        editModules:    true,
+        deleteModules:  true,
+      },
+    });
+
+    Roles.insert({
+      name: 'admin',
+      globalPermissions: {
+        viewHome:       true,
+        viewDashboard:  true,
+        editUserRoles:  true,
+        editModules:    true,
+        deleteModules:  false,
+      },
+    });
+    
+    Roles.insert({
+      name: 'user',
+      special: true,
+      globalPermissions: {
+        viewHome:       true,
+        viewDashboard:  false,
+        editUserRoles:  false,
+        editModules:    false,
+        deleteModules:  false,
+      },
+    });
+
+    Roles.insert({
+      name: 'guest',
+      special: true,
+      globalPermissions: {
+        viewHome:       true,
+        viewDashboard:  false,
+        editUserRoles:  false,
+        editModules:    false,
+        deleteModules:  false,
+      },
+    });
 
     fakeUser('Owner', 'owner');
     fakeUser('Admin', 'admin');

@@ -1,3 +1,38 @@
 <template name="iRoles">
-  iRoles
+  <span class="btn btn-primary">New Role</span>
+  <div class="well">
+    <p>
+      <span class="btn btn-primary">New Role</span>
+    </p>
+
+    <table>
+      <tr>
+        <td></td>
+        {{#each roles}}
+          <td>{{name}}</td>
+        {{/each}}
+      </tr>
+      {{#each permissions}}
+        {{> iRoles_permissionRow}}
+      {{/each}}
+  </table>
+  </div>
+  
 </template>
+
+
+<template name="iRoles_permissionRow">
+  <tr>
+    <td>{{label}}</td>
+    {{#each roles}}
+      <td>?</td>
+    {{/each}}
+  </tr>
+</template>
+<!-- 
+<template name="iRoles_role">
+  <div class="well">
+    {{name}}
+  </div>
+</template>
+ -->

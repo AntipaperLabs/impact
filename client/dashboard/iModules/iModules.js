@@ -1,3 +1,7 @@
+////////////////////
+/**/(function(){/**/
+////////////////////
+
 // Template.iModules.settings = function() {
   
 //   var x = ImpactSettings.findOne({});
@@ -13,3 +17,9 @@ Template.iModules.modules = function() {
   console.log("GOT Modules:", y);
   return y;
 };
+
+
+
+////////////////////
+/*********/})();/**/
+////////////////////

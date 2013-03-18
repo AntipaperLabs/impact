@@ -1,3 +1,9 @@
+////////////////////
+/**/(function(){/**/
+////////////////////
+
+
+
 Handlebars.registerHelper('hyphenize', function(string) {
   return string.toLowerCase()
                 // replace all non-alphanumeric characters with the hyphen
@@ -7,3 +13,8 @@ Handlebars.registerHelper('hyphenize', function(string) {
                 // trim leading and trailing hyphens
                 .replace(/^-+|-+$/g, ''); 
 });
+
+
+////////////////////
+/*********/})();/**/
+////////////////////

@@ -1,3 +1,8 @@
+////////////////////
+/**/(function(){/**/
+////////////////////
+
+
 Handlebars.registerHelper('applicationLoaded', function(options){
   return options.fn(this);
   // if(ImpactData.findOne({})) return options.fn(this);
@@ -5,3 +10,9 @@ Handlebars.registerHelper('applicationLoaded', function(options){
 
   // return options.inverse(this);
 });
+
+
+////////////////////
+/*********/})();/**/
+////////////////////
+
