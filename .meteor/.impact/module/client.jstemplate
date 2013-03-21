@@ -1,0 +1,13 @@
+(function(){
+  new Impact.ModuleFactory('##<# this.name; #>##',{
+    templates: {
+      ##<# this.templates; #>##
+    },
+    loader: function(I) {
+      with(I){
+        ##<# this.constructor #>##
+      }
+    },
+    manifest: ##<# this.manifest #>##,
+  });
+})();

@@ -1,7 +1,7 @@
 {
   "permissions": {
-    "createArticle": {},
-    "createComment": {},
-    "editComments": {},
+    "createArticle": {"name": "createArticle", "label": "Create Article"},
+    "createComment": {"name": "createComment", "label": "Create Comment"},
+    "editComments": {"name": "editComments", "label": "Edit Comments"},
   }
 }
