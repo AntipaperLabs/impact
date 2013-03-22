@@ -1,165 +1,135 @@
+/*
+  Compile module code
+*/
+
 require('sugar');
 require('../lib/oop.js');
 
 var fs = require('fs');
-var fsx = require('../fsx');
-var proc = require('child_process');
-var handlebars = require('./template.js');
+var pathTools = require('path');
+var fsx = require('../lib/fsx');
+var handlebarsTools = require('./template');
+var C = require('./config');
+var sourceTools = require('./source');
+var sourceType = sourceTools.type;
 
 
-var CODE_ROOT = '.impact/modules/';
-var CODE_ROOT_LENGTH = CODE_ROOT.length;
+/*
+  Add code from file depending on its extension
+*/
+var compileFileWithExtension = {
+  '.js': function(header, code, tailer, filename, source, type) {
+    source.addCode(header + code + tailer, type);
+  },
 
-var DEV_ROOT = 'public/-/m/';
-var SERVER_ROOT = 'server/-plugins/m/';
-var URL_ROOT = '/-/m/';
-
-
-var COMMENT_FILE_BREAK = "\n////////////////////////////////////////\n";
-
-
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-
-
-var Source = function(name) {
-  this.name = name;
-  this.templates = '';
-  this.constructor = '';
-  this.dashboard = '';
+  '.html': function(header, code, tailer, filename, source, type) {
+    if(type === sourceType.client) {
+      code = handlebarsTools.compile(code, filename);
+      source.addCode(code + "\n", sourceType.clientTemplate);
+    }
+  },
 };
 
-$functions(Source, {
-  addCode: function(text) {
-    this.constructor += text;
-  },
-  addTemplates: function(text) {
-    this.templates += text;
-  },
-  output: function() {
-    var ret = '';
+/*
+  Compile source code from file
+*/
+var compileFile = function(path, source, type) {
+  var fileExtension = pathTools.extname(path).toLowerCase();
+  if(Object.keys(compileFileWithExtension).indexOf(fileExtension) === -1) return;
 
-    ret += "(function(){\n\n";                                                       // OPEN #1
-    ret += "new Impact.ModuleFactory('"+this.name+"',{\n";        // OPEN #2
-
-    ret += "templates: {\n\n";
-    ret += this.templates;
-    ret += "\n},\n\n";
-
-    //ret += "loader: function(exports, Name, S, Template, Documents, Versions, Notes) {\n\n";
-    ret += "loader: function(I) {\n\n";
-    ret += "with(I){\n\n";
-    ret += this.constructor;
-    ret += "\n};\n";
-    ret += "\n},\n\n";
-
-
-    ret += "});\n";                                                   // CLOSE #2
-    ret += "\n})();\n";                                               // CLOSE #1
-    // ret += "console.log('END OF FILE REACHED');\n";
-    return ret;
-  },
-  serverOutput: function() {
-    var ret = '';
-    ret += "(function(){";                                                       // OPEN #1
-    ret += "new Impact.ModuleFactory('"+this.name+"',{\n";        // OPEN #2
-    
-    ret += "loader:function(I){";
-    ret += "with(I){\n\n";
-    ret += this.constructor;
-    ret += "\n};";
-    ret += "},\n";
-
-    ret += "});";                                                   // CLOSE #2
-    ret += "})();\n";                                                // CLOSE #1
-    return ret;
-  },
-});
-
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-
-var compileFile = function(path, source) {
-  console.log(path);
-  if(!(path.endsWith('.js') || path.endsWith('.html'))) return;
-
-  var filename = path.substring(CODE_ROOT_LENGTH);
+  var filename = path.substring(C.sourceCodeRoot.length);
   var code = fs.readFileSync(path, 'utf8');
-  var header = "\n" + COMMENT_FILE_BREAK +
+  var header = "\n" + C.fileBreakComment +
                "// "+ filename +
-               COMMENT_FILE_BREAK + "\n\n\n";
-  var tailer = "\n\n\n\n";
+               C.fileBreakComment + "\n\n";
+  var tailer = "\n\n" + C.fileBreakComment + "\n";
 
-  if(path.endsWith('.js')) {
-    source.addCode(header + code + tailer);
-  } else
-  if(path.endsWith('.html')) {
-    code = handlebars.compile(code, filename);
-    source.addTemplates(code + "\n");
-  }
-
+  console.log("COMPILE FILE", filename);
+  compileFileWithExtension[fileExtension](header, code, tailer, filename, source, type);
 }
 
-var compileDirectory = function(path, source) {//function(moduleName, directory, list) {
+/*
+  Compile source code from directory
+*/
+var compileDirectory = function(path, source, type) {
   if(!fs.existsSync(path)) return;
-  var dirName = path.substring(CODE_ROOT_LENGTH);
+  console.log("COMPILE DIRECTORY", path);
+
   fs.readdirSync(path).forEach(function(fileLastName) {
+    if(fileLastName.startsWith('.')) return;
     var filename = path + '/' + fileLastName;
+
     if(fs.statSync(filename).isDirectory()) {
-      compileDirectory(filename, source);
-      // makeDirectory(moduleName, filename, list);
+      compileDirectory(filename, source, type);
     } else {
-      compileFile(filename, source);
-      // makeFile(moduleName, filename, list);
+      compileFile(filename, source, type);
     }
   });
 }
 
 
 
-
+/*
+  Compile the whole module
+*/
 exports.make = function(name) {
+  C.initialize();
 
   if(name.startsWith('.')) return;
 
   console.log("==========================");
   console.log("  MAKE MODULE ["+name+"]");
   console.log("==========================");
-  var list = [];
 
 
-  var source = new Source(name);
-  compileDirectory(CODE_ROOT + name + "/shared", source);
-  compileDirectory(CODE_ROOT + name + "/client", source);
-  var dashSource = new Source(name);
-  compileDirectory(CODE_ROOT + name + "/dashboard", dashSource);
 
-  source.templates += dashSource.templates;
-  source.dashboard = dashSource.constructor;
+  var source = new sourceTools.Source(name);
 
-  var serverSource = new Source(name);
-  compileDirectory(CODE_ROOT + name + "/shared", serverSource);
-  compileDirectory(CODE_ROOT + name + "/server", serverSource);
+  compileDirectory(C.sourceCodeRoot + name + '/shared', source, sourceType.client);
+  compileDirectory(C.sourceCodeRoot + name + '/shared', source, sourceType.server);
+  compileDirectory(C.sourceCodeRoot + name + '/client', source, sourceType.client);
+  compileDirectory(C.sourceCodeRoot + name + '/server', source, sourceType.server);
+
+  if(fs.existsSync(C.sourceCodeRoot + name + '/manifest.json')) {
+    source.manifest = fs.readFileSync(C.sourceCodeRoot + name + '/manifest.json', 'utf8');
+  }
+
+  fs.writeFile(C.clientOutputRoot + name + ".js", source.clientOutput());
+  fs.writeFile(C.serverOutputRoot + name + ".js", source.serverOutput());
+
+  // var list = [];
 
 
-  // makeDirectory(name, CODE_ROOT + name, );
+  // var source = new Source(name);
+  // compileDirectory(CODE_ROOT + name + "/shared", source);
+  // compileDirectory(CODE_ROOT + name + "/client", source);
+  // var dashSource = new Source(name);
+  // compileDirectory(CODE_ROOT + name + "/dashboard", dashSource);
 
-  // var dev = "";
-  // list.forEach(function(file){
-  //   dev += "require(" +
-  //          "['" + file + "']," +
-  //          "function(){\n";
-  // });
-  // dev += "console.log('MODULE LOADED: ["+name+"]');\n";
-  // dev += "Impact.loadedModuleConstructor('"+name+"');\n";
-  // list.forEach(function(file){
-  //   dev += "});";
-  // });
-  // dev += "\n";
+  // source.templates += dashSource.templates;
+  // source.dashboard = dashSource.constructor;
 
-  fs.writeFile(DEV_ROOT + name + ".js", source.output());
-  fs.writeFile(SERVER_ROOT + name + ".js", serverSource.serverOutput());
+  // var serverSource = new Source(name);
+  // compileDirectory(CODE_ROOT + name + "/shared", serverSource);
+  // compileDirectory(CODE_ROOT + name + "/server", serverSource);
+
+
+  // // makeDirectory(name, CODE_ROOT + name, );
+
+  // // var dev = "";
+  // // list.forEach(function(file){
+  // //   dev += "require(" +
+  // //          "['" + file + "']," +
+  // //          "function(){\n";
+  // // });
+  // // dev += "console.log('MODULE LOADED: ["+name+"]');\n";
+  // // dev += "Impact.loadedModuleConstructor('"+name+"');\n";
+  // // list.forEach(function(file){
+  // //   dev += "});";
+  // // });
+  // // dev += "\n";
+
+  // fs.writeFile(DEV_ROOT + name + ".js", source.output());
+  // fs.writeFile(SERVER_ROOT + name + ".js", serverSource.serverOutput());
 }
 
