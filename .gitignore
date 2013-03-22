@@ -3,5 +3,5 @@ client/.DS_Store
 public/-/*
 public/-/m/blog/_/_.js
 server/-plugins/*
-
+server/\-plugins/m/*
 public/-/m/blog/list/list._template.js

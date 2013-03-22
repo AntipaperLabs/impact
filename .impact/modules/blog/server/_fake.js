@@ -1,6 +1,6 @@
 if(!Articles.findOne({})) {
 
-  // console.log("CREATE FAKE ARTICLES IN ", Articles);
+  console.log("CREATE FAKE ARTICLES");
 
   Articles.insert({
     title: 'How to recognize different kinds of trees?',
