@@ -71,9 +71,17 @@
   owner | user | guest
 
 */
-Roles = new Meteor.Collection('roles');
 
-Modules = new Meteor.Collection('modules');
+
+define('model', [], function () {
+  return {
+    roles   : new Meteor.Collection('roles'),
+    modules : new Meteor.Collection('modules'),
+  };
+});
+
+Roles = require('model').roles;
+Modules = require('model').modules;
 
 ImpactSettings = new Meteor.Collection('impactData');
 

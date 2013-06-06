@@ -1,5 +1,4 @@
-<template name="loader2">
-
+<template name="loader">
   <div class='b-loader-messages'>
     {{#if errors}}
       <p>ERROR: loading module failed due to the follwoing reasons:</p>
@@ -17,5 +16,8 @@
       <p><img alt="loading..." src='/-impact/loader.png'></p>
     {{/if}}
   </div>
-  
+</template>
+
+<template name="errors">
+  <p>An error occured while loading module `{{name}}`</p>
 </template>

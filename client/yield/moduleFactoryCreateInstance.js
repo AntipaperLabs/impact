@@ -9,7 +9,7 @@
   $functions(Impact.ModuleFactory, {
 
     // CREATE MODULE INSTANCE
-    createInstance: function (name, options) {
+    create: function (name, options) {
       options = options || {};
       //-------------------------------------
       options.moduleClass = this.moduleClass;

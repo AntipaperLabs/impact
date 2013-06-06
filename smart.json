@@ -3,6 +3,7 @@
     "router": {},
     "sugar": {},
     "gravatar": {},
-    "module-loader": {}
+    "module-loader": {},
+    "define": {}
   }
 }
