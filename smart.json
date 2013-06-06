@@ -1,7 +1,8 @@
 {
   "packages": {
-    "router": "0.3.5",
+    "router": {},
     "sugar": {},
-    "gravatar": {}
+    "gravatar": {},
+    "module-loader": {}
   }
 }
