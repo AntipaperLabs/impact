@@ -100,7 +100,10 @@ Handlebars.registerHelper('impactIndex', function() {
   
     var route = module.module.routes(state1);
 
-    return module.module.render(route.view, route.data);
+    if (route.view)
+      return module.module.render(route.view, route.data);
+    
+    return new Handlebars.SafeString(Template.error404());
   }
 
 });
