@@ -1,0 +1,12 @@
+/*
+.row-multi {
+
+  [class*="span"]:first-child {
+    margin-left: 0;
+  }
+
+  [class*="span"] {
+    margin-left: 0;
+    background-color: red;
+  }
+}*/

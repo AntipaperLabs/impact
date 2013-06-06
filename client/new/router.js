@@ -1,5 +1,12 @@
 
 
+//Handlebars.registerHelper('display')
+
+
+
+
+
+
 
 
 
