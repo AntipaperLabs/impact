@@ -1,2 +1,2 @@
 
-Documents = Collection ("documents");
+var Documents = Collection ("documents");

@@ -16,3 +16,5 @@ accounts-ui
 module-loader
 define
 reactive-dict
+showdown
+mathjax

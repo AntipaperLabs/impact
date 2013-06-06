@@ -1,0 +1,67 @@
+
+<template name="chunk-section-show">
+  <div class="page-header">
+    <h1>{{title}} <small>{{content}}</small></h1>
+  </div>
+</template>
+
+<template name="chunk-section-edit">
+  <p><input type="text" placeholder="Section title" value="{{title}}"></p>
+  {{#ace mode='markdown'}}
+    <textarea id="{{chunkId}}" name="{{name}}">{{content}}</textarea>
+  {{/ace}}
+</template>
+
+<template name="chunk-markdown-show">
+  {{#markdown}}{{content}}{{/markdown}}
+</template>
+
+<template name="chunk-markdown-edit">
+  {{#ace mode='markdown'}}
+    <textarea id="{{chunkId}}" name="{{name}}">{{content}}</textarea>
+  {{/ace}}
+</template>
+
+<template name="chunk-text-show">
+  <div>
+    {{#markdown}}{{content}}{{/markdown}}
+  </div>
+</template>
+
+<template name="chunk-text-edit">
+  <p><textarea>{{content}}</textarea></p>
+</template>
+
+<template name="chunk-photo-show">
+</template>
+
+<template name="chunk-photo-edit">
+</template>
+
+<template name="chunk-math-show">
+  {{#mathjax}}
+    {{#markdown}}{{content}}{{/markdown}}
+  {{/mathjax}}
+</template>
+
+<template name="chunk-math-edit">
+  {{#ace mode='markdown'}}
+    <textarea id="{{chunkId}}" name="{{name}}">{{content}}</textarea>
+  {{/ace}}
+</template>
+
+<!--
+
+text
+code
+photo
+multiphoto
+video
+audio
+file
+math
+chart
+table
+list
+
+-->

@@ -181,6 +181,10 @@ Methods({
 
 
 
+Publish('articles', function () {
+  return Articles.find({});
+});
+
 
 
 ////////////////////////////////////////
@@ -197,7 +201,8 @@ Methods({
     "createComment": {"name": "createComment", "label": "Create Comment"},
     "editComments": {"name": "editComments", "label": "Edit Comments"},
   }
-},
+}
+,
 ////////////////////////////////////////////////////////////////////////////////
   });
 })();

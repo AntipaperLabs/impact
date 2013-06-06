@@ -15,17 +15,30 @@
       {{#each permissions}}
         {{> iRoles_permissionRow}}
       {{/each}}
+
+      {{#each modules}}
+        {{> iRoles_module}}
+      {{/each}}
   </table>
   </div>
   
 </template>
 
+<template name="iRoles_module">
+  <tr>
+    <td>{{name}}</td>
+    {{#each roles}}<td></td>{{/each}}
+  </tr>
+  {{#each permissions}}
+    {{> iRoles_permissionRow}}
+  {{/each}}
+</template>
 
 <template name="iRoles_permissionRow">
   <tr>
     <td>{{label}}</td>
     {{#each roles}}
-      <td>?</td>
+      <td><input type="checkbox"/></td>
     {{/each}}
   </tr>
 </template>

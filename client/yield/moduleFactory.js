@@ -12,23 +12,12 @@ Impact.ModuleFactory = function (type, options) {
 
 Impact.collections = {};
 
-var counters = {};
-
-var getPrefix = function (name) {
-  if (counters[name] === undefined)
-    counters[name] = 0;
-  return 'im' + (++counters[name]) + '-' + name + '-';
-};
-
 $functions(Impact.ModuleFactory, {
 
   // CREATE MODULE INSTANCE
   create: function (name, callback) {
-    //----------------------------------------------------
-    // a module instance created this way is automatically
-    // registered int the module manager
-    //----------------------------------
-    var prefix = getPrefix();
+    //TODO: later change it to something different
+    var prefix = 'im1' + '-' + name + '-';
     var _Template = {};
 
     // install templates in global context
@@ -75,11 +64,17 @@ $functions(Impact.ModuleFactory, {
       // Meteor.call.call(arguments);
     };
 
+    var _Subscribe = function () {
+      if (arguments.length > 0)
+        arguments[0] = prefix + arguments[0];
+      Meteor.subscribe.apply(Meteor, arguments);
+    };
+
     // prepare exports object
     var exports = {};
 
-    // prepare module context
-    var context = {
+    //Q: use try/catch block here ?
+    this.loader({
       exports: exports,
       Name: name,
       S: _S,
@@ -94,11 +89,9 @@ $functions(Impact.ModuleFactory, {
       Meteor: {},
       Session: {},
       Impact: {},
+      Subscribe: _Subscribe,
       //...
-    };
-
-    //Q: use try/catch block here ?
-    this.loader(context);
+    });
 
     callback && callback();
 
@@ -106,3 +99,7 @@ $functions(Impact.ModuleFactory, {
   },
 
 });
+
+
+
+

@@ -42,11 +42,18 @@ $functions(Impact.ModuleFactory, {
       return this;
     };
 
+    var _Publish = function () {
+      if (arguments.length > 0)
+        arguments[0] = prefix + arguments[0];
+      Meteor.publish.apply(Meteor, arguments);
+    };
+
     this.loader({
       Name: moduleName,
       Collection: _Collection,
       Methods: _Methods,
       Permissions: _Permissions,
+      Publish: _Publish,
     });
   },
 });

@@ -5,32 +5,6 @@
 
 <body>
 
-  {{#applicationLoaded}}
-    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-    
-    {{#if currentUser}}
-      {{> userBar}}
-    {{/if}}
-    
-    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-    
-    <div class="container-fluid">
-      <div class="row-fluid">
-        {{renderPage}}
-      </div><!--/row-->
-
-      <hr>
-
-      <footer>
-        <p>&copy; Company 2013</p>
-      </footer>
-    </div><!--/.fluid-container-->
-    
-    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-  {{else}}
-    <div class="hero-unit">
-      METEOR APPROACHING...
-    </div>
-  {{/applicationLoaded}}
+  {{impactIndex}}
 
 </body>
