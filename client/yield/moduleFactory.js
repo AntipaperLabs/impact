@@ -64,6 +64,12 @@ $functions(Impact.ModuleFactory, {
       // Meteor.call.call(arguments);
     };
 
+    var _Subscribe = function () {
+      if (arguments.length > 0)
+        arguments[0] = prefix + arguments[0];
+      Meteor.subscribe.apply(Meteor, arguments);
+    };
+
     // prepare exports object
     var exports = {};
 
@@ -83,6 +89,7 @@ $functions(Impact.ModuleFactory, {
       Meteor: {},
       Session: {},
       Impact: {},
+      Subscribe: _Subscribe,
       //...
     });
 
