@@ -71,8 +71,9 @@
   owner | user | guest
 
 */
-var Roles = new Meteor.Collection('roles');
+Roles = new Meteor.Collection('roles');
 
+Modules = new Meteor.Collection('modules');
 
-var ImpactSettings = new Meteor.Collection('impactData');
+ImpactSettings = new Meteor.Collection('impactData');
 

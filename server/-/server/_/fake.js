@@ -110,7 +110,13 @@ var fakeUser = function(name, role) {
   }});
 };
 
-
+var fakeModule = function (name, type) {
+  Modules.insert({
+    name: name,
+    type: type,
+    fake: true,
+  });
+};
 
 Meteor.startup(function(){
   
@@ -169,25 +175,10 @@ Meteor.startup(function(){
     fakeUser('Guest', 'guest');
   }
 
-  if(!ImpactSettings.findOne({})) {
-    ImpactSettings.insert({
-      _id: '0',
-      modules: {
-        'news': {
-          name: 'news',
-          moduleClass: 'blog',
-        },
-        'page': {
-          name: 'page',
-          moduleClass: 'static',
-        },
-        'fake': {
-          name: 'fake',
-          moduleClass: 'fake'
-        },
-      },
-    });
-  }
+  Modules.remove({fake:true});
+
+  fakeModule('fake', 'fake');
+  fakeModule('news', 'blog');
 
 });
 
