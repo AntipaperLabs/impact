@@ -21,7 +21,7 @@ Template.iModules.moduleTypes = function() {
 };
 
 Template.iModules.events({
-	'click button.moduleButton': function() {
+	'click button.moduleButton': function(event) {
 
 	var x = ".popup[name="+event.target.name+"]";
 		$(x).fadeIn();	
