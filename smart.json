@@ -4,6 +4,7 @@
     "sugar": {},
     "gravatar": {},
     "module-loader": {},
-    "define": {}
+    "define": {},
+    "mathjax": {}
   }
 }
