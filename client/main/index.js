@@ -1,29 +1,54 @@
 
+
+var dashboardRoutes = {
+
+  '/-modules': {view: 'iModules'},
+
+  '/-module/:name': function(path, query) {
+    return {
+      view: 'iModule',
+      data: { moduleName: path[2] },
+    };
+  },
+
+  '/-users': {view: 'iUsers'},
+
+};
+
+
+
 var matchRoute = function(map) {
   var self = this;
-  // console.log("MATCHING ROUTE ["+this.fullPath+"]");
-  // console.log("OR BETTER: ", this.path);
+  console.log('MATCHING ROUTE', this.path);
+  // console.log('WITH', map);
 
   for(var key in map) {
+    console.log('check key', key);
+
     if(!_routeMatches(this.path, key)) continue;
+    console.log('FOUND!');
 
     var value = map[key];
-    // console.log("MROUTER match found!", value);
 
-    if(typeof value == "string") return value;
-    if(typeof value == "function") return value.apply(this, this.path);
+    if(typeof value === 'function') return value.apply(this, this.path);
+    return value;
     continue;
   }
+  console.log('nothing found!');
 
   return undefined;
 };
 
+
+
 var _routeMatches = function(array, string) {
-  if(string.startsWith('/')) string = string.substring(1);
+  // if(string.startsWith('/')) string = string.substring(1);
   var tab = string.split('/');  
-  if(tab[0] == "") {
-    tab.removeAt(0);
-  }
+  // if(tab[0] === '') {
+  //   tab.removeAt(0);
+  // }
+
+  console.log('    - match', array, tab);
 
   if(array.length != tab.length) return false;
   for(var i = 0; i < tab.length; ++i) {
@@ -40,9 +65,19 @@ Handlebars.registerHelper('impactIndex', function() {
   var state = Path.get();
 
   if(state.path.length <= 1) return "HOME PAGE";
+  if(state.path[1] === '-') return 'That looks like a 404 error to me.';
+
+  state.matchRoute = matchRoute.bind(state);
+
+
   if(state.path[1].startsWith('-')) {
 
-    return "DASHBOARD" + state.path[1];
+    var route = state.matchRoute(dashboardRoutes);
+
+    if(! route) return 'Bleargh! I am now officially dead.';
+    if(! Template[route.view]) return 'This page does not exist.';
+
+    return new Handlebars.SafeString(Template[route.view](route.data));
 
   } else {
 
@@ -58,8 +93,7 @@ Handlebars.registerHelper('impactIndex', function() {
     if(!(module.module && module.module.routes && module.module.render)) {
       return 'Blargh! Module doesn\'t click!';
     }
-
-    state.matchRoute = matchRoute.bind(state);
+  
     var route = module.module.routes(state);
 
     return module.module.render(route.view, route.data);
