@@ -75,36 +75,20 @@
     this.listeners = {};
     this.moduleName  = null;
     this.path = [];
+    this.deps = new Deps.Dependency;
     //XXX: this will be initialized on demand
     //this.params = new QueryDict();
   };
   
   $functions(Yield, {
 
-    _reactive: function () {
-      var context = Meteor.deps.Context.current;
-      if (context && !this.listeners[context.id]) {
-        this.listeners[context.id] = context;
-        var self = this;
-        context.onInvalidate(function () {
-          delete self.listeners[context.id];
-        });
-      }
-    },
-
-    _invalidate: function () {
-      for (var contextId in this.listeners) {
-        this.listeners[contextId].invalidate();
-      }
-    },
-
     getCurrentModule: function () {
-      this._reactive();
+      this.deps.depend();
       return this.moduleName;
     },
 
     getPath: function () {
-      this._reactive();
+      this.deps.depend();
       return this.path;
     },
 
@@ -121,14 +105,14 @@
       this.path = path;
       this.fullPath = fullPath;
       this.getParams().copy(params);
-      this._invalidate();
+      this.deps.changed();
     },
 
     setPathAndParams: function (path, params) {
       //TODO: check for changes
       this.path = path;
       this.getParams().copy(params);
-      this._invalidate();
+      this.deps.changed();
     },
 
     setParam: function (key, value) {

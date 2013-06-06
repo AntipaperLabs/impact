@@ -1,5 +1,5 @@
 (function(){
-  new Impact.ModuleFactory('##<# name #>##',{
+  Impact.factories['##<# name #>##'] = new Impact.ModuleFactory('##<# name #>##',{
     templates: {
 //////////////////////////////////////////////////////////// TEMPLATES
 ##<# templates #>##
