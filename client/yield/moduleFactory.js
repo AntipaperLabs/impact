@@ -12,23 +12,12 @@ Impact.ModuleFactory = function (type, options) {
 
 Impact.collections = {};
 
-var counters = {};
-
-var getPrefix = function (name) {
-  if (counters[name] === undefined)
-    counters[name] = 0;
-  return 'im' + (++counters[name]) + '-' + name + '-';
-};
-
 $functions(Impact.ModuleFactory, {
 
   // CREATE MODULE INSTANCE
   create: function (name, callback) {
-    //----------------------------------------------------
-    // a module instance created this way is automatically
-    // registered int the module manager
-    //----------------------------------
-    var prefix = getPrefix();
+    //TODO: later change it to something different
+    var prefix = 'im1' + '-' + name + '-';
     var _Template = {};
 
     // install templates in global context
@@ -78,8 +67,8 @@ $functions(Impact.ModuleFactory, {
     // prepare exports object
     var exports = {};
 
-    // prepare module context
-    var context = {
+    //Q: use try/catch block here ?
+    this.loader({
       exports: exports,
       Name: name,
       S: _S,
@@ -95,10 +84,7 @@ $functions(Impact.ModuleFactory, {
       Session: {},
       Impact: {},
       //...
-    };
-
-    //Q: use try/catch block here ?
-    this.loader(context);
+    });
 
     callback && callback();
 
