@@ -18,7 +18,10 @@ require('model', function (model) {
             status.set(module.name, 'ok');
           });
         });
-        return { status: function () { return status.get(module.name) } };
+        return {
+          config: function () { return module },
+          status: function () { return status.get(module.name) },
+        };
       });
 
       if (Impact.factories[module.type] === undefined) {
@@ -40,13 +43,13 @@ require('model', function (model) {
       return { status: 'loading' };
     var loader = require('loaders/' + name);
     if (loader) {
-      if (status.equals(name, 'ok')) {
-        return {
-          status: loader.status(),
-          module: Impact.modules[name],
-        };
-      }
-      return { status: loader.status() };
+      var module = {
+        status: loader.status(),
+        config: loader.config(),
+      };
+      if (status.equals(name, 'ok'))
+        module.module = Impact.modules[name];
+      return module;
     }
     return { status: 'error' };
   };
