@@ -18,4 +18,9 @@ exports.routes = function(state) {
                             return 'edit';
                           }
   });
-}
+};
+
+exports.render = function(view, data) {
+  console.log('rendering view', view);
+  //return new Handlebars.SafeString(Template[view](data));
+};

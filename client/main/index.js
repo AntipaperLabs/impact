@@ -1,4 +1,5 @@
 
+
 var dashboardRoutes = {
 
   '/-modules': {view: 'iModules'},
@@ -37,6 +38,7 @@ var matchRoute = function(map) {
 
   return undefined;
 };
+
 
 
 var _routeMatches = function(array, string) {
@@ -97,6 +99,5 @@ Handlebars.registerHelper('impactIndex', function() {
     return module.module.render(route.view, route.data);
   }
 
-  
 });
 
