@@ -116,6 +116,10 @@ var fakeModule = function (name, type) {
     type: type,
     fake: true,
   });
+  ModuleTypes.insert({
+    type: type,
+    fake: true,
+  })
 };
 
 Meteor.startup(function(){
@@ -176,6 +180,7 @@ Meteor.startup(function(){
   }
 
   Modules.remove({fake:true});
+  ModuleTypes.remove({fake:true});
 
   fakeModule('fake', 'fake');
   fakeModule('news', 'blog');

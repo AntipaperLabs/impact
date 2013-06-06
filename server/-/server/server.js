@@ -5,3 +5,7 @@ Meteor.publish("users", function () {
 Meteor.publish("modules", function () {
   return Modules.find({});
 });
+
+Meteor.publish("moduleTypes",function(){
+	return ModuleTypes.find({});
+})
