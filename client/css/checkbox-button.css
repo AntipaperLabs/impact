@@ -1,0 +1,11 @@
+.checkbox-button {
+  display: inline-block;
+  width: 48px;
+  height: 48px;
+  line-height: 48px;
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 3px;
+  font-weight: bold;
+  color: #008000;
+  text-align: center;
+}
