@@ -1,11 +1,11 @@
 
-var  matchRoute = function(map) {
+var matchRoute = function(map) {
   var self = this;
   // console.log("MATCHING ROUTE ["+this.fullPath+"]");
   // console.log("OR BETTER: ", this.path);
 
   for(var key in map) {
-    if(!this._routeMatches(this.path, key)) continue;
+    if(!_routeMatches(this.path, key)) continue;
 
     var value = map[key];
     // console.log("MROUTER match found!", value);
@@ -18,7 +18,7 @@ var  matchRoute = function(map) {
   return undefined;
 };
 
-var  _routeMatches = function(array, string) {
+var _routeMatches = function(array, string) {
   if(string.startsWith('/')) string = string.substring(1);
   var tab = string.split('/');  
   if(tab[0] == "") {
@@ -65,6 +65,5 @@ Handlebars.registerHelper('impactIndex', function() {
     return module.module.render(route.view, route.data);
   }
 
-  
 });
 

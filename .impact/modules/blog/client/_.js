@@ -21,5 +21,6 @@ exports.routes = function(state) {
 };
 
 exports.render = function(view, data) {
-  return new Handlebars.SafeString(Template[view](data));
+  console.log('rendering view', view);
+  //return new Handlebars.SafeString(Template[view](data));
 };
