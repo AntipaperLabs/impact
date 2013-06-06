@@ -8,7 +8,11 @@ Path._dep = new Deps.Dependency();
 
 Path.get = function() {
   Path._dep.depend();
-  var array = window.location.pathname.split('/');
+  
+  var path = window.location.pathname;
+  if(path.endsWith('/')) path = path.substring(0, path.length - 1);
+
+  var array = path.split('/');
   
   var dict = {};
   dict.data = window.location.search;  

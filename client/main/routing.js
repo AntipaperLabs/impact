@@ -16,6 +16,12 @@ Impact.Routing.dashboardRoutes = {
 
 };
 
+
+
+
+
+
+
 Impact.Routing.matchRoute = function(map) {
   var self = this;
   console.log('MATCHING ROUTE', this.path);
@@ -40,6 +46,10 @@ Impact.Routing.matchRoute = function(map) {
 
 
 var _routeMatches = function(array, string) {
+
+  if(! string.startsWith('/'))
+    string = '/' + string;
+
   var tab = string.split('/');  
   
   console.log('    - match', array, tab);
