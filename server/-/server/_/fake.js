@@ -176,14 +176,21 @@ Meteor.startup(function(){
         'news': {
           name: 'news',
           moduleClass: 'blog',
+          permissions: {
+            "createArticle": [],
+            "createComment": [],
+            "editComments": [],
+          }
         },
         'page': {
           name: 'page',
           moduleClass: 'static',
+          permissions: {},
         },
         'fake': {
           name: 'fake',
-          moduleClass: 'fake'
+          moduleClass: 'fake',
+          permissions: {},
         },
       },
     });
