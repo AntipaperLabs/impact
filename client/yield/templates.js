@@ -1,4 +1,5 @@
-(function () {
+
+
 
   Impact._def_template = function (name, template, prefix) {
     prefix = prefix || '';
@@ -27,8 +28,3 @@
     Meteor._def_template(prefix + name, Handlebars.json_ast_to_func(template));
   }
 
-
-
-////////////////////
-/*********/})();/**/
-////////////////////
