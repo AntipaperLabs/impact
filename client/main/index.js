@@ -1,6 +1,4 @@
 
-<<<<<<< HEAD
-
 var dashboardRoutes = {
 
   '/-modules': {view: 'iModules'},
@@ -18,22 +16,16 @@ var dashboardRoutes = {
 
 
 
-=======
->>>>>>> blog-module
 var matchRoute = function(map) {
   var self = this;
   console.log('MATCHING ROUTE', this.path);
   // console.log('WITH', map);
 
   for(var key in map) {
-<<<<<<< HEAD
     console.log('check key', key);
 
     if(!_routeMatches(this.path, key)) continue;
     console.log('FOUND!');
-=======
-    if(!_routeMatches(this.path, key)) continue;
->>>>>>> blog-module
 
     var value = map[key];
 
@@ -46,20 +38,10 @@ var matchRoute = function(map) {
   return undefined;
 };
 
-<<<<<<< HEAD
-
 
 var _routeMatches = function(array, string) {
-  // if(string.startsWith('/')) string = string.substring(1);
-=======
-var _routeMatches = function(array, string) {
-  if(string.startsWith('/')) string = string.substring(1);
->>>>>>> blog-module
   var tab = string.split('/');  
-  // if(tab[0] === '') {
-  //   tab.removeAt(0);
-  // }
-
+  
   console.log('    - match', array, tab);
 
   if(array.length != tab.length) return false;
