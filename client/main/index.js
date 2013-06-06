@@ -79,10 +79,13 @@ Handlebars.registerHelper('impactIndex', function() {
   if(state.path.length <= 1) return "HOME PAGE";
   if(state.path[1] === '-') return 'That looks like a 404 error to me.';
 
-  state.matchRoute = matchRoute.bind(state);
+  
 
 
   if(state.path[1].startsWith('-')) {
+
+
+    state.matchRoute = matchRoute.bind(state);
 
     var route = state.matchRoute(dashboardRoutes);
 
@@ -92,6 +95,13 @@ Handlebars.registerHelper('impactIndex', function() {
     return new Handlebars.SafeString(Template[route.view](route.data));
 
   } else {
+
+    var state1 = {
+      path: state.path,
+      query: state.query,
+    };
+    state1.path.splice(1,1);
+    state1.matchRoute = matchRoute.bind(state1);
 
     var module = Impact.requireModule(state.path[1]);
     if(module.status == 'error') {
@@ -106,7 +116,7 @@ Handlebars.registerHelper('impactIndex', function() {
       return 'Blargh! Module doesn\'t click!';
     }
   
-    var route = module.module.routes(state);
+    var route = module.module.routes(state1);
 
     return module.module.render(route.view, route.data);
   }
