@@ -72,7 +72,6 @@
 
 */
 
-
 define('model', [], function () {
   return {
     roles   : new Meteor.Collection('roles'),
