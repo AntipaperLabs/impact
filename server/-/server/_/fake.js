@@ -175,10 +175,12 @@ Meteor.startup(function(){
     fakeUser('Guest', 'guest');
   }
 
+
   Modules.remove({fake:true});
 
   fakeModule('fake', 'fake');
   fakeModule('news', 'blog');
+
 
 });
 
