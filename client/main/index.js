@@ -29,7 +29,10 @@ var matchRoute = function(map) {
 
     var value = map[key];
 
-    if(typeof value === 'function') return value.apply(this, this.path);
+    if(typeof value === 'function')
+      value = value.call(this, this.path);
+    if(typeof value === 'string')
+      value = { view: value };
     return value;
     continue;
   }
@@ -100,7 +103,9 @@ Handlebars.registerHelper('impactIndex', function() {
   
     var route = module.module.routes(state1);
 
-    if (route.view)
+    console.log(route);
+
+    if (route && route.view)
       return module.module.render(route.view, route.data);
     
     return new Handlebars.SafeString(Template.error404());

@@ -7,20 +7,20 @@
 
 exports.routes = function(state) {
   return state.matchRoute({
-    '/':                  'list',
-    '/new':               'new',
-    '/:title/:id':        function(title, id) {
-                            S('articleId', id);
+    '/':                  { view: 'list' },
+    '/new':               { view: 'new' },
+    '/:title/:id':        function(path) {
+                            S('articleId', path[2]);
                             return 'show';
                           },
-    '/:title/:id/edit':   function(title, id) {
-                            S('articleId', id);
+    '/:title/:id/edit':   function(path) {
+                            S('articleId', path[2]);
                             return 'edit';
                           }
   });
 };
 
 exports.render = function(view, data) {
-  console.log('rendering view', view);
-  //return new Handlebars.SafeString(Template[view](data));
+  console.log(view, data);
+  return new Handlebars.SafeString(Template[view](data));
 };

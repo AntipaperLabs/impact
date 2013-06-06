@@ -181,8 +181,8 @@ Methods({
 
 
 
-Publish('documents', function () {
-  return Documents.find({});
+Publish('articles', function () {
+  return Articles.find({});
 });
 
 
