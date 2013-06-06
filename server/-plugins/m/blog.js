@@ -201,7 +201,8 @@ Publish('documents', function () {
     "createComment": {"name": "createComment", "label": "Create Comment"},
     "editComments": {"name": "editComments", "label": "Edit Comments"},
   }
-},
+}
+,
 ////////////////////////////////////////////////////////////////////////////////
   });
 })();
