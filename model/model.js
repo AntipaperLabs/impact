@@ -81,6 +81,3 @@ define('model', [], function () {
 
 Roles = require('model').roles;
 Modules = require('model').modules;
-
-ImpactSettings = new Meteor.Collection('impactData');
-
