@@ -1,3 +1,12 @@
 <template name="yield">
   {{renderModule}}
 </template>
+
+<template name="loader">
+  <p>Loading module `{{name}}`. Please wait...</p>
+  <p><img alt="loading..." src='/-impact/loader.png'></p>
+</template>
+
+<template name="errors">
+  <p>An error occured while loading module `{{name}}`</p>
+</template>

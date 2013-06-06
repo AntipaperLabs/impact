@@ -1,7 +1,3 @@
-////////////////////
-/**/(function(){/**/
-////////////////////
-
 
 // Handlebars.registerHelper('renderModule',
 Template.yield.helpers({
@@ -18,10 +14,16 @@ Template.yield.helpers({
     // Still, it seems very fiddly. This function needs to update reactively
     // in order for paths put earlier in the router to work.
     // Is there another way?
-    if (moduleName && request && request.status === 'ok') {
-      // console.log("HLP: MODULE EXISTS. ", module);
-      // console.log("HLP: CURRENT STATE: ", state);
-      return new Handlebars.SafeString(request.module.render(state) || '');
+    if (moduleName && request) {
+      if (request.status === 'ok') {
+        // console.log("HLP: MODULE EXISTS. ", module);
+        // console.log("HLP: CURRENT STATE: ", state);
+        return new Handlebars.SafeString(request.module.render(state) || '');
+      } else if (request.status === 'loading') {
+        return new Handlebars.SafeString(Template.loader({name:moduleName}));
+      } else if (request.status === 'error') {
+        return new Handlebars.SafeString(Template.errors({name:moduleName}));
+      }
     }
 
     console.log(moduleName);
@@ -40,10 +42,3 @@ Template.yield.helpers({
   },
 });
 
-
-
-
-
-////////////////////
-/*********/})();/**/
-////////////////////
