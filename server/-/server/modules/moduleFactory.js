@@ -43,7 +43,9 @@ $functions(Impact.ModuleFactory, {
     };
 
     var _Publish = function () {
-      
+      if (arguments.length > 0)
+        arguments[0] = prefix + arguments[0];
+      Meteor.publish.apply(Meteor, arguments);
     };
 
     this.loader({
