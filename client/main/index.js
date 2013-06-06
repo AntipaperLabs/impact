@@ -79,7 +79,7 @@ Handlebars.registerHelper('impactIndex', function() {
   } else {
 
     var state1 = {
-      path: state.path,
+      path: state.path.clone(),
       query: state.query,
     };
     state1.path.splice(1,1);
