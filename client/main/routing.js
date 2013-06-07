@@ -37,15 +37,15 @@ Impact.Routing.dashboardRoutes = {
 
 Impact.Routing.matchRoute = function(map) {
   var self = this;
-  console.log('MATCHING ROUTE', this.path);
+  // console.log('MATCHING ROUTE', this.path);
   // console.log('WITH', map);
 
   for(var key in map) {
-    console.log('check key', key);
+    // console.log('check key', key);
     var params = _routeMatches(this.path, key);
 
     if(!params) continue;
-    console.log('FOUND!');
+    // console.log('FOUND!');
 
     var value = map[key];
 
@@ -63,7 +63,7 @@ var _routeMatches = function(array, string) {
 
   var tab = Path.stringToArray(string);
   
-  console.log('    - match', array, tab);
+  // console.log('    - match', array, tab);
 
   if(array.length != tab.length) return false;
 

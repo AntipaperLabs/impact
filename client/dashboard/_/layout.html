@@ -1,0 +1,32 @@
+
+<template name="iLayout">
+  <div class="dashboard-body">
+    {{> iLayout-topBar}}
+    {{yield}}
+  </div>
+  
+</template>
+
+
+
+<template name="iLayout-topBar">
+
+  <div class="dashboard-top-bar">
+    <div class="dashboard-top-left">
+      <img src="/-impact/logo.png"/>
+    </div>
+    <div class="dashboard-top-right">
+      <span class="dashboard-top-right-button">Logout</span>
+    </div>
+    <ul>
+      <li><a class="dashboard-top-button dashboard-top-button-site" href="/-site">Site</a>
+      <li><a class="dashboard-top-button dashboard-top-button-modules" href="/-modules">Modules</a>
+      <li><a class="dashboard-top-button dashboard-top-button-users" href="/-users">Users</a>
+      <li><a class="dashboard-top-button dashboard-top-button-media" href="/-media">Media</a>
+    </ul>
+    <!-- <ul>
+      <li>user</li>
+      <li>logout</li>
+    </ul> -->
+  </div>
+</template>
