@@ -24,7 +24,7 @@ Template.iRoles.permissions = function() {
 };
 
 Template.iRoles.modules = function() {
-  return Object.values(ImpactSettings.findOne().modules);
+  //return Object.values(ImpactSettings.findOne().modules);
 };
 
 
