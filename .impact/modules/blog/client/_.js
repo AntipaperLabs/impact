@@ -9,11 +9,11 @@ exports.routes = function(state) {
   return state.matchRoute({
     '/':                  'list',
     '/new':               'new',
-    '/:title/:id':        function(title, id) {
+    '/:title/:id':        function(params) {
                             S('articleId', id);
                             return 'show';
                           },
-    '/:title/:id/edit':   function(title, id) {
+    '/:title/:id/edit':   function(params) {
                             S('articleId', id);
                             return 'edit';
                           }
