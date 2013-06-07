@@ -29,13 +29,14 @@ Impact.Routing.matchRoute = function(map) {
 
   for(var key in map) {
     console.log('check key', key);
+    var params = _routeMatches(this.path, key);
 
-    if(!_routeMatches(this.path, key)) continue;
+    if(!params) continue;
     console.log('FOUND!');
 
     var value = map[key];
 
-    if(typeof value === 'function') return value.apply(this, this.path);
+    if(typeof value === 'function') return value.apply(this, params);
     return value;
     continue;
   }
@@ -51,12 +52,13 @@ var _routeMatches = function(array, string) {
   
   console.log('    - match', array, tab);
 
-  if(array.length < tab.length) return false;
+  if(array.length != tab.length) return false;
 
   var params = {}
 
   for(var i = 0; i < tab.length; ++i) {
-    if(tab[i] == '?') continue;
+    // if(tab[i] === '*') break;
+    if(tab[i] === '?') continue;
     if(tab[i].startsWith(':')) {
       var key = tab[i];
       key = key.substring(0, key.length - 1);
@@ -65,7 +67,7 @@ var _routeMatches = function(array, string) {
     }
     if(array[i] != tab[i]) return false;
   }
-  return true;
+  return params;
 };
 
 
