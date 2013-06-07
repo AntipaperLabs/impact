@@ -1,19 +1,7 @@
 
 var dashboardRoutes = {
 
-  '/-dashboard': {view: 'iDashboard'},
-
-  '/-home': {view: 'iHome'},
-
-  '/-media': {view: 'iMedia'},
-
-  '/-modules': {view: 'iModules'},
-
-  '/-roles': {view: 'iRoles'},
-
-  '/-themes': {view: 'iThemes'},
-
-  '/-users': {view: 'iUsers'},
+  '/-dashboard': { view: 'iDashboard' },
 
   '/-module/:name': function(path, query) {
     return {
@@ -22,11 +10,13 @@ var dashboardRoutes = {
     };
   },
 
-  '/-users': {view: 'iUsers'},
-
 };
 
-
+Impact.Dashboard.places.forEach(function (name) {
+  dashboardRoutes['/-' + name] = {
+    view: 'i' + name.capitalize(),
+  };
+});
 
 var matchRoute = function(map) {
   var self = this;
