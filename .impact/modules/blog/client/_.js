@@ -9,14 +9,18 @@ exports.routes = function(state) {
   return state.matchRoute({
     '/':                  { view: 'list' },
     '/new':               { view: 'new' },
-    '/:title/:id':        function(path) {
-                            S('articleId', path[2]);
-                            return 'show';
+    '/:title/:id':        function(p) {
+                            return {
+                              view: 'show',
+                              data: {articleId: p.id}
+                            }
                           },
-    '/:title/:id/edit':   function(path) {
-                            S('articleId', path[2]);
-                            return 'edit';
-                          }
+    '/:title/:id/edit':   function(p) {
+                            return {
+                              view: 'edit',
+                              data: {articleId: p.id}
+                            }
+                          },
   });
 };
 
