@@ -76,13 +76,20 @@ define('model', [], function () {
   return {
     roles   : new Meteor.Collection('roles'),
     modules : new Meteor.Collection('modules'),
-    moduleTypes : new Meteor.Collection('moduleTypes')
+    moduleTypes : new Meteor.Collection('moduleTypes'),
+    shortCuts : new Meteor.Collection('shortCuts')
   };
 });
 
 Roles = require('model').roles;
+
 Modules = require('model').modules;
+
 ModuleTypes = require('model').moduleTypes;
+
+ShortCuts = require('model').shortCuts;
+
+
 
 
 

@@ -7,7 +7,13 @@ Meteor.publish("modules", function () {
   return Modules.find({});
 });
 
-
 Meteor.publish("moduleTypes",function(){
 	return ModuleTypes.find({});
-})
+});
+
+Meteor.publish("shortCuts",function(){
+	return ShortCuts.find({});
+});
+
+
+

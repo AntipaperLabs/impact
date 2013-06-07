@@ -182,9 +182,14 @@ Meteor.startup(function(){
 
   Modules.remove({fake:true});
   ModuleTypes.remove({fake:true});
+  ShortCuts.remove({to:''});
 
   fakeModule('fake', 'fake');
   fakeModule('news', 'blog');
+  ShortCuts.insert({
+    from: '/',
+    to: ''
+  });
 
 
 });
