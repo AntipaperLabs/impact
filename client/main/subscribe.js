@@ -7,3 +7,7 @@ Deps.autorun(function(){
 Deps.autorun(function(){
   Meteor.subscribe('impactSettings');
 });
+
+Deps.autorun(function(){
+  Meteor.subscribe("moduleTypes");
+});

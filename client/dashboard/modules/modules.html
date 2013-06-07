@@ -1,4 +1,21 @@
-<template name="iModules">  
+<template name="iModules">
+
+  <div class="iModules-box dashboard-centered">
+    <div class="dashboard-h3">Add new module</div>
+    {{#each moduleTypes}}
+      <div class="dashboard-content-bulb">
+        <div class="dashboard-content-bulb-icon"></div>
+        <div class="dashboard-content-bulb-title">{{title}}</div>
+      </div>
+    {{/each}}  
+  </div>
+
+</template>
+
+
+<template name="iModules-pociej">
+
+
   <h1 class="page-header">
     Modules
   </h1>
@@ -19,9 +36,7 @@
   {{#each moduleTypes}}
     {{>dialog}}
   {{/each}}
-
 </template>
-
 
 <template name="iModules_module">
   <div class="span2">

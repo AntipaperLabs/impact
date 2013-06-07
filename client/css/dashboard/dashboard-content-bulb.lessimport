@@ -1,0 +1,32 @@
+
+.dashboard-content-bulb {
+  /*.animated;*/
+  width: 150px;
+  height: 147px;
+
+  padding-bottom: 3px;
+  /*padding-bottom: 3px;*/
+
+  display: inline-block;
+  margin: 10px;
+
+  font-family: Lobster;
+  color: #ffffff;
+  text-shadow: 0px 2px 0px rgba(0,0,0,0.25);
+
+  /*padding: 0px 30px;*/
+  background: #ce483d;
+  border-radius: 5px;
+  box-shadow: 0px -5px 0px rgba(0,0,0,0.25) inset;
+  
+  
+  
+  cursor: default;
+
+  &:hover {
+    text-decoration: none;
+    padding-bottom: 0px;
+    margin-top: 13px; 
+    box-shadow: 0px -2px 0px rgba(0,0,0,0.25) inset;//, 0px 1px 0px rgba(255, 255, 255, 0.25) inset;
+  }
+}

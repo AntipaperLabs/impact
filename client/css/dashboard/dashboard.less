@@ -1,11 +1,21 @@
 
 
 
+.animated {
+  -webkit-transition: all 100ms ease-out;
+  -moz-transition: all 100ms ease-out;
+  -o-transition: all 100ms ease-out;
+  transition: all 100ms ease-out;
+}
+
+
+
 .dashboard-body {
   position: absolute;
   background: #e0e0e0;
   width: 100%;
   min-height: 100%;
+  font-family: 'Open sans';
 }
 
 
@@ -14,5 +24,6 @@
 @import 'dashboard-bulbs.lessimport';
 @import 'dashboard-div.lessimport';
 @import 'dashboard-content.lessimport';
+@import 'dashboard-content-bulb.lessimport';
 
 
