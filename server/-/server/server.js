@@ -12,7 +12,7 @@ Meteor.publish("moduleTypes",function(){
 });
 
 Meteor.publish("shortCuts",function(){
-	return shortCuts.find({});
+	return ShortCuts.find({});
 });
 
 
