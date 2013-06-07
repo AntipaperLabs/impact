@@ -1,7 +1,19 @@
 
 var dashboardRoutes = {
 
+  '/-dashboard': {view: 'iDashboard'},
+
+  '/-home': {view: 'iHome'},
+
+  '/-media': {view: 'iMedia'},
+
   '/-modules': {view: 'iModules'},
+
+  '/-roles': {view: 'iRoles'},
+
+  '/-themes': {view: 'iThemes'},
+
+  '/-users': {view: 'iUsers'},
 
   '/-module/:name': function(path, query) {
     return {
@@ -64,11 +76,7 @@ Handlebars.registerHelper('impactIndex', function() {
   if(state.path.length <= 1) return "HOME PAGE";
   if(state.path[1] === '-') return 'That looks like a 404 error to me.';
 
-  
-
-
   if(state.path[1].startsWith('-')) {
-
 
     state.matchRoute = matchRoute.bind(state);
 
@@ -77,7 +85,9 @@ Handlebars.registerHelper('impactIndex', function() {
     if(! route) return 'Bleargh! I am now officially dead.';
     if(! Template[route.view]) return 'This page does not exist.';
 
-    return new Handlebars.SafeString(Template[route.view](route.data));
+    return new Handlebars.SafeString(Template.dashboard({
+      content: new Handlebars.SafeString(Template[route.view](route.data))
+    }));
 
   } else {
 

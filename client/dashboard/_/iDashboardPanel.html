@@ -1,18 +1,11 @@
 <template name="iDashboardPanel">
-
-  
-    <div class="well sidebar-nav iDashboardPanel">
-      <ul class="nav nav-list">
-        <li><a href="/-">Dashboard home</a></li>
-        <li class="nav-header">Site</li>
-        <li><a href="/-documents">Documents</a></li>
-        <li><a href="/-media">Media</a></li>
-        <li><a href="/-modules">Modules</a></li>
-        <li><a href="/-themes">Themes</a></li>
-        <li><a href="/-roles">Roles</a></li>
-        <li><a href="/-users">Users</a></li>
-      </ul>
-    </div><!--/.well -->
-  
-    
+  <div class="well sidebar-nav iDashboardPanel">
+    <ul class="nav nav-list">
+      <li><a href="/-dashboard">Dashboard home</a></li>
+      <li class="nav-header">Site</li>
+      {{#each places}}
+        <li><a href="{{href}}">{{name}}</a></li>
+      {{/each}}
+    </ul>
+  </div><!--/.well -->
 </template>

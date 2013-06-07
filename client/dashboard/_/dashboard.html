@@ -1,9 +1,12 @@
+
 <template name="dashboard">
   <div class="span3">
     {{> iDashboardPanel}}
   </div>
   <div class="span9">
-    {{renderDashboard}}
+    <div class="dashboard-content">
+      {{content}}
+    </div>
   </div>
 </template>
 
