@@ -82,6 +82,20 @@ define('model', [], function () {
 });
 
 Roles = require('model').roles;
+
 Modules = require('model').modules;
+
 ModuleTypes = require('model').moduleTypes;
+
 ShortCuts = require('model').shortCuts;
+
+
+
+
+
+
+
+
+
+
+
