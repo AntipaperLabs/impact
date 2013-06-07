@@ -13,7 +13,7 @@ var render404 = function() {
 var renderDashboard = function(state) {
   state.matchRoute = Impact.Routing.matchRoute.bind(state);
 
-  var route = state.matchRoute(dashboardRoutes);
+  var route = state.matchRoute(Impact.Routing.dashboardRoutes);
 
   if(! route) return 'Bleargh! I am now officially dead.';
   if(! Template[route.view]) return 'This page does not exist.';
@@ -27,10 +27,10 @@ var renderModule = function(state) {
     path: state.path.clone(),
     query: state.query,
   };
-  state1.path.splice(1,1);
+  state1.path.splice(0,1);
   state1.matchRoute = Impact.Routing.matchRoute.bind(state1);
 
-  var module = Impact.requireModule(state.path[1]);
+  var module = Impact.requireModule(state.path[0]);
   if(module.status == 'error') {
     return 'Module does not exist';
   }
@@ -57,21 +57,25 @@ Handlebars.registerHelper('impactIndex', function() {
 
   var state = Path.get();
 
-  if((state.path.length <= 1) ||
-     (state.path[1].length < 1)) {
+  if((state.path.length === 0) ||
+     (state.path[0].length === 0)) {
     return renderHomePage();
   }
 
-  if(state.path[1] === '-') {
+  if(state.path[0] === '-') {
     /* These paths should be resolved by 'public' route */
     return render404();
   }
 
-  if(state.path[1].startsWith('-')) {
+  if(state.path[0].startsWith('-')) {
     return renderDashboard(state);
   } else {
     return renderModule(state);
   }
 
 });
+
+
+
+
 

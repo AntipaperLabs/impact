@@ -3,23 +3,28 @@
 
 Path = {};
 
+Path.stringToArray = function(string) {
+  var array = string.split('/');
+  if(array[0] === '') array.splice(0,1);
+  var z = array.length - 1;
+  if(array[z] === '') array.splice(z,1);
+  return array;
+};
+
+Path.queryToDict = function(string) {
+  return {data: string};
+};
+
 
 Path._dep = new Deps.Dependency();
 
+
 Path.get = function() {
   Path._dep.depend();
-  
-  var path = window.location.pathname;
-  if(path.endsWith('/')) path = path.substring(0, path.length - 1);
-
-  var array = path.split('/');
-  
-  var dict = {};
-  dict.data = window.location.search;  
 
   return {
-    path: array,
-    dict: dict,
+    path: Path.stringToArray(window.location.pathname),
+    dict: Path.queryToDict(window.location.search),
   };
 };
 

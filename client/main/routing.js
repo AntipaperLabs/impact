@@ -47,18 +47,45 @@ Impact.Routing.matchRoute = function(map) {
 
 var _routeMatches = function(array, string) {
 
-  if(! string.startsWith('/'))
-    string = '/' + string;
-
-  var tab = string.split('/');  
+  var tab = Path.stringToArray(string);
   
   console.log('    - match', array, tab);
 
-  if(array.length != tab.length) return false;
+  if(array.length < tab.length) return false;
+
+  var params = {}
+
   for(var i = 0; i < tab.length; ++i) {
     if(tab[i] == '?') continue;
-    if(tab[i].startsWith(':')) continue;
+    if(tab[i].startsWith(':')) {
+      var key = tab[i];
+      key = key.substring(0, key.length - 1);
+      params[key] = array[i];
+      continue;
+    }
     if(array[i] != tab[i]) return false;
   }
   return true;
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
