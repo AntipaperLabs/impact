@@ -7,7 +7,7 @@
       {{title}}
     </div>
     {{#each bulbs}}
-      <div class="dashboard-bulb">
+      <div class="dashboard-bulb{{#if active}} dashboard-bulb-active{{/if}}">
         <a href="{{url}}">
           <span class="dashboard-bulb-icon">{{icon}}</span>
           <span class="dashboard-bulb-title">{{title}}</span>

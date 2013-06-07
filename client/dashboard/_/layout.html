@@ -2,8 +2,13 @@
 <template name="iLayout">
   <div class="dashboard-body">
     {{> iLayout-topBar}}
-    <div class="dashboard-content">
-      {{yield}}
+    <div class="dashboard-div">
+      {{#with bulbs}}
+        {{> iBulbs}}
+      {{/with}}
+      <div class="dashboard-content">
+        {{yield}}
+      </div>
     </div>
   </div>
   
