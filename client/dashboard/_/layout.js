@@ -39,6 +39,8 @@ Template.iLayout.bulbs = function() {
   for(var i = 0; i < tab.length; ++i) {
     if(tab[i].id === this.bulb) {
       tab[i].active = true;
+    } else if(tab[i].active) {
+      delete tab[i].active;
     }
   }
 

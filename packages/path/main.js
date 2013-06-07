@@ -61,7 +61,8 @@ function sameOrigin(href) {
   return 0 == href.indexOf(origin);
 };
 
-var onclick = function(e) {
+Path.onclick = function(e) {
+
   if (1 != which(e)) return;
   if (e.metaKey || e.ctrlKey || e.shiftKey) return;
   if (e.defaultPrevented) return;
@@ -89,13 +90,8 @@ var onclick = function(e) {
   // if (base && orig == path) return;
 
   e.preventDefault();
-  Path.to(orig);
+  Path.to(href);
 };
-
-
-Meteor.startup(function () {
-  window.addEventListener('click', onclick, false);
-});
 
 
 

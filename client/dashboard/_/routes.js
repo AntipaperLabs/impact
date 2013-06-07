@@ -17,6 +17,7 @@ Impact.Dashboard.routes = {
       data: { moduleName: params.name },
     };
   },
+  '/-modules/manage': {view: 'iModules', bulb: 'manage'},
 
   '/-users': {view: 'iRoles', bulb: 'roles'},
   '/-users/roles': {view: 'iRoles', bulb: 'roles'},
