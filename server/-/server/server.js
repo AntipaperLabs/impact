@@ -11,8 +11,8 @@ Meteor.publish("moduleTypes",function(){
 	return ModuleTypes.find({});
 });
 
-Meteor.publish("shortCuts",function(){
-	return ShortCuts.find({});
+Meteor.publish("impactSettings",function(){
+	return ImpactSettings.find({});
 });
 
 

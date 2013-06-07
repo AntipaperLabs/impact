@@ -1,12 +1,20 @@
 
-Meteor.subscribe("shortCuts");
+
+
+Template.iHome.home = function() {
+  var is = ImpactSettings.findOne({});
+  return is ? is.home : '';
+};
 
 Template.iHome.events({
 
-	'click button': function(){
-		var newPath = $('input')[0].value;
-		var Id = ShortCuts.findOne({from:'/'})._id;
-		ShortCuts.update({_id: Id},{from:'/',to:newPath});
+	'click .iHome-setButton': function(e){
+    var path = $(e.target).closest('.iHome-box').find('.iHome-field').val();
+
+    console.log('SET PATH',path);
+    ImpactSettings.update('0', {$set: {
+      home: path
+    }});
 	},
 
 });

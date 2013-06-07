@@ -2,13 +2,16 @@
 
    
 
-Roles = new Meteor.Collection('roles'),
+Roles = new Meteor.Collection('roles');
 
-Modules = new Meteor.Collection('modules'),
+Modules = new Meteor.Collection('modules');
 
-ModuleTypes = new Meteor.Collection('moduleTypes'),
+ModuleTypes = new Meteor.Collection('moduleTypes');
 
-ShortCuts = new Meteor.Collection('shortCuts')
+ImpactSettings = new Meteor.Collection('impactSettings');
+
+
+
 
 
 
