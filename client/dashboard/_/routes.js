@@ -4,60 +4,63 @@
 
 Impact.Dashboard.routes = {
 
+  '/-site': {view: 'iHome', bulb: 'home'},
+  '/-site/home': {view: 'iHome', bulb: 'home'},
+  '/-site/theme': {view: 'iTheme', bulb: 'theme'},
+  '/-site/themes': {view: 'iThemes', bulb: 'themes'},
 
-
-  '/-dashboard': {view: 'iDashboard'},
-
-  '/-site': {view: 'iSite'},
-
-  '/-modules': {view: 'iModules'},
-
+  '/-modules': {view: 'iModules', bulb: 'manage'},
   '/-module/:name': function(params) {
     return {
       view: 'iModule',
+      bulb: 'm:' + params.name,
       data: { moduleName: params.name },
     };
   },
 
-  '/-home': {view: 'iHome'},
+  '/-users': {view: 'iRoles', bulb: 'roles'},
+  '/-users/roles': {view: 'iRoles', bulb: 'roles'},
+  '/-users/list': {view: 'iUsers', bulb: 'list'},
 
-  '/-media': {view: 'iMedia'},
+  '/-media': {view: 'iMedia', bulb: 'storages'},
+  '/-media/storages': {view: 'iMedia', bulb: 'storages'},
+  
+};
 
-  '/-modules': {view: 'iModules'},
 
-  '/-roles': {view: 'iRoles'},
+Impact.Dashboard.bulbs = {
 
-  '/-themes': {view: 'iThemes'},
+  site: [
+    {title: 'Home', icon: 'Ç', url: '/-site/home', id: 'home'},
+    {title: 'Theme', icon: ':', url: '/-site/theme', id: 'theme'},
+    {title: 'Themes', icon: 'l', url: '/-site/themes', id: 'themes'},
+  ],
 
-  '/-users': {view: 'iUsers'},
+  modules: [
+    {title: 'Manage', icon: 'Ĥ', url: '/-modules/manage', id: 'manage'},
+    {load: '/-module'},
+  ],
+
+  users: [
+    {title: 'Roles', icon: 'ġ', url: '/-users/roles', id: 'roles'},
+    {title: 'List', icon: 'Ü', url: '/-users/list', id: 'list'},
+  ],
+
+  media: [
+    {title: 'Storages', icon: '@', url: '/-media/storages', id: 'storages'},
+    {load: '/-storage'},
+  ],
 
 };
 
-Impact.Dashboard.tabs = {
 
-  'site': [
-    ['home', 'H', '/-home'],
-    ['theme', 't', '/-theme'],
-    ['themes', 'T', '/-themes'],
-  ],
-
-  'modules': [
-    ['manage', 'M', '/-modules'],
-    'space',
-    {load: 'modules'},
-  ],
-
-  'users': [
-    ['roles', 'R', '/-roles'],
-    ['users', 'U', '/-users'],
-  ],
-
-  'media': [
-    ['storage', 'S', '/-storage'],
-    'space',
-    {load: 'storage'},
-  ],
-
+Impact.Dashboard.bulbPrefixes = {
+  '-site': 'site',
+  '-modules': 'modules',
+  '-module': 'modules',
+  '-users': 'users',
+  '-media': 'media',
+  '-storage': 'media',
 };
 
 

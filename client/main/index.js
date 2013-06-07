@@ -14,6 +14,7 @@ var renderDashboard = function(state) {
   state.matchRoute = Impact.Routing.matchRoute.bind(state);
 
   var route = state.matchRoute(Impact.Dashboard.routes);
+  route.prefix = state.path[0];
   
   return new Handlebars.SafeString(Template.iLayout(route));
 };

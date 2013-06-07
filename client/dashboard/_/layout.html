@@ -3,9 +3,11 @@
   <div class="dashboard-body">
     {{> iLayout-topBar}}
     <div class="dashboard-div">
-      {{#with bulbs}}
-        {{> iBulbs}}
-      {{/with}}
+      <div class="dashboard-bulbs">
+        {{#each bulbs}}
+          {{> iLayout-bulb}}
+        {{/each}}
+      </div>
       <div class="dashboard-content">
         {{yield}}
       </div>
@@ -37,3 +39,21 @@
     </ul> -->
   </div>
 </template>
+
+
+
+<template name="iLayout-bulb">
+  {{#if url}}
+    <div class="dashboard-bulb{{#if active}} dashboard-bulb-active{{/if}}">
+      <a href="{{url}}">
+        <span class="dashboard-bulb-icon">{{icon}}</span>
+        <span class="dashboard-bulb-title">{{title}}</span>
+      </a>
+    </div>
+  {{else}}
+    <div class="dashboard-bulb-space">
+    </div>
+  {{/if}}
+</template>
+
+

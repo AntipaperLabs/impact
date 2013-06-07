@@ -25,6 +25,7 @@
 }
 
 .dashboard-bulb {
+  display: block;
   width: 150px;
   height: 100px;
   a {
@@ -38,6 +39,12 @@
     box-shadow: 0px 0px 5px #c0c0c0 inset;
     border-radius: 3px;
   }
+}
+
+.dashboard-bulb-space {
+  height: 5px;
+  width: 150px;
+  display: block;
 }
 
 .dashboard-bulb-active a {
