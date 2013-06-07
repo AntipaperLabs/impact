@@ -1,34 +1,6 @@
 
 Impact.Routing = {};
 
-Impact.Routing.dashboardRoutes = {
-
-
-  '/-dashboard': {view: 'iDashboard'},
-
-  '/-modules': {view: 'iModules'},
-
-  '/-module/:name': function(params) {
-    return {
-      view: 'iModule',
-      data: { moduleName: params.name },
-    };
-  },
-
-  '/-home': {view: 'iHome'},
-
-  '/-media': {view: 'iMedia'},
-
-  '/-modules': {view: 'iModules'},
-
-  '/-roles': {view: 'iRoles'},
-
-  '/-themes': {view: 'iThemes'},
-
-  '/-users': {view: 'iUsers'},
-
-};
-
 
 
 

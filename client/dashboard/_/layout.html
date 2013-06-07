@@ -2,7 +2,9 @@
 <template name="iLayout">
   <div class="dashboard-body">
     {{> iLayout-topBar}}
-    {{yield}}
+    <div class="dashboard-content">
+      {{yield}}
+    </div>
   </div>
   
 </template>

@@ -1,0 +1,21 @@
+
+
+<template name="iBulbs">
+
+  <div class="dashboard-bulbs">
+    <div class="dashboard-bulbs-header">
+      {{title}}
+    </div>
+    {{#each bulbs}}
+      <div class="dashboard-bulb">
+        <a href="{{url}}">
+          <span class="dashboard-bulb-icon">{{icon}}</span>
+          <span class="dashboard-bulb-title">{{title}}</span>
+        </a>
+      </div>
+    {{/each}}
+  </div>
+
+</template>
+
+

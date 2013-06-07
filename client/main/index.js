@@ -13,11 +13,8 @@ var render404 = function() {
 var renderDashboard = function(state) {
   state.matchRoute = Impact.Routing.matchRoute.bind(state);
 
-  var route = state.matchRoute(Impact.Routing.dashboardRoutes);
-
-  // if(! route) return 'Bleargh! I am now officially dead.';
-  // if(! Template[route.view]) return 'This page does not exist.';
-
+  var route = state.matchRoute(Impact.Dashboard.routes);
+  
   return new Handlebars.SafeString(Template.iLayout(route));
 };
 

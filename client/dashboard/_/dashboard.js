@@ -1,6 +1,0 @@
-
-Impact.Dashboard = {};
-
-
-
-
