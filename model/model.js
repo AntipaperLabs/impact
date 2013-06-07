@@ -1,93 +1,14 @@
 
-/*
-  impact {
-    createdAt:
-    updatedAt:
-    createdBy:
 
-  }
+   
 
-*/
+Roles = new Meteor.Collection('roles'),
 
-/*
+Modules = new Meteor.Collection('modules'),
 
-  moduleName:
+ModuleTypes = new Meteor.Collection('moduleTypes'),
 
-  meta:
-  head:
-  body:
-  // recommended body schema:
-  // [{
-  //  type:
-  //  content:
-  // }]
-
-  versions: ['id']
-
-  tags:
-  notes: [{
-    
-  }]
-
-*/
-
-// var Documents = new Meteor.Collection('documents');
-
-
-/*
-  moduleName:
-  documentId:
-
-  createdAt:
-  createdBy:
-  memo:
-
-  // NOT MVP - THINK ABOUT IT LATER
-  // recentEdits: {
-  //   'userId': 'date'
-  // }
-
-
-
-  meta:
-  head:
-  body:
-*/
-// var Versions = new Meteor.Collection('versions');
-
-/*
-  moduleName:
-
-  createdAt:
-  userId:
-  name:
-  content:
-*/
-// var Notes = new Meteor.Collection('notes');
-
-
-
-/*
-  owner | user | guest
-
-*/
-
-define('model', [], function () {
-  return {
-    roles   : new Meteor.Collection('roles'),
-    modules : new Meteor.Collection('modules'),
-    moduleTypes : new Meteor.Collection('moduleTypes'),
-    shortCuts : new Meteor.Collection('shortCuts')
-  };
-});
-
-Roles = require('model').roles;
-
-Modules = require('model').modules;
-
-ModuleTypes = require('model').moduleTypes;
-
-ShortCuts = require('model').shortCuts;
+ShortCuts = new Meteor.Collection('shortCuts')
 
 
 
