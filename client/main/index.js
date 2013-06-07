@@ -30,6 +30,7 @@ var renderModule = function(state) {
   state1.path.splice(0,1);
   state1.matchRoute = Impact.Routing.matchRoute.bind(state1);
 
+
   var module = Impact.requireModule(state.path[0]);
   if(module.status == 'error') {
     return 'Module does not exist';
@@ -37,8 +38,9 @@ var renderModule = function(state) {
   if(module.status == 'loading') {
     return 'Loading...';
   }
-  if(module.status != 'ok') return 'Blargh! Unknown status!';
-
+  if(module.status != 'ok') {
+    return 'Blargh! Unknown status!';
+  }
   if(!(module.module && module.module.routes && module.module.render)) {
     return 'Blargh! Module doesn\'t click!';
   }
@@ -74,8 +76,6 @@ Handlebars.registerHelper('impactIndex', function() {
   }
 
 });
-
-
 
 
 

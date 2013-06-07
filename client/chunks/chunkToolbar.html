@@ -1,0 +1,30 @@
+
+ <template name="chunkToolbar">
+   <div class="btn-toolbar">
+    <div class="btn-group">
+      <button type="button" class="btn btn-small" data-action="moveUp">
+        <i class="icon-arrow-up"></i>
+      </button>
+      <button type="button" class="btn btn-small" data-action="moveDown">
+        <i class="icon-arrow-down"></i>
+      </button>
+    </div><!-- btn group -->
+    <div class="btn-group">
+      <button type="button" class="btn btn-small" disabled="true">type: {{type}}</button>
+      <button type="button" class="btn btn-small dropdown-toggle" data-toggle="dropdown">
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <!-- this is fake -->
+        <li><a href="#">plain text</a></li>
+        <li><a href="#">markdown</a></li>
+        <li><a href="#">math</a></li>
+      </ul>
+    </div><!-- btn group -->
+    <div class="btn-group pull-right">
+      <button type="button" class="btn btn-small btn-danger" data-action="remove">
+        <i class="icon-remove"></i>
+      </button>
+    </div><!-- btn group -->
+  </div>
+</template>

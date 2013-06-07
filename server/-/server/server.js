@@ -8,4 +8,6 @@ Meteor.publish("modules", function () {
 });
 
 
-
+Meteor.publish("moduleTypes",function(){
+	return ModuleTypes.find({});
+})

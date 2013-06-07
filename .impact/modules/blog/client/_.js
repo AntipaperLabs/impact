@@ -7,20 +7,24 @@
 
 exports.routes = function(state) {
   return state.matchRoute({
-    '/':                  'list',
-    '/new':               'new',
-    '/:title/:id':        function(params) {
-                            S('articleId', id);
-                            return 'show';
+    '/':                  { view: 'list' },
+    '/new':               { view: 'new' },
+    '/:title/:id':        function(p) {
+                            return {
+                              view: 'show',
+                              data: {articleId: p.id}
+                            }
                           },
-    '/:title/:id/edit':   function(params) {
-                            S('articleId', id);
-                            return 'edit';
-                          }
+    '/:title/:id/edit':   function(p) {
+                            return {
+                              view: 'edit',
+                              data: {articleId: p.id}
+                            }
+                          },
   });
 };
 
 exports.render = function(view, data) {
-  console.log('rendering view', view);
-  //return new Handlebars.SafeString(Template[view](data));
+  console.log(view, data);
+  return new Handlebars.SafeString(Template[view](data));
 };

@@ -5,3 +5,12 @@ Template.show.article = function() {
   // return article;
   return Articles.findOne({_id: S('articleId')});
 };
+
+Template.show.chunks = function() {
+  var article = Articles.findOne({_id: S('articleId')});
+  if (article.chunks)
+    return article.chunks;
+  return [
+    { type: 'text', content: article.body, },
+  ];
+};
