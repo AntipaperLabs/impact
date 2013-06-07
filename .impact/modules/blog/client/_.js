@@ -10,6 +10,7 @@ exports.routes = function(state) {
     '/':                  { view: 'list' },
     '/new':               { view: 'new' },
     '/:title/:id':        function(p) {
+      console.log("PID", p);
                             return {
                               view: 'show',
                               data: {articleId: p.id}

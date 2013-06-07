@@ -1,13 +1,10 @@
 Template.show.article = function() {
-  console.log("SHOW ARTICLE", S('articleId'));
-  // var article = Articles.findOne({_id: S('articleId')});
-  // console.log("THIS ARTICLE: ", article);
-  // return article;
-  return Articles.findOne({_id: S('articleId')});
+  return Articles.findOne(this.articleId);
 };
 
 Template.show.chunks = function() {
-  var article = Articles.findOne({_id: S('articleId')});
+  console.log("CHU", this);
+  var article = Articles.findOne(this._id);
   if (article.chunks)
     return article.chunks;
   return [

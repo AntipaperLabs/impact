@@ -49,7 +49,7 @@ Impact.Routing.matchRoute = function(map) {
 
     var value = map[key];
 
-    if(typeof value === 'function') return value.apply(this, params);
+    if(typeof value === 'function') return value.call(this, params);
     return value;
     continue;
   }
@@ -74,7 +74,7 @@ var _routeMatches = function(array, string) {
     if(tab[i] === '?') continue;
     if(tab[i].startsWith(':')) {
       var key = tab[i];
-      key = key.substring(0, key.length - 1);
+      key = key.substring(1);
       params[key] = array[i];
       continue;
     }
