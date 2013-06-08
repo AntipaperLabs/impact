@@ -1,5 +1,5 @@
 (function(){
-  new Impact.ModuleFactory('blog',{
+  Impact.registerModuleFactory('blog',{
     loader:function(I){
       with(I){
 //////////////////////////////////////////////////////////// CONSTRUCTOR
