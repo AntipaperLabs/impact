@@ -4,8 +4,11 @@ Impact.modules = {};
 Impact.factories = {};
 
 var status = new ReactiveDict;
+
+
 var handle = Meteor.subscribe("modules", function () {
 
+  
   //TODO: consider using observe here
   Modules.find({}).forEach(function (module) {
 
