@@ -65,3 +65,12 @@ Impact.Dashboard.bulbPrefixes = {
 };
 
 
+Impact.Dashboard.bulbColors = {
+  'site': 'dashboard-body-red',
+  'modules': 'dashboard-body-yellow',
+  'users': 'dashboard-body-blue',
+  'media': 'dashboard-body-violet',
+};
+
+
+

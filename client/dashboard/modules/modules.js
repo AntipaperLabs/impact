@@ -9,6 +9,15 @@ Template.iModules.title = function() {
 };
 
 
+
+Template.iModules.events({
+
+  'click .iModules-addButton': function(e) {
+    Impact.Dashboard.popup(Template['iModules-newAlert']());
+  },
+
+});
+
 // Template.iModules.events({
 // 	'click button.moduleButton': function(event) {
 

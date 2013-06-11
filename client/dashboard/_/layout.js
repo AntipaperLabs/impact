@@ -9,6 +9,12 @@ Template.iLayout.yield = function() {
 
 
 
+Template.iLayout.bodyColor = function() {
+  if(!this.prefix) return '';
+  var bulb = Impact.Dashboard.bulbPrefixes[this.prefix];
+  if(!bulb) return '';
+  return Impact.Dashboard.bulbColors[bulb];
+};
 
 
 Template.iLayout.bulbs = function() {

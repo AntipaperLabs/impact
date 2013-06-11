@@ -1,0 +1,58 @@
+
+
+.dashboard-body-red {
+
+  .dashboard-bulb-active a {
+    color: @red;
+    &:hover { color: @red; }
+  }
+
+  .dashboard-button-action, .dashboard-content-bulb {
+    background: @red;
+  }
+
+}
+
+
+
+.dashboard-body-yellow {
+
+  .dashboard-bulb-active a {
+    color: @yellow;
+    &:hover { color: @yellow; }
+  }
+
+  .dashboard-button-action, .dashboard-content-bulb {
+    background: @yellow;
+  }
+
+}
+
+
+.dashboard-body-blue {
+
+  .dashboard-bulb-active a {
+    color: @blue;
+    &:hover { color: @blue; }
+  }
+
+  .dashboard-button-action, .dashboard-content-bulb {
+    background: @blue;
+  }
+
+}
+
+
+.dashboard-body-violet {
+
+  .dashboard-bulb-active a {
+    color: @violet;
+    &:hover { color: @violet; }
+  }
+
+  .dashboard-button-action, .dashboard-content-bulb {
+    background: @violet;
+  }
+}
+
+

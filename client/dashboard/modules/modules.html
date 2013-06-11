@@ -4,7 +4,7 @@
     <div class="dashboard-h3">Add new module</div>
     <br/>
     {{#each moduleTypes}}
-      <div class="dashboard-content-bulb">
+      <div class="dashboard-content-bulb iModules-addButton" data-name="{{name}}">
         <div class="dashboard-content-bulb-icon">K</div>
         <div class="dashboard-content-bulb-title">{{name}}</div>
       </div>
@@ -12,6 +12,24 @@
   </div>
 
 </template>
+
+
+
+<template name="iModules-newAlert">
+    <div class="dashboard-popup">
+      <div class="dashboad-popup-header">
+        New module
+      </div>
+      <div class="dashboad-popup-body">
+        Module name
+      </div>
+      <div class="dashboad-popup-footer">
+        <span class="dashboard-button">Cancel</span>
+        <span class="dashboard-button dashboard-button-action">Create</span>
+      </div>
+    </div>
+</template>
+
 
 
 <template name="iModules-pociej">
