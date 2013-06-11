@@ -2,7 +2,7 @@
 
 .dashboard-body-red {
 
-  .dashboard-bulb-active a {
+  .dashboard-content a, .dashboard-bulb-active a {
     color: @red;
     &:hover { color: @red; }
   }
@@ -11,13 +11,17 @@
     background: @red;
   }
 
+  .dashboard-popup-overlay {
+    //box-shadow: 0px 5px 0px -5px @red inset;
+  }
+
 }
 
 
 
 .dashboard-body-yellow {
 
-  .dashboard-bulb-active a {
+  .dashboard-content a, .dashboard-bulb-active a {
     color: @yellow;
     &:hover { color: @yellow; }
   }
@@ -26,12 +30,15 @@
     background: @yellow;
   }
 
+  .dashboard-popup-overlay {
+    //box-shadow: 0px 6px 0px @yellow inset, 0px 6px 3px rgba(0,0,0,0.125) inset;
+  }
 }
 
 
 .dashboard-body-blue {
 
-  .dashboard-bulb-active a {
+  .dashboard-content a, .dashboard-bulb-active a {
     color: @blue;
     &:hover { color: @blue; }
   }
@@ -45,7 +52,7 @@
 
 .dashboard-body-violet {
 
-  .dashboard-bulb-active a {
+  .dashboard-content a, .dashboard-bulb-active a {
     color: @violet;
     &:hover { color: @violet; }
   }

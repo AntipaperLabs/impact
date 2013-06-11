@@ -4,9 +4,9 @@
     <div class="dashboard-h3">Add new module</div>
     <br/>
     {{#each moduleTypes}}
-      <div class="dashboard-content-bulb iModules-addButton" data-name="{{name}}">
+      <div class="dashboard-content-bulb iModules-addButton" data-type="{{name}}">
         <div class="dashboard-content-bulb-icon">K</div>
-        <div class="dashboard-content-bulb-title">{{name}}</div>
+        <div class="dashboard-content-bulb-title">{{title}}</div>
       </div>
     {{/each}}  
   </div>
@@ -15,17 +15,18 @@
 
 
 
-<template name="iModules-newAlert">
+<template name="iModules-new">
     <div class="dashboard-popup">
-      <div class="dashboad-popup-header">
-        New module
+      <div class="dashboard-popup-header">
+        New module &mdash; {{title}}
       </div>
-      <div class="dashboad-popup-body">
-        Module name
+      <div class="dashboard-popup-body">
+        Module name:<br/>
+        <input type="text" class="iModules-newField"><br/>
       </div>
-      <div class="dashboad-popup-footer">
-        <span class="dashboard-button">Cancel</span>
-        <span class="dashboard-button dashboard-button-action">Create</span>
+      <div class="dashboard-popup-footer">
+        <span class="iModules-newCancelButton dashboard-button">Cancel</span>
+        <span class="iModules-newActionButton dashboard-button dashboard-button-action">Create</span>
       </div>
     </div>
 </template>
