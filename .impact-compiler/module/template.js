@@ -1,3 +1,12 @@
+/*
+  Compile .html files with handlebars 
+  into Meteor template code.
+*/
+/*
+  Taken directly from Meteor
+*/
+
+
 require('sugar');
 
 var handlebars = require('handlebars');

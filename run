@@ -1,2 +1,2 @@
 #!/bin/bash
-node ./.meteor/.impact/run.js
+node ./.impact-compiler/run.js

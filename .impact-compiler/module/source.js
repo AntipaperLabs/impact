@@ -2,6 +2,8 @@
   Class that holds and module source code
   and outputs it to a string
 */
+
+
 var jsTemplate = require('./jstemplate');
 
 var t = {
