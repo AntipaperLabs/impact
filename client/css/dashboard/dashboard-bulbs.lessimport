@@ -10,20 +10,6 @@
 }
 
 
-.dashboard-bulbs-header {
-  display: none;
-  height: 50px;
-  line-height: 45px;
-  /*background: #ce483d;*/
-  color: #ce483d;
-  box-shadow: 0px -10px 0px -5px #ce483d inset;
-  font-family: Lobster;
-  font-size: 20px;
-  
-  /*text-shadow: 0px 2px 0px rgba(0,0,0,0.25);*/
-  cursor: default;
-}
-
 .dashboard-bulb {
   display: block;
   width: 150px;
@@ -49,9 +35,9 @@
 
 .dashboard-bulb-active a {
   background: #f0f0f0;
-  color: #ce483d;
+  color: @neutral;
   &:hover {
-    color: #ce483d;
+    color: @neutral;
   }
 }
 

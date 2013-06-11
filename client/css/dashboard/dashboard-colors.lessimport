@@ -1,0 +1,65 @@
+
+
+.dashboard-body-red {
+
+  .dashboard-content a, .dashboard-bulb-active a {
+    color: @red;
+    &:hover { color: @red; }
+  }
+
+  .dashboard-button-action, .dashboard-content-bulb {
+    background: @red;
+  }
+
+  .dashboard-popup-overlay {
+    //box-shadow: 0px 5px 0px -5px @red inset;
+  }
+
+}
+
+
+
+.dashboard-body-yellow {
+
+  .dashboard-content a, .dashboard-bulb-active a {
+    color: @yellow;
+    &:hover { color: @yellow; }
+  }
+
+  .dashboard-button-action, .dashboard-content-bulb {
+    background: @yellow;
+  }
+
+  .dashboard-popup-overlay {
+    //box-shadow: 0px 6px 0px @yellow inset, 0px 6px 3px rgba(0,0,0,0.125) inset;
+  }
+}
+
+
+.dashboard-body-blue {
+
+  .dashboard-content a, .dashboard-bulb-active a {
+    color: @blue;
+    &:hover { color: @blue; }
+  }
+
+  .dashboard-button-action, .dashboard-content-bulb {
+    background: @blue;
+  }
+
+}
+
+
+.dashboard-body-violet {
+
+  .dashboard-content a, .dashboard-bulb-active a {
+    color: @violet;
+    &:hover { color: @violet; }
+  }
+
+  .dashboard-button-action, .dashboard-content-bulb {
+    background: @violet;
+  }
+}
+
+

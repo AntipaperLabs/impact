@@ -17,6 +17,7 @@ Impact.Dashboard.routes = {
       data: { moduleName: params.name },
     };
   },
+  '/-modules/manage': {view: 'iModules', bulb: 'manage'},
 
   '/-users': {view: 'iRoles', bulb: 'roles'},
   '/-users/roles': {view: 'iRoles', bulb: 'roles'},
@@ -62,5 +63,14 @@ Impact.Dashboard.bulbPrefixes = {
   '-media': 'media',
   '-storage': 'media',
 };
+
+
+Impact.Dashboard.bulbColors = {
+  'site': 'dashboard-body-red',
+  'modules': 'dashboard-body-yellow',
+  'users': 'dashboard-body-blue',
+  'media': 'dashboard-body-violet',
+};
+
 
 

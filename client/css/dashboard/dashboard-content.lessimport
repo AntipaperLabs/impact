@@ -1,0 +1,51 @@
+
+
+.dashboard-centered {
+  text-align: center;
+}
+
+
+.dashboard-h3 {
+  display: block;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 32px;
+  margin-bottom: 20px;
+}
+
+.dashboard-button {
+  display: inline-block;
+  vertical-align: bottom;
+
+  height: 35px;
+  line-height: 30px;
+  font-size: 15px;
+
+  font-family: Lobster;
+  color: #ffffff;
+  text-shadow: 0px 2px 0px rgba(0,0,0,0.25);
+
+  padding: 0px 30px;
+  background: #a0a0a0;
+  border-radius: 5px;
+  box-shadow: 0px -5px 0px rgba(0,0,0,0.25) inset;
+  
+  
+  
+  cursor: default;
+
+  &:hover {
+    text-decoration: none;
+    height: 32px;
+    /*border-top: 3px solid rgba(255, 255, 255, 0);*/
+    margin-top: 3px; 
+    box-shadow: 0px -2px 0px rgba(0,0,0,0.25) inset;//, 0px 1px 0px rgba(255, 255, 255, 0.25) inset;
+    /*color: rgba(255,255,255,0);*/
+    /*text-shadow: 0px 3px 0px rgba(255,255,255,1), 0px 5px 0px rgba(0,0,0,0.25);*/
+  }
+}
+
+
+.dashboard-button-action {
+  background: #707070;
+}

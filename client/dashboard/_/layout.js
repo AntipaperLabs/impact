@@ -1,22 +1,25 @@
 
 Template.iLayout.yield = function() {
 
-  console.log("LAYOUT ", this);
   if(! this.view) return "No such view";
   if(! Template[this.view]) return "No such template";
-  console.log("WILL DRAW TEMPLATE", this.view);
   return new Handlebars.SafeString(Template[this.view](this.data));
 };
 
 
 
 
+Template.iLayout.bodyColor = function() {
+  if(!this.prefix) return '';
+  var bulb = Impact.Dashboard.bulbPrefixes[this.prefix];
+  if(!bulb) return '';
+  return Impact.Dashboard.bulbColors[bulb];
+};
 
 
 Template.iLayout.bulbs = function() {
 
   if(!this.prefix) return [];
-  console.log("BULBS", this);
 
   var tab = Impact.Dashboard.bulbs[
     Impact.Dashboard.bulbPrefixes[this.prefix]
@@ -39,11 +42,11 @@ Template.iLayout.bulbs = function() {
 
   }
 
-  console.log("GOT BULBS", tab);
-
   for(var i = 0; i < tab.length; ++i) {
     if(tab[i].id === this.bulb) {
       tab[i].active = true;
+    } else if(tab[i].active) {
+      delete tab[i].active;
     }
   }
 

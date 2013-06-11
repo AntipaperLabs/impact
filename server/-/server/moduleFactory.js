@@ -1,12 +1,44 @@
 
 Impact.ModuleFactories = {};
 
+
+Impact.registerModuleFactory = function(moduleType, params) {
+  params = params || {};
+  params.manifest = params.manifest || {};
+
+  var factory = new Impact.ModuleFactory(moduleType, params);
+  Impact.ModuleFactories[moduleType] = factory;
+
+  Meteor.startup(function(){
+
+    if(!ModuleTypes.findOne({name: moduleType})) {
+      console.log("TYPES INSERT", moduleType);
+
+      ModuleTypes.insert({
+        name: moduleType,
+        icon: 'K',
+        views: params.manifest.views,
+        roles: params.manifest.roles,
+      });
+    } else {
+      console.log("TYPES UPDATE", moduleType);
+      ModuleTypes.update({
+        name: moduleType,
+      }, { $set: {
+        icon: 'K',
+        views: params.manifest.views,
+        roles: params.manifest.roles,
+      }});
+    }
+  });
+};
+
 Impact.ModuleFactory = function(moduleClass, options){
   options = options || {};
   this.moduleClass = moduleClass;
   this.loader = options.loader;
 
-  Impact.ModuleFactories[moduleClass] = this;
+  // Impact.ModuleFactories[moduleClass] = this;
 };
 
 

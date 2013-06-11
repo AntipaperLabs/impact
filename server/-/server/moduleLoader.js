@@ -1,6 +1,3 @@
-////////////////////
-/**/(function(){/**/
-////////////////////
 
 Meteor.startup(function(){
   Object.each(Modules.find({}).fetch(), function(index,module){
@@ -9,12 +6,4 @@ Meteor.startup(function(){
       Impact.ModuleFactories[module.type].loadModule(module.name);
   });
 
-  // Impact.ModuleFactory = {};
-
-  // Impact.
-
 });
-
-////////////////////
-/*********/})();/**/
-////////////////////

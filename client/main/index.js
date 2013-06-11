@@ -1,10 +1,4 @@
 
-
-var renderHomePage = function() {
-  return 'HOME PAGE';
-};
-
-
 var render404 = function() {
   return 'That looks like a 404 error to me.'
 };
@@ -14,6 +8,8 @@ var renderDashboard = function(state) {
   state.matchRoute = Impact.Routing.matchRoute.bind(state);
 
   var route = state.matchRoute(Impact.Dashboard.routes);
+  if(!route) route = {};
+  
   route.prefix = state.path[0];
   
   return new Handlebars.SafeString(Template.iLayout(route));
@@ -55,11 +51,17 @@ var renderModule = function(state) {
 
 Handlebars.registerHelper('impactIndex', function() {
 
+
   var state = Path.get();
 
   if((state.path.length === 0) ||
      (state.path[0].length === 0)) {
-    return renderHomePage();
+    
+    var is = ImpactSettings.findOne({});
+    if(!is) return 'Loading...';
+    state = {
+      path: Path.stringToArray(is.home),
+    };
   }
 
   if(state.path[0] === '-') {

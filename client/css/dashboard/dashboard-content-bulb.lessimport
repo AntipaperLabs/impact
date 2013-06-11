@@ -1,0 +1,47 @@
+
+.dashboard-content-bulb {
+  /*.animated;*/
+  width: 150px;
+  height: 150px;
+  padding-top: 0px;
+  
+  display: inline-block;
+  vertical-align: bottom;
+  margin: 10px;
+
+
+
+
+  font-family: Lobster;
+  color: #ffffff;
+  text-shadow: 0px 2px 0px rgba(0,0,0,0.25);
+
+  /*padding: 0px 30px;*/
+  
+  cursor: default;
+
+
+  border-radius: 5px;
+  background: @neutral;
+  box-shadow: 0px -5px 0px rgba(0,0,0,0.25) inset;
+
+  &:hover {
+    text-decoration: none;
+    height: 147px;
+    box-shadow: 0px -2px 0px rgba(0,0,0,0.25) inset;
+  }
+}
+
+
+.dashboard-content-bulb-icon {
+  font-family: Sosa;
+  font-size: 64px;
+  height: 100px;
+  line-height: 100px;
+}
+
+.dashboard-content-bulb-title {
+  height: 50px;
+  line-height: 50px;
+  font-size: 16px;
+}
