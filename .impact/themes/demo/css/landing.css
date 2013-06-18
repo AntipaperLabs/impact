@@ -1,0 +1,26 @@
+
+.layout-landing-top-bar {
+  background: #303030;
+  height: 50px;
+}
+
+.layout-landing-hero {
+  background: #ffc000;
+  height: 300px;
+}
+
+.layout-landing-bulbs {
+  background: #e0e0e0;
+  min-height: 150px;
+}
+
+.layout-landing-content {
+  background: #f0f0f0;
+  min-height: 300px;
+}
+
+.layout-landing-footer {
+  background: #707070;
+  min-height: 100x;
+}
+

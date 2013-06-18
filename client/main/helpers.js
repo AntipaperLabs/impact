@@ -1,7 +1,3 @@
-////////////////////
-/**/(function(){/**/
-////////////////////
-
 
 
 Handlebars.registerHelper('hyphenize', function(string) {
@@ -14,7 +10,3 @@ Handlebars.registerHelper('hyphenize', function(string) {
                 .replace(/^-+|-+$/g, ''); 
 });
 
-
-////////////////////
-/*********/})();/**/
-////////////////////

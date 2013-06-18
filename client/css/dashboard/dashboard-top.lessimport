@@ -101,3 +101,26 @@
 
 
 
+
+@media (max-width: 979px) {
+
+  .dashboard-top-bar {
+    height: 100px;
+  }
+  
+  .dashboard-top-bar ul {
+    width: 100%;
+    margin-top: 50px;
+    li {
+      width: 25%;
+    }
+  }
+
+  .dashboard-top-button {
+    width: 100%;
+  }
+}
+
+
+
+
