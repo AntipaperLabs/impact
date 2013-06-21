@@ -7,7 +7,7 @@ Handlebars.registerHelper('area', function (config) {
     areaName:name,
     viewName:"",
   }));
-};
+});
 
 Handlebars.registerHelper('showWidget', function (config) {
   var handle = Impact.requireWidget(config);
