@@ -27,8 +27,10 @@ var handle = Meteor.subscribe("widgets", function () {
       // make sure we wont define it twice
       Impact.widgetFactories[widget.type] = null;
       ModuleLoader.define("widgetFactories/" + widget.type, {
-        source: "/-/m/" + widget.type + ".js", // TODO: later change it to different source
-        verify: function () { return Impact.widgetFactories[widget.type] },
+        // TODO: later change it to different source
+        source: "/-/m/" + widget.type + ".js",
+        // TODO: this should be Impact.widgetFactories as soon as we modify the compiler
+        verify: function () { return Impact.factories[widget.type] },
         loaded: function () {}, //Q: do we need initialization here?
       });
     }
