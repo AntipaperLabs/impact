@@ -70,6 +70,17 @@ $functions(Impact.ModuleFactory, {
       Meteor.subscribe.apply(Meteor, arguments);
     };
 
+    var _DataSource = function () {
+
+    };
+
+    var _DataHandle = function () {
+      return {
+        ready: function () {},
+        stop: function () {},
+      }
+    };
+
     // prepare exports object
     var exports = {};
 
@@ -90,6 +101,8 @@ $functions(Impact.ModuleFactory, {
       Session: {},
       Impact: {},
       Subscribe: _Subscribe,
+      DataSource: _DataSource,
+      DataHandle: _DataHandle,
       //...
     });
 
