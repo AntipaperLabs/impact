@@ -8,7 +8,6 @@ var status = new ReactiveDict;
 
 var handle = Meteor.subscribe("modules", function () {
 
-  
   //TODO: consider using observe here
   Modules.find({}).forEach(function (module) {
 
@@ -35,11 +34,8 @@ var handle = Meteor.subscribe("modules", function () {
         loaded: function () {}, //Q: do we need initialization here?
       });
     }
-
   });
-
 });
-
 
 Impact.requireModule = function (name) {
   if (!handle.ready())
